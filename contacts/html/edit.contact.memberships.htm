@@ -1,0 +1,195 @@
+<style type="text/css">
+    #frmContentDiv {
+        width: 860px;
+        overflow: hidden;
+        min-height: 400px;
+        height: auto !important;
+    }
+    .contactMembership {
+        width: 420px;
+        overflow: hidden;
+        min-height: 50px;
+        height: auto !important;
+        margin-right: 10px;
+        float: left;
+    }
+    .editFormTbl {
+        background-color: #F0F0F0;
+        border: 3px solid #254B7C;
+        padding: 5px;
+    }
+    .editFormTbl select,.editFormTbl input {
+        font-size: 12pt;
+        padding: 3px;
+        border: 2px solid #254B7C;
+        width: 200px;
+    }
+    .editFormTbl select[name=status_id] {
+        width: 110px;
+    }
+    .editFormTbl input[type=checkbox] {
+        width: 15px;
+        vertical-align: middle;
+    }
+    
+    #membership_type_id {
+        float: left;
+        font-size: 14pt;
+        padding: 3px;
+        border: 2px solid #254B7C;
+        margin-right: 10px;
+    }
+    .memHeading {
+        padding: 3px;
+        font-size: 18pt;
+    }
+    select[name="custom_16"] {
+        width: 180px;
+        margin-right: 10px;
+    }
+    #frmContentDiv img { 
+        cursor: pointer;
+        vertical-align: middle;
+    }
+    .lblOverride {
+        font-size: 10pt;
+        font-weight: normal;
+        float: right;
+    }
+    .overrideDiv {
+        font-size: 14pt;
+        font-weight:  bold;
+        width: 80px;
+        float: left;
+    }
+</style>
+<script type="text/javascript" language="javascript">
+    $("#btnAddMembership").click(function () {
+        if ($("#membership_type_id").val().length==0) {
+            alert('Please select a membership to add');
+            $("#membership_type_id").focus();
+            return;
+        }
+        if ($("#membership_type_id").val()=='<?php echo $bamMembershipTypeId; ?>') {
+            $("#tblNewMembership").show();   
+        } else {
+            submitMembershipFrm();
+        }
+    });
+    $("#custom_16").keyup(function () {
+        if ($(this).val().length>0) {
+            $("#trCertRow").show();
+        } else {
+            $("#trCertRow").hide();
+        }
+    });
+    $("#bntCancelNewMembership").click(function () {
+        $("#trCertRow").hide();
+        $("#tblNewMembership").hide();
+        $("#membership_type_id").val('');
+    });
+    $("#btnSaveNewMembership").bind("click",submitMembershipFrm);
+    function submitMembershipFrm() {
+        var cfm = confirm("Are you sure you want to Save the changes you made.");
+        if (cfm) {
+            var $form = $( '#frmNewMembership' );
+            $( "#frmDiv" ).empty().append('<img src="/dms/img/loading.gif" style="vertical-align: middle" /> saving...');
+            var strUrl = $form.attr( "action" );
+            $.post( 
+                strUrl,
+                $form.serialize()  
+            ).done(function (data) {
+               resultContent = $.parseJSON(data);
+               reloadSummary();
+               $("#memberships").click();
+            });
+        }
+    }
+    
+    function validateMembershipFrm(){
+        var btnFullId = $(this).attr('id').split('-');
+        var recordId = btnFullId[1];
+        if ($("#join_date-" + recordId).val().length==0) {
+            alert("Please enter the join date.");
+            $("#join_date-" + recordId).focus();
+            return;
+        }
+        var cfm = confirm("Are you sure you want to Save the changes you made.");
+        if (cfm) {
+            var $form = $("#frmEditMembership-"+recordId);
+            $( "#frmDiv" ).empty().append('<img src="/dms/img/loading.gif" style="vertical-align: middle" /> saving...');
+            var strUrl = $form.attr( "action" );
+            $.post( 
+                strUrl,
+                $form.serialize()  
+            ).done(function (data) {
+               resultContent = $.parseJSON(data);
+               reloadSummary();
+               $("#memberships").click();
+            });
+        }
+    }
+    
+    function deleteMembership() {
+        var btnFullId = $(this).attr('id').split('-');
+        var recordId = btnFullId[1];
+        var cfm = confirm("Are you sure you want to delete this membership?");
+        if (cfm) {
+            $( "#frmDiv" ).empty().append('<img src="/dms/img/loading.gif" style="vertical-align: middle" /> deleting record...');
+            $.post( 
+                'delete.contact.membership.php',
+                { ref: recordId }  
+            ).done(function (data) {
+               resultContent = $.parseJSON(data);
+               $("#memberships").click();
+               reloadSummary();
+            });
+        }
+    }
+    
+    function showStatus() {
+        var chkFullId = $(this).attr('id').split('-');
+        var recordId = chkFullId[1];
+        if ($(this).is(":checked")) {
+            $("#status_id-"+recordId).show();
+            $("#overrideDiv-"+recordId).hide();
+        } else {
+            $("#status_id-"+recordId).hide();
+            $("#overrideDiv-"+recordId).show();
+        }
+    }
+
+    $("#bamCertificate").click(function(){
+        var m = $(this).attr('mid');
+        window.open('bam/'+m+'-bam-certificate.pdf', 'BAM Certificate', "width=600, height=400");
+    });
+    <?php echo $jqueryBindings; ?>
+</script>
+<div id="frmContentDiv">
+    <?php if (!empty($membershipsSelect)) { ?>
+    <div class="contactMembership" style="float:none">
+        <form action="save.contact.membership.php" method="POST" id="frmNewMembership" name="frmNewMembership">
+        <div class="memHeading" style="overflow: hidden">
+            <input type="hidden" name="contact_id" value="<?php echo $contactId; ?>" />
+            <?php echo $membershipsSelect; ?>
+            <div class="btn" id="btnAddMembership">Add</div>
+        </div>
+        <table width="100%" cellpadding="3" cellspacing="0" class="editFormTbl" id="tblNewMembership" style="display: none">
+            <tr class="bamRefNo">
+                <td><label for="custom_15">BAM Ref No</label></td>
+                <td><input type="text" id="custom_15" name="custom_15" /></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><div class="btn" id="btnSaveNewMembership">Save</div> <div class="btn" id="bntCancelNewMembership">Cancel</div></td>
+            </tr>
+        </table>
+        </form>
+    </div>
+    <?php } 
+        echo $membershipDivs;
+    ?>
+</div>
+<div id="divSaveResults" style="display:none">
+    <div id="divResult"></div>
+</div>

@@ -1,0 +1,71 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 20 Jan 2015, 9:38:22 AM
+    Author     : Chezre
+*/
+
+#frmHeading {
+    font-weight: bold;
+    font-size: 14pt;
+    margin-bottom: 10px;
+}
+
+#departmentForm {
+    float: left;
+    overflow: hidden;
+    width: auto;
+    height: auto;
+    background-color: rgba(37,75,124,0.25);
+    margin-left: 20px;
+    border: 2px solid #254B7C;
+}
+
+#frmDiv {
+    background-color: #FFF;
+    width: 550px;
+    margin: auto;
+    margin-top: 150px;
+    padding: 20px;
+    border: 10px solid #254B7C;
+    border-radius: 10px;
+    overflow: hidden;
+}
+#frmDiv input,#frmDiv select {
+    border: 2px solid #254B7C;
+    padding: 2px;
+}
+#departmentName {
+    font-weight: bold;
+    background-color: rgba(37,75,124,0.5);
+}
+#budgetDiv {
+    float: left;
+    width: 200px;
+    overflow: hidden;
+    height: auto;
+    background-color: #254B7C;
+    color: #FFF;
+    padding: 10px;
+    margin-right: 20px;
+    text-align: right;
+    font-size: 15pt;
+    font-weight: bold;
+}
+#detailsDiv {
+    float: left;
+    overflow: scroll;
+    height: 500px;
+    margin-bottom: 20px;
+}
+
+#tblBody tr:nth-child(even) {
+    background: rgba(37,75,124,0.1);
+}
+
+#tblBody tr:hover {
+    cursor: pointer;
+}

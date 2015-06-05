@@ -1,0 +1,1 @@
+<xi:include href="CRM/Dmsextension/files.xml"              parse="xml" />

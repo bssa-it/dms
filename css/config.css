@@ -1,0 +1,64 @@
+#mainDiv {
+    overflow: auto;
+}
+.heading {
+    font-size: 14pt;
+    font-weight: bold;
+    width: auto !important;
+    color: #254B7C;
+    border-bottom: 2px solid #FF9F00;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.tblConnection {
+    margin-bottom: 5px;
+    font-size: 10pt;
+}
+
+#connectionsDiv {
+    float: left;
+    width: 300px;
+    height: auto !important;
+    padding: 5px;
+    border: 8px solid #254B7C;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    margin-bottom: 10px;
+    margin-left:  100px;
+}
+
+#frmConfig input,select {
+    width: 150px;
+    font-size: 10pt;
+}
+
+#authorisationFrmDiv {
+    float: left;
+    clear: left;
+    width: 300px;
+    height: auto !important;
+    padding: 5px;
+    border: 8px solid #254B7C;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    margin-left:  100px;    
+}
+#systemClassesFrmDiv {
+    float: right;
+    width: 600px;
+    height: auto !important;
+    padding: 5px;
+    border: 8px solid #254B7C;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    margin-right: 100px;
+}
+#newClassDiv {
+    width: 450px;
+    float: left;
+}
+#configDiv {
+    height: 550px;
+    width: 100%;
+    overflow:  scroll;
+}

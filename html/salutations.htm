@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="css/global.css" />
+        <link rel="stylesheet" type="text/css" href="css/<?php echo $curScript; ?>.css" />
+
+        <script type="text/javascript" language="javascript" src="scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/global.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/<?php echo $curScript; ?>.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/tablePaging.js"></script>
+    </head>
+    <body>
+    <div id="screenProtectorDiv" style="display:none"></div>
+    <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+    <div id="headingRow">
+        <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+    </div>
+    <div id="menuRow">
+        <?php echo $menu; ?>
+    </div>
+    <div id="mainDiv">
+        <div id="posDiv"></div>
+        <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+        <div id="notificationsDiv" style="display: none"></div>
+        <div id="contentDiv">
+            <div id="divMySalutations">
+                <table align="center" width="100%" cellspacing="0" cellpadding="3" id="tblSalutations">
+                    <thead id="theadSalutations">
+                        <tr>
+                            <td>DP</td>
+                            <td>DN</td>
+                            <td>Cat</td>
+                            <td>Type</td>
+                            <td>Lang</td>
+                            <td>Text</td>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodySalutations">
+                        <?php echo $mySalutationRows; ?>
+                    </tbody>
+                </table>
+                <?php if (!empty($allSalutations)) { ?>
+                <script type="text/javascript" language="javascript">$('#tblSalutations').oneSimpleTablePagination({rowsPerPage: 20,brdrColor: "#254B7C"});</script>
+                <?php } ?>
+            </div>
+            <div id="divNewSalutation">
+                <div id="divNewHeading">Add</div>
+                <form action="save.salutations.php" method="POST" name="frmSalutations" id="frmSalutations">
+                    <input type="hidden" name="sal_id" id="sal_id" />
+                <div id="divTableContainer">
+                    <table align="center" width="100%" cellpadding="3" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td>Department</td>
+                                <td>
+                                    <select id="sal_department_id" name="sal_department_id">
+                                        <option value="">-- select --</option>
+                                        <?php echo $depOpts; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="sal_department_id">Denomination</label></td>
+                                <td>
+                                    <select id="sal_denomination_id" name="sal_denomination_id">
+                                        <option value="">-- select --</option>
+                                        <?php echo $denOpts; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="sal_category_id">Category</label></td>
+                                <td>
+                                    <select id="sal_category_id" name="sal_category_id">
+                                        <option value="">-- select --</option>
+                                        <?php echo $catOpts; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="sal_type">Type</label></td>
+                                <td>
+                                    <select id="sal_type" name="sal_type">
+                                        <option value="">-- select --</option>
+                                        <?php echo $typeOpts; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="sal_language">Language</label></td>
+                                <td>
+                                    <select id="sal_language" name="sal_language">
+                                        <option value="">-- select --</option>
+                                        <?php echo $langOpts; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="sal_text">Text</label></td>
+                                <td><input type="text" name="sal_text" id="sal_text" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div id="btnSave" class="btn">Save</div>
+                                    <div id="btnCancel" class="btn" style="display:none">Cancel</div>
+                                    <div id="btnDelete" class="btn" style="display:none">Delete</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </form> 
+            </div>
+        </div>
+    </div>
+    <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+    </body>
+</html>

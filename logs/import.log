@@ -1,0 +1,147 @@
+--2015-01-27 10:18:21--  http://129.47.16.245/dms/import.contacts.php
+Connecting to 129.47.16.245:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 46 [text/html]
+Saving to: `/scripts/import.contacts.php'
+
+     0K                                                       100% 1,83M=0s
+
+2015-01-27 10:18:35 (1,83 MB/s) - `/scripts/import.contacts.php' saved [46/46]
+
+--2015-01-27 10:18:36--  http://129.47.16.245/dms/import.bam.php
+Connecting to 129.47.16.245:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 198 [text/html]
+Saving to: `/scripts/import.bam.php'
+
+     0K                                                       100% 5,20M=0s
+
+2015-01-27 10:22:54 (5,20 MB/s) - `/scripts/import.bam.php' saved [198/198]
+
+--2015-01-27 10:22:55--  http://129.47.16.245/dms/import.contributions.php
+Connecting to 129.47.16.245:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: `/scripts/import.contributions.php'
+
+     0K .......... .......... .......... .......... .......... 3,07K
+    50K .......... .......... .......... .......... .......... 3,88K
+   100K .......... .......... .......... .......... .......... 2,83K
+   150K .......... .......... .......... .......               2,86K=60s
+
+2015-01-27 10:24:45 (3,13 KB/s) - `/scripts/import.contributions.php' saved [192179]
+
+--2015-01-27 10:24:46--  http://129.47.16.245/dms/import.sower.php
+Connecting to 129.47.16.245:80... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:25:00--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:25:17--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:25:38--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:25:55--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:26:09--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:26:21--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:26:33--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:26:44--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:26:57--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:27:09--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:27:21--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:27:33--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:27:45--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:27:57--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 302 Found
+Location: import.sower.php [following]
+--2015-01-27 10:28:09--  http://129.47.16.245/dms/import.sower.php
+Reusing existing connection to 129.47.16.245:80.
+HTTP request sent, awaiting response... 200 OK
+Length: 10 [text/html]
+Saving to: `/scripts/import.sower.php'
+
+     0K                                                       100%  384K=0s
+
+2015-01-27 10:28:09 (384 KB/s) - `/scripts/import.sower.php' saved [10/10]
+
+--2015-01-27 10:28:09--  http://129.47.16.245/dms/remove.contacts.php
+Connecting to 129.47.16.245:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 42 [text/html]
+Saving to: `/scripts/remove.contacts.php'
+
+     0K                                                       100% 1,66M=0s
+
+2015-01-27 10:28:26 (1,66 MB/s) - `/scripts/remove.contacts.php' saved [42/42]
+
+--2015-01-27 10:28:27--  http://129.47.16.245/dms/import.addresses.php
+Connecting to 129.47.16.245:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 160 [text/html]
+Saving to: `/scripts/import.addresses.php'
+
+     0K                                                       100% 7,45M=0s
+
+2015-01-27 10:28:28 (7,45 MB/s) - `/scripts/import.addresses.php' saved [160/160]
+
+--2015-01-27 10:28:28--  http://129.47.16.245/dms/import.phones.php
+Connecting to 129.47.16.245:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 164 [text/html]
+Saving to: `/scripts/import.phones.php'
+
+     0K                                                       100% 7,35M=0s
+
+2015-01-27 10:28:30 (7,35 MB/s) - `/scripts/import.phones.php' saved [164/164]
+
+--2015-01-27 10:28:30--  http://129.47.16.245/dms/import.email.php
+Connecting to 129.47.16.245:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 865 [text/html]
+Saving to: `/scripts/import.email.php'
+
+     0K                                                       100% 3,49M=0s
+
+2015-01-27 10:28:33 (3,49 MB/s) - `/scripts/import.email.php' saved [865/865]
+
+test db stored procedure ran successfully! :)
+start time: 27/01/2015 10:01:14
+end time: 27/01/2015 10:28:47
+duration: 27 min:33 sec

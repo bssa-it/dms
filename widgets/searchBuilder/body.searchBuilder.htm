@@ -1,0 +1,113 @@
+<script lang="text/javascript" type="text/javascript">
+	function validateDnrSearch() {
+	   
+       var dnrNo = document.getElementById('srch_donorNumber');
+        if ($('#srch_donorNumber').val().length>0) {
+            if ($('#srch_donorNumber').val().trim().length!=6 || isNaN($('#srch_donorNumber').val()))
+            {
+                alert("Please enter a valid donor number");
+                $('#srch_donorNumber').focus();
+                return;    
+            }
+        }
+        var dnrDeleted = document.getElementById('srch_donorDeleted');
+        var civId = document.getElementById('srch_civiId'); 
+        var recordId = document.getElementById('srch_recordId');
+        var recordLen = 0;
+        if (dnrNo!=null) recordLen += dnrNo.value.length;
+        if (civId!=null) recordLen += civId.value.length;
+        if (recordId!=null) recordLen += recordId.value.length;
+        
+        if (dnrDeleted.value.length==0&&recordLen==0) {
+            alert('Please select whether donor is deleted or not.');
+            dnrDeleted.focus();
+            return;
+        }
+        
+        var colLen = 0;
+        $('.colInput').each(function(){
+            colLen += $(this).val().trim().length;
+        });
+        if (colLen==0&&recordLen==0) {
+            alert('Please insert your search criteria');
+            return;
+        }
+        
+        $('#searchLoadingDiv').show();
+        document.frmSearch.submit();
+	}
+    function enterDonorNumber(e){
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if(code == 13) { 
+            validateDnrSearch();
+        }
+    }
+    function checkBamOnly() {
+        var bamRefNoLength = document.getElementById('srch_bamRefNo').value.trim().length;
+        document.getElementById('srch_bamOnly').checked = (bamRefNoLength>0);
+        document.getElementById('srch_bamOnly').disabled = (bamRefNoLength>0);
+    }
+    $(document).ready(function() {
+        $("#frmSearch input,#frmSearch select").keypress(function(event){
+           enterDonorNumber(event);
+        });
+    });
+</script>
+<style type="text/css">
+    #frmSearch {
+        color: #FFF;
+    }
+    #frmSearch input,select {
+        width: 240px;
+        padding: 5px;
+        font-size: 10pt;
+        margin: 1px;
+    }
+    #frmSearch label {
+        font-size: 9pt;
+    }
+    
+    #frmSearch input[type="checkbox"],#frmSearch input[type="radio"],#imgAdvancedSrch {
+        vertical-align: middle;
+    }
+</style>
+<form name="frmSearch" id="frmSearch" action="contacts/find.contact.php" method="POST">
+<div class="widgetHeader">
+    <img src="img/settings.png" height="16" width="16" title="edit settings" style="cursor: pointer;margin-right: 5px;" onclick="showAppSettings(<?php echo $w->wid_id; ?>)" />
+    <?php echo $w->wid_name; ?> 
+    <div style="float:right;display: inline-block;margin-right: 40px;">
+        <input type="radio" name="srch_database" id="radCivi" value="civicrm" style="width: 15px" <?php echo $isCiviChecked; ?>  /><label for="radCivi">CiviCRM</label>
+        <input type="radio" name="srch_database" id="radArchive" value="archive" style="width: 15px" <?php echo $isArchChecked; ?> /><label for="radArchive">Archive</label>
+    </div>
+</div>
+<div align="center" style="width:540px;height: 160px;">
+    <div style="float: left;width:280px;height:140px;">
+        <input type="text" name="srch_donorNumber" id="srch_donorNumber" placeholder="Donor Number" tabindex="1" style="font-size: 12pt;border: 4px solid #254B7C" autofocus />
+        <?php echo $leftColumnInputs; ?>
+    </div>
+    <div style="float: right;width:250px;height:140px;">
+        <div id="delAndReg">
+            <select id="srch_donorDeleted" name="srch_donorDeleted" tabindex="2" style="width:120px;font-size: 9pt;padding: 3px;margin-bottom:15px;">
+                <?php echo $dnrDeletedOpts; ?>
+            </select>
+            <?php echo $regionField; ?>
+            <?php echo $rightColumnInputs; ?>
+        </div>
+    </div>
+</div>
+<div style="width:540px;height: 50px;margin-top: 5px">
+    <div style="float: left;width: 200px;">
+        <div class="btn" onclick="validateDnrSearch();" style="margin-left: 15px;">Search</div>
+        <div style="font-style: italic;font-size: 9pt;float:left;display: none;margin-top:10px;" id="searchLoadingDiv">
+            <img id="imgAdvancedSrch" align="right" src="img/loading2.gif" style="margin-left: 10px;" /> 
+            loading
+        </div>
+    </div>
+    <div style="float: left;width: 170px;margin-top:5px" align="center">
+        <div><a href="contacts/contact.search.php" style="font-size:9pt;"><img src="img/search-white-32.png" width="16" height="16" style="cursor:pointer;margin-right:5px" />advanced search</a></div>
+    </div>
+    <div style="float:right;margin-top:5px;margin-right:10px;text-align: right;">
+        <input type="checkbox" name="srch_bamOnly" id="srch_bamOnly" value="Y" style="width: 15px;padding:0px;margin: 0px;" <?php echo $isBamOnly; ?> /> <label for="srch_bamOnly">Search BAM only</label>
+    </div>
+</div>
+</form>

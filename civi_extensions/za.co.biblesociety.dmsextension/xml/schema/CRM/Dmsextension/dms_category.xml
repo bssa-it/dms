@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>Category</class>
+  <name>civicrm_dms_category</name>
+  <comment>Category reporting code table</comment>
+  <log>true</log>
+
+  <field>
+    <name>cat_id</name>
+    <type>varchar</type>
+    <length>4</length>
+    <required>true</required>
+    <comment>Unique Settings ID</comment>
+  </field>
+  <primaryKey>
+    <name>cat_id</name>
+  </primaryKey>
+
+  <field>
+    <name>cat_name</name>
+    <type>varchar</type>
+    <length>100</length>
+    <comment>Category name</comment>
+    <title>Category Name</title>
+  </field>
+
+  <field>
+    <name>cat_departments</name>
+    <type>varchar</type>
+    <length>50</length>
+    <comment>Departments linked to category</comment>
+    <title>Category Departments</title>
+  </field>
+</table>

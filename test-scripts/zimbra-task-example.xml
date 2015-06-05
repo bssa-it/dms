@@ -1,0 +1,16 @@
+<task id="89080" uid="782f19fa-99b1-4c7d-aa3c-2f780ca2fbee" d="1409577603000" rev="203976" s="0" l="15">
+    <inv id="89079" seq="0" compNum="0" type="task">
+        <comp uid="782f19fa-99b1-4c7d-aa3c-2f780ca2fbee" percentComplete="0" d="1409577603000" allDay="1" status="NEED" noBlob="1" ciFolder="15" isOrg="1" class="PUB" loc="" compNum="0" url="" calItemId="89080" x_uid="782f19fa-99b1-4c7d-aa3c-2f780ca2fbee" priority="5" name="Phone Call dms-2028226" seq="0" rsvp="0" method="PUBLISH">
+            <fr>call GM undefined Phone No: 021-913-1289</fr>
+            <desc>call GM undefined Phone No: 021-913-1289 </desc>
+            <descHtml>
+                Phone Call dms-2028226
+                call GM undefined Phone No: 021-913-1289
+            </descHtml>
+            
+            <or a="fredericks@biblesociety.co.za" url="fredericks@biblesociety.co.za"/>
+            <s d="20140908"/>
+            <e d="20140908"/>
+        </comp>
+    </inv>
+</task>

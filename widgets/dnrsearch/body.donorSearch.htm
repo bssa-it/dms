@@ -1,0 +1,114 @@
+<script lang="text/javascript" type="text/javascript">
+	function validate() {
+	   document.getElementById('searchLoadingDiv').style.display = 'none';
+		var dnrNo = document.getElementById('srch_donorNumber');
+        if (dnrNo.value.length>0) {
+            if (dnrNo.value.trim().length!=6 || isNaN(dnrNo.value.trim()))
+            {
+                alert("Please enter a valid donor number");
+                dnrNo.focus();
+                return;    
+            }
+        }
+        
+        var dnrName = document.getElementById('srch_donorName');
+        var dnrContactNo = document.getElementById('srch_contactNo');
+        var dnrEmail = document.getElementById('srch_email');
+        var dnrDeleted = document.getElementById('srch_donorDeleted');
+        var dnrAddress1 = document.getElementById('srch_AddressLine1');
+        var dnrAddress2 = document.getElementById('srch_AddressLine2');
+        var dnrAddress3 = document.getElementById('srch_AddressLine3');
+        var dnrCity = document.getElementById('srch_City');
+        var dnrPostalCode = document.getElementById('srch_PostalCode');
+        
+        if (dnrDeleted.value.length==0&&dnrNo.value.trim().length==0) {
+            alert('Please select whether donor is deleted or not.');
+            dnrDeleted.focus();
+            return;
+        }
+        
+        if (dnrNo.value.length==0&&dnrName.value.length==0&&dnrContactNo.value.length==0
+            &&dnrEmail.value.length==0&&dnrDeleted.value.length==0&&dnrAddress1.value.length==0
+            &&dnrAddress2.value.length==0&&dnrAddress3.value.length==0&&dnrCity.value.length==0
+            &&dnrPostalCode.value.length==0)
+            {
+                alert('Please insert your search criteria');
+                dnrNo.focus();
+                return;
+            }
+        
+        document.getElementById('searchLoadingDiv').style.display = '';
+        /* VALIDATION PASSED */
+        document.frmSearch.submit();
+	}
+    
+    function enterDonorNumber(e){
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if(code == 13) { 
+            validate();
+        }
+    }
+    
+</script>
+<style type="text/css">
+    #frmSearch {
+        color: #FFF;
+    }
+    #frmSearch input,select {
+        width: 200px;
+        padding:3px;
+        font-size: 11pt;
+    }
+    #tblSearch {
+        margin-left: 20px;
+    }
+</style>
+<form name="frmSearch" id="frmSearch" action="contacts/find.contacts.php" method="POST">
+<div class="widgetHeader">
+    <img src="img/settings.png" height="16" width="16" title="edit settings" style="cursor: pointer;margin-right: 5px;" onclick="showAppSettings(<?php echo $w->wid_id; ?>)" />
+    <?php echo $w->wid_name; ?> 
+    <div style="float:right;display: inline-block;margin-right: 40px;">
+        <input type="radio" name="srch_database" id="radCivi" value="civicrm" style="width: 15px" checked=""  /><label for="radCivi" style="font-size: 9pt;">CiviCRM</label>
+        <input type="radio" name="srch_database" id="radArchive" value="archive" style="width: 15px" /><label for="radArchive" style="font-size: 9pt;">Archive</label>
+    </div>
+</div>
+<table align="center" width="95%" border="0" cellpadding="2" cellspacing="0" id="tblSearch">
+	<tr>
+		<td style="padding-left:20px"><input type="text" name="srch_donorNumber" id="srch_donorNumber" placeholder="Donor Number" tabindex="1" onkeypress="enterDonorNumber(event);" /></td>
+		<td><input type="text" name="srch_AddressLine1" id="srch_AddressLine1" placeholder="Address Line 1" tabindex="6" /></td>
+	</tr>
+    <tr>
+		<td style="padding-left:20px"><input type="text" id="srch_donorName" name="srch_donorName" placeholder="Donor Name" tabindex="2" /></td>
+        <td><input type="text" name="srch_AddressLine2" id="srch_AddressLine2" placeholder="Address Line 2" tabindex="7" /></td>
+	</tr>
+    <tr>
+		<td style="padding-left:20px"><input type="text" id="srch_contactNo" name="srch_contactNo" placeholder="Donor Contact No" tabindex="3" /></td>
+        <td><input type="text" name="srch_AddressLine3" id="srch_AddressLine3" placeholder="Address Line 3" tabindex="8" /></td>
+	</tr>
+	<tr>
+		<td style="padding-left:20px"><input type="email" id="srch_email" name="srch_email" placeholder="Donor Email" tabindex="4" /></td>
+        <td><input type="text" name="srch_City" id="srch_City" placeholder="Suburb" tabindex="9" /></td>
+	</tr>
+    <tr>
+        <td style="padding-left:20px">
+            <select id="srch_donorDeleted" name="srch_donorDeleted" tabindex="5" style="width:140px;">
+                <option value="">Donor Deleted</option>
+                <option value="Y" >Yes</option>
+                <option value="N" >No</option>
+                <option value="A" >All</option>
+            </select>
+            <select id="srch_region" name="srch_region" style="width:80px;">
+                <option value="">Region</option>
+                <?php echo $regionOpts; ?>
+            </select>
+        </td>
+        <td>
+            <input type="text" name="srch_PostalCode" id="srch_PostalCode" placeholder="Postal Code" tabindex="10" />
+        </td>
+    </tr>
+	<tr>
+        <td style="padding-top:10px;padding-left:20px"><div class="btn" onclick="validate();">Search</div></td>
+        <td align="right" style="font-style: italic;font-size: 9pt;padding-right: 15px;"><div style="display:none" id="searchLoadingDiv"><img align="right" src="img/loading2.gif" style="margin-left: 10px;" /> loading </div></td>
+	</tr>
+	</form>
+ </table>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="css/global.css" />
+        <link rel="stylesheet" type="text/css" href="css/<?php echo $curScript; ?>.css" />
+
+        <link href="css/flick/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
+        <script type="text/javascript" language="javascript" src="scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/global.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/<?php echo $curScript; ?>.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/tablePaging.js"></script>
+        <script type="text/javascript" src="scripts/jquery.tablesorter.js"></script>
+        <script type="text/javascript">
+                $(function() {
+
+                var enableDays = [<?php echo $strEnabledDates; ?>];
+
+                function enableAllTheseDays(date) {
+                    var sdate = $.datepicker.formatDate( 'dd-mm-yy', date);
+                    if($.inArray(sdate, enableDays) != -1) {
+                        return [true];
+                    }
+                    return [false];
+                }
+                        $( "#datepicker" ).datepicker({
+                              minDate: "<?php echo $minDate; ?>",
+                      maxDate: "<?php echo $maxDate; ?>",
+                      defaultDate: "<?php echo $defaultDate; ?>",
+                              dateFormat: 'dd-mm-yy', 
+                      beforeShowDay: enableAllTheseDays
+                });
+                $( "#edatepicker" ).datepicker({
+                              minDate: "<?php echo $minDate; ?>",
+                      maxDate: "<?php echo $maxDate; ?>",
+                      defaultDate: "<?php echo $defaultDate; ?>",
+                              dateFormat: 'dd-mm-yy', 
+                      beforeShowDay: enableAllTheseDays
+                });
+
+                        // Hover states on the static widgets
+                        $( "#dialog-link, #icons li" ).hover(
+                                function() {
+                                        $( this ).addClass( "ui-state-hover" );
+                                },
+                                function() {
+                                        $( this ).removeClass( "ui-state-hover" );
+                                }
+                        );
+                });
+
+                $(function() {
+                        $("#filteredDataTbl").tablesorter();
+                });
+        </script>
+    </head>
+    <body>
+    <div id="screenProtectorDiv" style="display:none"></div>
+     <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+        <form name="acknowledgementDataset" id="acknowledgementDataset" action="update.acknowledgements.php" method="POST">
+        <div id="nextDivBackground" style="display:none;">
+            <div id="nextDiv" >
+                <div class="detailContainerHeading" style="font-size:16pt;">What would you like to do now?<div style="float:right;font-weight: bold;font-size: 14pt;padding-right: 5px;padding-bottom: 10px;cursor:pointer" onclick="showNextDiv();">x</div></div>
+                <div class="whatNowDiv" style="margin-left:10px;">
+                    <div class="detailContainerHeading">Create Mail Merge File</div>
+                    <input type="text" placeholder="Filename (????.txt)" value="" name="filename" id="filename" style="padding:5px;width:220px;border: 3px solid #254B7C;margin-bottom: 10px;" />
+                    <div class="btn" id="btnCreate" style="clear:both">Create</div>
+                    <div style="float:left;display:none;font-style:italic;font-size:9pt;padding-right:15px;" id="searchLoadingDiv"><img align="right" src="img/loading2.gif" style="margin-left: 10px;" /> loading </div>
+                </div>
+                <div class="whatNowDiv">
+                    <div class="detailContainerHeading">Choose Template for PDF/Email</div>
+                    <img src="img/pdf.png" height="110" width="110" title="pdf" style="float:left" />
+                    <div class="btn" <?php if ($_SESSION['dms_user']['authorisation']->canSelect) { ?>onclick="openTemplateManager();"<?php } else { ?> onclick="alert('option unavailable');" <?php } ?>>Select Template</div>
+                </div>
+            </div>
+            <div style="display: none" id="progressDivBackground">
+                <div id="progressDiv">
+                    <div class="detailContainerHeading">Processing...</div>
+                    <div id="statusDiv">
+                        <!--div id="progressBar"><progress value="0" max="229" class="html5"></progress></div>
+                        <div id="perComplete">0 %</div-->
+                        <div id="cntDiv"><!--span id="totalCompleted">0</span>/<span id="totalRecords">0</span> Complete-->
+                            This message will disappear when export is complete.  <p>Please do not refresh your screen.</p>
+                            <p>Thank you</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="headingRow">
+            <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+        </div>
+        <div id="menuRow">
+            <?php echo $menu; ?>
+        </div>
+        <div id="mainDiv">
+            <div id="posDiv"></div>
+            <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+            <div id="notificationsDiv" style="display: none"></div>
+            <div id="contentDiv">
+                <div id="controlDiv">
+                    <div class="detailContainerDiv">
+                        <div class="detailContainerHeading">Filter:</div>
+                        <table cellpadding="3" cellspacing="0" width="100%" class="detailContainerTable">
+                            <tr>
+                                <td>Department</td>
+                                <td>
+                                    <?php echo $departmentCheckBoxes; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Region</td>
+                                <td>
+                                    <?php echo $regionCheckBoxes; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>From Date</td>
+                                <td>
+                                    <input type="text" value="" id="datepicker" name="txtDateReceived" onchange="selectFromFilter()" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>To Date</td>
+                                <td>
+                                    <input type="text" value="" id="edatepicker" name="etxtDateReceived" onchange="selectFromFilter()" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Language</td>
+                                <td>
+                                    <?php echo $languageRadio; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Category</td>
+                                <td><?php echo $categoryChkBoxs; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Doc Type</td>
+                                <td><?php echo $docTypeChkBoxs; ?></td>
+                            </tr>
+                            <?php if (!empty($motivationCheckBoxes)) { ?>
+                            <tr>
+                                <td>Motivation</td>
+                                <td><?php echo $motivationCheckBoxes; ?></td>
+                            </tr>
+                            <?php } ?>
+                            <tr>
+                                <td>New Donors</td>
+                                <td>
+                                    <input type="radio" name="firstTimers" value="includeFirstTimers" class="chkBox" id="inclFirst" onclick="selectFromFilter()" checked /><label for="inclFirst">all donors</label><br />
+                                    <input type="radio" name="firstTimers" value="excludeFirstTimers" class="chkBox" id="excludeFirstTimers" onclick="selectFromFilter()" /><label for="excludeFirstTimers">exclude new donors</label><br />
+                                    <input type="radio" name="firstTimers" value="exclusivelyFirstTimers" class="chkBox" id="exclusivelyFirstTimers" onclick="selectFromFilter()"  /><label for="exclusivelyFirstTimers">only new donors</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Preference</td>
+                                <td>
+                                    <input type="radio" name="preference" value="" class="chkBox" id="radAllPreferences" onclick="selectFromFilter()" checked /><label for="radAllPreferences">all donors</label><br />
+                                    <input type="radio" name="preference" value="Email" class="chkBox" id="radEmail" onclick="selectFromFilter()" /><label for="radEmail">Email</label><br />
+                                    <input type="radio" name="preference" value="Postal Mail" class="chkBox" id="radPostalMail" onclick="selectFromFilter()"  /><label for="radPostalMail">Postal Mail</label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="detailContainerDiv">
+                        <div class="detailContainerHeading">Records Selected:</div>
+                        <table cellpadding="3" cellspacing="0" width="100%" class="detailContainerTable">
+                            <tr>
+                                <td>
+                                    <div id="countSummaryDiv">0</div>
+                                </td>
+                                <td width="95"><div class="btn" onclick="showNextDiv();" style="margin-right: 0px;float:right">Continue</div></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="filteredDataDiv">
+                    <table align="center" cellpadding="3" cellspacing="0" id="filteredDataTbl" width="100%">
+                    
+                        <thead>
+                            <tr>
+                                <td width="30" style="background-color: #7B7922;"><input type="checkbox" class="chkBox" id="chkSelectAll" onclick="selectAll();" /></td>
+                                <th>Dep</th>
+                                <th>Name</th>
+                                <th>Lang</th>
+                                <th>Category</th>
+                                <th>Date Received</th>
+                                <th>Receipt #</th>
+                                <th>Doc Type</th>
+                                <th style="text-align: right">Amount</th>
+                                <th>Donor #</th>
+                                <th>Reg</th>
+                                <th>New Donor</th>
+                                <th>MTD Trxn #</th>        
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php echo $acknowledgementRows; ?>
+                        </tbody>
+                   
+                    </table>
+                    <script type="text/javascript" language="javascript">$('#filteredDataTbl').oneSimpleTablePagination({rowsPerPage: 20,brdrColor: "#7B7922"});</script>
+                </div>
+                    </form>
+            </div>
+        </div>
+        <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+	</body>
+</html>

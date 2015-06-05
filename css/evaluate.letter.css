@@ -1,0 +1,290 @@
+#topControlDiv {
+    min-height: 50px;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+#bottomDiv {
+    height: 550px;
+    width: auto !important;
+    margin-left: 10px;
+}
+#leftControlDiv {
+    float:left;
+    min-width: 180px;
+    width: auto !important;
+    height: 550px;
+    clear: left;
+    position: relative;
+}
+#letterDiv {
+    float: left;
+    width: 1100px;
+    height: 550px;
+}
+#methodDiv {
+    float: left;
+}
+#emailDiv {
+    float: left;
+    margin-left: 10px;
+}
+#emailDiv input,#emailDiv select {
+    width: 270px;
+    padding: 3px;
+    border: 2px solid #254B7C;
+}
+#emailDiv label {
+    font-size: 9pt;
+}
+#emailDiv div {
+    float: left;
+    margin-right: 10px;
+    margin-top: -15px;
+}
+#printDiv {
+    float: left;
+    margin-left: 10px;
+}
+#printDiv label {
+    font-size: 9pt;
+}
+#printDiv div {
+    float: left;
+    margin-right: 10px;
+    margin-top: -15px;    
+}
+#readyDiv {
+    margin-right: 20px;
+    border:  1px solid #254B7C;
+    height: 90px;
+    width: 160px;
+    text-align: center;
+    clear: both;
+    margin-bottom: 10px;
+}
+#navLeftDiv {
+    float: left;
+    text-align: left;
+    width: 24px;
+    height: 24px;
+}
+#navMiddleDiv {
+   float: left;
+   text-align: center; 
+   width: 90px;
+   margin-left: 10px;
+   height: 24px;
+}
+#navRightDiv {
+    float: right;
+    text-align: right;
+    margin-right: 20px;
+    width: 24px;
+    height: 24px;
+}
+#method {
+    border: 2px solid #254B7C;
+    font-size: 14pt;
+    width: 130px;
+    padding: 2px;
+}
+#bottomCenterControlDiv {
+    width: 150px;
+    margin-left: 10px;
+    text-align: center;
+}
+#printDiv input {
+    width: 40px;
+    text-align: center;
+    padding: 3px;
+    border: 2px solid #254B7C;
+}
+#nextBtn,#prevBtn,#updateBtn {
+    cursor: pointer;
+}
+
+#progressDiv {
+    padding-left:5px;
+    padding-right:5px;
+    padding-top:10px;
+    padding-bottom:10px;
+    background-color: #F8F8F8;
+    border: 8px solid #254B7C;
+    height: 125px;
+    width: 580px;
+    margin: 0 auto;
+    margin-top: 150px;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+}
+#progressDivBackground {
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: rgba(37,75,124,0.8);
+}
+
+.detailContainerHeading {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    font-weight: bold;
+    border-bottom: 2px solid #FF9F00;
+}
+#perComplete {
+    text-align: right;
+    font-size: 20pt;
+    font-weight: bold;
+    float: right;
+    padding-right: 5px;
+}
+#cntDiv {
+    font-size: 20pt;
+    font-weight: bold;
+    float: left;
+    padding-left: 5px;
+}
+
+#impersonateDpt {
+    width: 110px;
+    font-size: 8pt;
+}
+
+progress:not(value) {
+	/* Add your styles here. As part of this walkthrough we will focus only on determinate progress bars. */
+}
+
+/* Styling the determinate progress element */
+
+progress[value] {
+	/* Get rid of the default appearance */
+	appearance: none;
+	
+	/* This unfortunately leaves a trail of border behind in Firefox and Opera. We can remove that by setting the border to none. */
+	border: none;
+	
+	/* Add dimensions */
+	width: 100%; height: 30px;
+	
+	/* Although firefox doesn't provide any additional pseudo class to style the progress element container, any style applied here works on the container. */
+	  background-color: whiteSmoke;
+	  border-radius: 3px;
+	  box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
+	
+	/* Of all IE, only IE10 supports progress element that too partially. It only allows to change the background-color of the progress value using the 'color' attribute. */
+	color: royalblue;
+	
+	position: relative;
+	margin: 0; 
+}
+
+/*
+Webkit browsers provide two pseudo classes that can be use to style HTML5 progress element.
+-webkit-progress-bar -> To style the progress element container
+-webkit-progress-value -> To style the progress element value.
+*/
+
+progress[value]::-webkit-progress-bar {
+	background-color: whiteSmoke;
+	border-radius: 3px;
+	box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
+}
+
+progress[value]::-webkit-progress-value {
+	position: relative;
+	
+	background-size: 35px 30px, 100% 100%, 100% 100%;
+	border-radius:3px;
+	
+	/* Let's animate this */
+	animation: animate-stripes 5s linear infinite;
+}
+
+@keyframes animate-stripes { 100% { background-position: -100px 0; } }
+
+/* Let's spice up things little bit by using pseudo elements. */
+
+progress[value]::-webkit-progress-value:after {
+	/* Only webkit/blink browsers understand pseudo elements on pseudo classes. A rare phenomenon! */
+	content: '';
+	position: absolute;
+	
+	width:5px; height:5px;
+	top:7px; right:7px;
+	
+	background-color: white;
+	border-radius: 100%;
+}
+
+/* Firefox provides a single pseudo class to style the progress element value and not for container. -moz-progress-bar */
+
+progress[value]::-moz-progress-bar {
+	/* Gradient background with Stripes */
+	background-image:
+	-moz-linear-gradient( 135deg,
+													 transparent,
+													 transparent 33%,
+													 rgba(0,0,0,.1) 33%,
+													 rgba(0,0,0,.1) 66%,
+													 transparent 66%),
+    -moz-linear-gradient( top,
+														rgba(255, 255, 255, .25),
+														rgba(0,0,0,.2)),
+     -moz-linear-gradient( left, #09c, #f44);
+	
+	background-size: 35px 30px, 100% 100%, 100% 100%;
+	border-radius:3px;
+	
+	/* Firefox doesn't support CSS3 keyframe animations on progress element. Hence, we did not include animate-stripes in this code block */
+}
+
+/* Fallback technique styles */
+.progress-bar {
+	background-color: whiteSmoke;
+	border-radius: 3px;
+	box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
+
+	/* Dimensions should be similar to the parent progress element. */
+	width: 100%; height:30px;
+}
+
+.progress-bar span {
+	background-color: royalblue;
+	border-radius: 3px;
+	
+	display: block;
+	text-indent: -9999px;
+}
+
+
+.html5::-webkit-progress-value  {
+	/* Gradient background with Stripes */
+	background-image:
+	-webkit-linear-gradient( 135deg,
+													 transparent,
+													 transparent 33%,
+													 rgba(0,0,0,.1) 33%,
+													 rgba(0,0,0,.1) 66%,
+													 transparent 66%),
+    -webkit-linear-gradient( top,
+														rgba(255, 255, 255, .25),
+														rgba(0,0,0,.2)),
+     -webkit-linear-gradient( left, #09c, #f44);
+}
+
+/* Similarly, for Mozillaa. Unfortunately combining the styles for different browsers will break every other browser. Hence, we need a separate block. */
+
+.html5::-moz-progress-bar {
+	/* Gradient background with Stripes */
+	background-image:
+	-moz-linear-gradient( 135deg,
+													 transparent,
+													 transparent 33%,
+													 rgba(0,0,0,.1) 33%,
+													 rgba(0,0,0,.1) 66%,
+													 transparent 66%),
+    -moz-linear-gradient( top,
+														rgba(255, 255, 255, .25),
+														rgba(0,0,0,.2)),
+     -moz-linear-gradient( left, #09c, #f44);
+}

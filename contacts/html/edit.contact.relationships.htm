@@ -1,0 +1,176 @@
+<style type="text/css">
+    #newRelationshipDiv,#existingRelationshipsDiv {
+        width: 880px;
+        min-height: 50px;
+        height: auto !important;
+        overflow: auto;
+        margin-bottom: 10px;
+    }
+    #newRelationshipDiv {
+        max-height: 410px;
+    }
+    #contactA_Div {
+        min-width: 50px;
+        width: auto !important;
+        overflow: hidden;
+        font-weight: bold;
+        height: 30px;
+        font-size: 16pt;
+        float: left;
+        margin-right: 10px;
+        margin-top: 5px;
+        padding-top: 5px;
+    }
+    #relationshipTypeSelectDiv {
+        float:left;
+        height: 30px;
+        padding-top: 2px;
+        background-color: #F0F0F0;
+        margin-right: 10px;
+        margin-top: 5px;
+    }
+    #relationship_description {
+        width: 250px;
+        background-color: inherit;
+    }
+    #contactB_div {
+        border: 2px solid #254B7C;
+        float: left;
+        padding: 5px;
+    }
+    #contact_right_dnr_no {
+        margin: 0px;
+        float: left;
+        width: 200px;
+    }
+    #imgSearch {
+        vertical-align: middle;
+        cursor: pointer;
+    }
+    #btnAddNewRelationship {
+        clear: left;
+        margin-top: 10px;
+    }
+    #tblRelationships {
+        margin-bottom: 10px;
+        background-color: #F0F0F0;
+        padding:10px;
+        border: 3px solid #254B7C;
+        float: left;
+    }
+    #btnCancelEditRelationship {
+        margin-top: 10px;
+    }
+    #contactB_nameDiv {
+        float: left;
+        height: 30px;
+        padding: 10px;
+        padding-bottom: 0px;
+        min-width: 220px;
+    }
+</style>
+<script type="text/javascript">
+    $("#btnAddNewRelationship").click(function () {
+       if ($("#contact_right_dnr_no").val().length==0&&$("#contactB_div").is(":visible")) {
+        alert('Please insert the contact <?php echo $dnr['display_name']; ?> is related to.');
+        $("#contact_right_dnr_no").focus();
+        return;
+       }
+       var $form = $( '#frmRelationships' );
+        $( "#frmDiv" ).empty().append('<img src="/dms/img/loading.gif" style="vertical-align: middle" /> saving...');
+        var strUrl = $form.attr( "action" );
+        $.post( 
+            strUrl,
+            $form.serialize()  
+        ).done(function (data) {
+           resultContent = $.parseJSON(data);
+           reloadSummary();
+           $("#relationships").click();
+        }); 
+    });
+    $("#imgSearch").click(function () {
+       window.open('donor.search.php'); 
+    });
+    function deleteRelationship() {
+        var btnFullId = $(this).attr('id').split('-');
+        var recordId = btnFullId[1];
+        var contactId = $("#contact_id_left").val();
+        var rContactId = $("#contact_id_right-"+recordId).val();
+        var cnfm = confirm('Are you sure you want to delete this relationship?');
+        if (cnfm) {
+            $.post( 
+                'delete.contact.relationships.php',
+                { id: recordId, contact: contactId, rightContact: rContactId }  
+            ).done(function (data) {
+               resultContent = $.parseJSON(data);
+               reloadSummary();
+               $("#relationships").click();
+            });
+        } 
+    }
+    function editRelationship() {
+        var btnFullId = $(this).attr('id').split('-');
+        var recordId = btnFullId[1];
+        $("#id").val(recordId);
+        $("#relationshipFrmDiv").text('Edit Relationship');
+        $("#btnAddNewRelationship").text('Save');
+        $("#relationship_description option").filter(function() {
+            return $(this).text() == $("#relationship_desc-"+recordId).text(); 
+        }).prop('selected', true);
+        $("#contactB_div").hide();
+        $("#contact_id_right").val($("#contact_id_right-"+recordId).val());
+        $("#contactB_nameDiv").text($("#nameB-"+recordId).text());
+        $("#contactB_nameDiv").show();
+        
+        $("#btnCancelEditRelationship").show();
+    }
+    $("#btnCancelEditRelationship").click(function () {
+        $("#id").val();
+        $("#relationshipFrmDiv").text('New Relationship');
+        $("#btnAddNewRelationship").text('Add Relationship');
+        $("#relationship_description").prop('selectedIndex',0);
+        $("#contact_right_dnr_no").val('');
+        $("#contact_id_right").val('');
+        $("#contactB_div").show();
+        $("#contactB_nameDiv").text('');
+        $("#contactB_nameDiv").hide();
+        $(this).hide();
+    });
+    $("#contact_right_dnr_no").change(function () {
+       $("#contactB_nameDiv").text('');
+       $("#contactB_nameDiv").hide();
+    });
+    
+    <?php echo $jqueryBindings; ?>
+</script>
+<div id="frmContentDiv">
+    <form action="save.contact.relationships.php" method="POST" id="frmRelationships">
+    <input type="hidden" name="contact_id_left" id="contact_id_left" value="<?php echo $contactId; ?>" />
+    <input type="hidden" name="contact_left_dnr_no" value="<?php echo $dnrNo; ?>" />
+    <input type="hidden" name="contact_id_right" id="contact_id_right" />
+    <input type="hidden" name="id" id="id" /> 
+        <?php if (!empty($relationships)) { ?>
+        <div id="existingRelationshipsDiv">
+        <div class="frmHeadingDiv">Existing Relationships for <?php echo $dnr['display_name']; ?></div>
+        <div class="circle" style="margin-top: 0px;margin-right:5px;"><img src="/dms/img/relationships.png" title="relationships" width="32" height="32" /></div>
+        <table width="750" cellpadding="5" cellspacing="0" id="tblRelationships">
+            <?php echo $contactRelationshipRows; ?>
+        </table>
+            <?php echo $hiddenInputs; ?>
+        </div>
+        <?php } ?>
+        <div id="newRelationshipDiv">
+            <div class="frmHeadingDiv" id="relationshipFrmDiv">New Relationship</div>
+             <div id="contactA_Div"><?php echo $dnr['display_name']; ?></div>
+             <div id="relationshipTypeSelectDiv"><select name="relationship_description" id="relationship_description"><?php echo $relationshipTypeOpts; ?></select></div>
+             <div id="contactB_div"><input type="text" placeholder="donor no" name="contact_right_dnr_no" id="contact_right_dnr_no" /> <img src="/dms/img/search-black-32.png" width="24" height="24" id="imgSearch" /></div>
+             <div id="contactB_nameDiv" style="display: none">&nbsp;</div>
+             <div class="btn" id="btnAddNewRelationship">Add Relationship</div>
+             <div class="btn" id="btnCancelEditRelationship" style="display:none">Cancel</div>
+             
+        </div>  
+    </form> 
+</div>
+<div id="divSaveResults" style="display:none">
+    <div id="divResult"></div>
+</div>

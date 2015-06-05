@@ -1,0 +1,587 @@
+/* Element Styling */
+    body {
+        font-family: sans-serif;
+        background-color: #FFF;
+    	color: #254B7C;
+        margin: 0px;
+    }
+    a {
+        text-decoration: none;
+        color: #FFF;
+    }
+    input,select {
+        border: none;
+        font-size: 14pt;
+        width:300px;
+        color: #555;
+    }
+
+/*Class Styling*/
+
+    /* div buttons */
+    .btn {
+        background-color: #254B7C;
+        min-width: 60px;
+        width: auto !important;
+        height: auto !important;
+        font-size: 11pt;
+        color: #FFF;
+        text-align: center;
+        padding: 10px;
+        cursor: pointer;
+        float: left;
+        margin-right: 10px;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+    }
+    .adminBgColor {
+        background-color: #CD3333;
+    }
+    .xClose {
+        float: right;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+    /* input wrapper style */
+    .input {
+        background-color: #F8F8F8;
+        height: 30px;
+        font-size: 14pt;
+        text-align: center;
+        padding: 5px;
+        border: 2px solid #254B7C;
+        display: inline;
+        width: auto !important;
+    }
+    /* ckeditor strinsert box width */
+    .cke_combo_text, .cke_combopanel {
+      width: auto !important;
+    }
+
+/* ID Specific styles */
+    /* Main Window on each screen */
+    #headingRow {
+        overflow: hidden;
+        min-height: 45px;
+        height: auto !important;
+        background-color: #F0F0F0;
+        border: 5px solid #F0F0F0;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    #menuRow {
+        background-color: #254B7C;
+        border: 5px solid #254B7C;
+        border-bottom: none;
+        border-top: none;
+        height: 40px;
+        vertical-align: middle;
+    }
+    #mainDiv {
+        background-color:#F8F8F8;
+        min-height: 400px;
+        height: auto !important;
+        overflow: hidden;
+        border: 5px solid #F8F8F8;
+        border-top: 0;
+        border-bottom: 0;
+        padding-top:10px;
+    }
+    #footerRow {
+        height: 30px;
+        background-color: #254B7C;
+        color: #FFF;
+        font-size: 9pt;
+        vertical-align: middle;
+        border: 5px solid #254B7C;
+        text-align: center;
+    }
+    #menuRow,#mainDiv,#footerRow,#headingRow {
+        min-width:1300px;
+        width: 100%;
+    }
+    #posDiv {
+        position: fixed;
+        z-index: -1;
+        top: 0;
+        left: 0;
+    }
+    #navigationDiv {
+        width: auto !important;
+        height: auto !important;
+        float: left;
+    }
+    #myConfigurationDiv {
+        padding-top: 5px;
+        height: 16px;
+        float: right;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    #myConfigurationDiv img {
+        vertical-align: middle;
+    }
+    #navigationDiv,#myConfigurationDiv {
+        background-color: #254B7C;
+        color: #FFF;
+        font-weight: bold;
+        font-size: 9pt;
+        vertical-align: middle;
+        text-align: center;
+        margin-top: 7px;
+    }
+    #navigator { 
+        list-style: none;
+        text-align: center;
+        padding-left: 0;
+        margin-left:  10px;
+        margin-right: 10px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    #navigator li { 
+        display: inline;
+        cursor: pointer;
+        padding-right: 15px;
+        padding-bottom: 40px;
+    }
+    #navigator li:hover {
+        color:  #9EC630;
+    }
+    #headingLeftDiv {
+        float:left;
+        width: 100px;
+        height: 100px;
+        vertical-align: middle;
+    }
+    #headingRightDiv {
+        font-size: 24pt;
+        font-weight: bold;
+        float:right;
+        width: 1200px;
+        height: 100px;
+        text-align: left;
+        vertical-align: middle;
+    }
+    #pageHeadingDiv {
+        font-size: 28pt;
+        font-weight: bold;
+        min-width: 500px;
+        width: auto !important;
+        min-height:  45px;
+        height: auto !important;
+        float: left;
+        margin-left: 10px;
+    }
+    #tablePagination_currPage {
+        width: 40px;
+        text-align: center;
+    }
+    #screenProtectorDiv {
+        position: fixed;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        background: rgba(37,75,124,0.8);
+    }
+    #impersonateUserDiv {
+        margin: auto;
+        margin-top: 5px;
+        margin-bottom: 3px;
+        clear: both;
+        width: 300px;
+        height: 25px;
+        border: 5px solid #254B7C;
+        background-color: #F8F8F8;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        padding: 10px;
+        vertical-align: top;
+        text-align: center;
+        font-size: 14pt;
+        font-weight: bold;
+    }
+    #impersonateUserDetailDiv {
+        position: absolute;
+        z-index: 2;
+    	left:50%;
+        top: 50%;
+        width: 290px;
+        margin-left:-145px;
+        height: 260px;
+        margin-top: -130px;
+        background-color: #F8F8F8;
+        padding: 10px;
+        border: 5px solid #254B7C;
+        font-size: 14pt;
+        font-weight: bold;
+    }
+    #tblUserdetail thead {
+        font-size:11pt;
+        background-color: #254B7C;
+    }
+    #tblUserdetail tbody {
+        background-color: #42AEC2;
+    }
+    #tblUserdetail {
+        width: 290px;
+        margin-right: 10px;
+        font-size:9pt;
+        color: #FFF;
+    }
+    #notificationLinkDiv {
+        float: right;
+        height: 16px;
+        width: 16px;
+        padding: 2px;
+        border: 2px solid #CD3333;
+        background-color: #CD3333;
+        border-radius: 12px;
+        -moz-border-radius: 12px;
+        cursor: pointer;
+        margin-top: 7px;
+        margin-right: 5px;
+    }
+    .submenu {
+        position: absolute;
+        z-index: 99;
+        display: none;
+        width: 200px;
+        margin: 10px;
+    }
+    .submenu:hover {
+        display: block;
+    }
+    .submenu ul {
+    	list-style: none;
+    	margin: 0;
+    	padding: 0;
+	}
+    .submenu li a {
+        height: 32px;
+        voice-family: '"}"'; 
+        voice-family: inherit;
+        height: 24px;
+        text-decoration: none;
+        text-align: left;
+        padding-right: 0px;
+    }	
+    .submenu li a:link, .submenu li a:visited {
+        color: #FFF;
+        display: block;
+        background:  url(../img/menu.gif);
+        padding: 8px 0 0 10px;
+        padding-right: 0px;
+    }
+    .submenu li a:hover {
+        color: #FFF;
+        background:  url(../img/menu.gif) 0 -32px;
+        padding: 8px 0 0 10px;
+        padding-right: 0px;
+    }
+    #notificationsDiv {
+        background-color: #CD3333;
+        min-width: 325px;
+        min-height: 60px;
+        padding: 10px;
+        position: absolute;
+        z-index: 99;
+        border: 5px solid #254B7C;
+        right: 10px;
+        color: #FFF;
+    }
+    .nextDateDiv,#remindersActionDiv {
+        width: 295px;
+        padding-left: 5px;
+        height: 45px;
+        color: #FFF;
+        margin-bottom: 5px;
+        cursor: pointer;
+        
+    }
+    .nextDateDiv:hover,#remindersActionDiv:hover {
+        background-color: #A32A2A;
+    }
+    #notificationsHeadingDiv {
+        font-weight: bold;
+        color: #FFF;
+        border-bottom: 2px solid #FFF;
+        padding-bottom: 3px;
+        margin-bottom: 5px;
+        font-style: italic;
+    }
+    .dt {
+        float: left;
+        width: 80px;
+        margin-right: 15px;
+        
+    }
+    .action {
+        float: left;
+        width: auto;
+        height: auto;
+        overflow: hidden;
+    }
+    .reminderCnt {
+        font-size: 28pt;
+        font-weight: bold;
+        float: left;
+        margin-left: 5px;
+        height: 40px;
+        margin-right: 50px;
+    }
+    .d {
+        font-size: 28pt;
+        font-weight: bold;
+        float: left;
+        height: 40px;
+        margin-right: 5px;
+    }
+    .y,.m {
+        float: left;
+        font-size: 10pt;
+        height: 15px;
+    }
+    .m {
+        margin-top: 5px;
+    }
+    .t {
+        font-size: 10pt;
+    }
+    .aType {
+        font-style: italic;
+        font-weight: bold;
+        margin-top: 3px;
+    }
+    .cont {
+        font-size: 10pt;
+    }
+    .notificationStatusChkBox,.notificationReminderChkBox {
+        width: 15px;
+        float: left;
+        margin-top:10px;
+    }
+    
+    .circle {
+        border-radius: 29px;
+        -moz-border-radius: 29px;
+        width: 32px;
+        height: 32px;
+        float: left;
+        text-align: center;
+        padding: 3px;
+        font-size: 20pt;
+        font-weight: bold;
+        color: #FFF;
+        margin-top: 10px;
+    }
+    .circle64 {
+        border-radius: 32px;
+        -moz-border-radius: 32px;
+        width: 38px;
+        height: 38px;
+        float: left;
+        text-align: center;
+        padding: 3px;
+        padding-bottom: 0px;
+        padding-top: 7px;
+        font-size: 20pt;
+        font-weight: bold;
+        color: #FFF;
+    }
+    .circle80 {
+        /*border-radius: 40px;
+        -moz-border-radius: 40px;
+        width: 52px;
+        height: 50px;
+        float: left;
+        text-align: center;
+        padding: 3px;
+        padding-top: 5px;
+        font-size: 28pt;
+        font-weight: bold;
+        color: #FFF;*/
+        border-radius: 40px;
+        -moz-border-radius: 40px;
+        width: 52px;
+        height: 50px;
+        float: left;
+        text-align: center;
+        padding: 0;
+        padding-top: 0;
+        font-size: 45px;
+        font-weight: bold;
+        color: #FFF;
+    }
+    
+    /* SQL div */
+    #sql {
+        float: left;
+        margin-top: 4px;
+    }
+    #sqlLabel {
+        height: 24px;
+        width: 24px;
+        padding: 2px;
+        padding-bottom: 0px;
+        border: 2px solid #CD3333;
+        padding-top: 4px;
+        text-align: center;
+        background-color: #CD3333;
+        border-radius: 16px;
+        -moz-border-radius: 16px;
+        cursor: pointer;
+        color: #FFF;
+    }
+    #queries {
+        width: 700px;
+        overflow: scroll;
+        position: fixed;
+        height: 500px;
+        background-color: #F0F0F0;
+        padding: 10px;
+        padding-top: 0px;
+        border: 3px solid #254B7C;
+        z-index: 100;
+        top: 150px;
+        left: 10px;
+    }
+    #imgLogout {
+        height: 16px;
+        float: right;
+        margin-top: 11px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    
+    #titleDiv {
+        vertical-align: middle;
+        margin: auto;
+        margin-top: 3px;
+        width: auto;
+        height: auto;
+        overflow: hidden;
+        float: left;
+    }
+    #permanentSearchDiv {
+        float: left;
+        margin-left: 10px;
+        text-align: left;
+        position: relative;
+    }
+    #rightInnerFoooterDiv {
+        float: right;
+    }
+    #srchRed,#searchBlue {
+        float: left;
+        margin-top: 0;
+        position: absolute;
+        background-color: #254B7C;
+        border: 7px solid #254B7C;
+        top: -10px;
+        cursor: pointer;
+    }
+    #srchRed {
+        background-color: #CD3333;
+        border: 7px solid #CD3333;
+    }
+    #frmQuickSearchDiv{
+        float: left;
+    }
+    #imgUserSearch {
+       width: 24px;
+       height: 24px;
+       margin-top: 3px;
+    }
+    #qck_search {
+        padding: 3px;
+        margin-top: 1px;
+        margin-left: 0px;
+        width: 200px;
+    }
+    #contactSearchResultdiv {
+        position: fixed;
+        z-index: 10;
+        width: 200px;
+        height: 200px;
+        border: 5px solid #254B7C;
+        background-color:#A7B526;
+        color: #FFF;
+        border-color: #747D20;
+        font-size: 8pt;
+    }
+    #contactSearchResultDivHeading {
+        background-color: #747D20;
+        color: #FFF;
+        padding: 3px;
+        height: auto;
+        overflow: hidden;
+        padding-bottom: 5px;
+    }
+    #closeContactSearchDiv {
+        font-weight: bold;
+        cursor:pointer; 
+        float: right;
+    }
+    .contactSearchResult {
+        padding: 4px;
+        cursor: pointer;
+    }
+    #divNextRecord:hover,#divPrevRecord:hover,.contactSearchResult:hover{
+        text-shadow: 0 0 0.2em #FFF;
+    }
+    #csResultsDiv {
+        overflow: auto;
+        height: 180px;
+    }
+    #seshNextPrevDiv{
+        float: left;
+        color: #FFF;
+        width: 50px;
+        height: auto;
+        overflow: hidden;
+        margin-left: 58px;
+        margin-right: 10px;
+        text-align: right;
+    }
+    #divNextRecord,#divPrevRecord {
+        cursor:pointer;
+    }
+    .birthdayCnt {
+        font-size: 36px;
+        font-weight: bold;
+        width: auto;
+        height: auto;
+        overflow: hidden;
+        float: left;
+        margin-right: 10px;
+        padding-left: 10px;
+    }
+    #prezzieDiv {
+        float: right;
+        padding-top: 4px;
+    }
+    .divNotification {
+        width: auto;
+        height: auto;
+        overflow: hidden;
+        cursor:pointer;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-right: 5px;
+    }
+    .divNotification:hover {
+        background-color: #A32A2A;
+        cursor:pointer;
+    }
+    .heading1 {
+        font-size: 25px;
+        font-weight: bold;
+        font-style: italic;
+        margin-bottom: 15px;
+    }
+@media print {
+    #menuRow,#footerRow {
+        display: none;
+    }
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="../css/global.css" />
+        <link rel="stylesheet" type="text/css" href="../css/<?php echo $curScript; ?>.css" />
+
+        <script type="text/javascript" language="javascript" src="../scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="../scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="../scripts/global.js"></script>
+        <script type="text/javascript" language="javascript" src="../scripts/<?php echo $curScript; ?>.js"></script>
+        <script type="text/javascript" language="javascript" src="../scripts/tablePaging.js"></script>
+    </head>
+    <body>
+    <div id="screenProtectorDiv" style="display:none"></div>
+    <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+    <div id="headingRow">
+        <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+    </div>
+    <div id="menuRow">
+        <?php echo $menu; ?>
+    </div>
+    <div id="mainDiv">
+        <div id="posDiv"></div>
+        <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+        <div id="notificationsDiv" style="display: none"></div>
+        <div id="contentDiv">
+            <!-- content goes here -->
+            <div id="userTableDiv">
+                <table width="100%" cellpadding="5" cellspacing="0" id="tblAllUsers">
+                    <thead>
+                        <tr>
+                            <td>User type</td>
+                            <td>Username</td>
+                            <td>Full name</td>
+                            <td>Joomla Id</td>
+                            <td>Civi Id</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php echo $userRows; ?>
+                    </tbody>
+                </table>
+                <script type="text/javascript" language="javascript">$('#tblAllUsers').oneSimpleTablePagination({rowsPerPage: 10,brdrColor: "#254B7C"});</script>
+            </div>
+            <div id="userEditDiv" style="">
+                <script>
+                    var usedWidgetList = [];
+                    <?php echo $widJavaObj; ?>
+                    <?php echo $userJavaArray ?>
+                </script>
+                <form action="save.user.php" method="POST" id="frmUser" name="frmUser">
+                    <input type="hidden" name="usr_id" id="usr_id" />
+                    <div id="userNameDiv">Username</div>
+                    <div id="userDeets">
+                        <div><select name="userType" id="userType"><?php echo $userTypeOpts; ?></select></div>
+                        <div id="widgetBody">
+                            <div class="widget widget-1"><select name="widgets[]" id="q1"><?php echo $widOpts; ?></select></div>
+                            <div class="widget widget-2"><select name="widgets[]" id="q2"><?php echo $widOpts; ?></select></div>
+                            <div class="widget widget-3"><select name="widgets[]" id="q3"><?php echo $widOpts; ?></select></div>
+                            <div class="widget widget-4"><select name="widgets[]" id="q4"><?php echo $widOpts; ?></select></div>
+                            <div class="btn" id="btnSave">Save</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- end content -->
+        </div>
+    </div>
+    <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+    </body>
+</html>

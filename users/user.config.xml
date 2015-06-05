@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<systemSettings>
+    <nextStaffNo>900152</nextStaffNo>
+    <userTypes>
+        <uType value="Secretary" />
+        <uType value="Organising Secretary" />
+        <uType value="Head Office" />
+        <uType value="Super User" />
+    </userTypes>
+    <dmsUserGroupId>3</dmsUserGroupId>
+</systemSettings>

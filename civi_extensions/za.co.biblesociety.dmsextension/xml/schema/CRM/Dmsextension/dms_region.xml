@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>Region</class>
+  <name>civicrm_dms_region</name>
+  <comment>Region code table</comment>
+  <log>true</log>
+
+  <field>
+    <name>reg_id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>Unique Region ID</comment>
+  </field>
+  <primaryKey>
+    <name>reg_id</name>
+  </primaryKey>
+
+  <field>
+    <name>reg_name</name>
+    <type>varchar</type>
+    <length>50</length>
+    <comment>Region name</comment>
+    <title>Region Name</title>
+  </field>
+
+  <field>
+    <name>org_consol_id</name>
+    <type>int</type>
+    <length>11</length>
+    <comment>This is the id of the consol file for the consolidated report.</comment>
+    <title>Consol File Id</title>
+  </field>
+</table>

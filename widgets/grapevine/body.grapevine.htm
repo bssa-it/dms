@@ -1,0 +1,112 @@
+<style type="text/css">
+    #smsMainWrapper {
+        width: auto;
+        height: auto;
+        overflow: hidden;
+        margin: auto;
+        padding: 20px;
+        padding-top: 0px;
+        margin-top: 5px;
+    }
+    #msisdnRow div,#messageRow div {
+        margin-bottom: 3px;
+        float: left;
+    }
+    #msisdnRow, #messageRow {
+        clear: both;
+        
+    }
+    #cellphone_nos {
+        width: 200px;
+        padding: 3px;
+        border: 4px solid #254B7C;
+    }
+    #message {
+        padding: 3px;
+        border: 4px solid #254B7C;
+    }
+    #smsSendResultDiv {
+        width: auto;
+        min-width: 150px;
+        height: auto;
+        max-height: 70px;
+        overflow: auto;
+        padding: 5px;
+        font-size: 9pt;
+        float: left;
+        background-color: rgba(255,255,255,.25);
+    }
+    .lbl {
+        width: 110px;
+        padding-top: 5px;
+    }
+    #btnSendSms {
+        clear: both;
+        margin-bottom: 5px;
+    }
+    .neg {
+        color: rgb(205, 51, 51);
+        font-weight: bold;
+        background-color: rgba(255,255,255,.25);
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#btnSendSms").click(function(){
+            if ($("#cellphone_nos").val().length!=10||isNaN($("#cellphone_nos").val())) {
+                alert('Please enter the cellphone number in the 0831234567 format');
+                $("#cellphone_nos").focus();
+                return;
+            }
+            if ($("#message").val().length==0) {
+                alert('Please enter the message');
+                $("#message").focus();
+                return;
+            }
+            $.post('send.sms.php',$("#frmSms").serialize()).done(function(data){
+                var resp = $.parseJSON(data);
+                if (resp.resultCode>0) {
+                    $("#smsSendResultDiv").css('backgroundColor','#CD3333');
+                    $("#smsSendResultDiv").empty().append(resp.resultCode+': '+resp.resultText);
+                } else {
+                    $("#smsSendResultDiv").css('backgroundColor','rgba(255,255,255.25)');
+                    $("#smsSendResultDiv").empty().append(resp.resultText);
+                    $("#cellphone_nos").val('');
+                    $("#message").val('');
+                    $("#message").keyup();
+                }
+                $("#smsSendResultDiv").show();
+            });
+        });
+        $("#message").keyup(function(){
+           var msg = $(this).val().trim();
+           var rm = 140 - parseInt(msg.length);
+           if (rm<0) {
+               $("#charCnt").addClass('neg');
+           } else {
+               $("#charCnt").removeClass();
+           }
+           $("#charCnt").empty().append(rm);
+        });
+    });
+</script>
+<div class="widgetHeader">
+    <span>Grapevine SMS</span>
+    <div style="float:right;display: none;margin-right: 30px;">
+        <img src="img/settings.png" height="16" width="16" title="edit settings" style="cursor:pointer" onclick="showAppSettings(<?php echo $w->wid_id; ?>);" />
+    </div>
+</div>
+<div id="smsMainWrapper">
+    <form action="#" name="frmSms" id="frmSms" method="POST">
+        <div id="msisdnRow">
+            <div class="lbl"><label for="cellphone_nos">Cellphone No</label></div>
+            <div><input type="text" id="cellphone_nos" name="cellphone_nos[]" placeholder="0831234567" /></div>
+        </div>
+        <div id="messageRow">
+            <div class="lbl"><div><label for="message">message</label></div><div><span id="charCnt">140</span> left</div></div>
+            <div><textarea name="message" id="message" placeholder="type message here" cols="40" rows="5"></textarea></div>
+        </div>
+        <div class="btn" id="btnSendSms">Send</div>
+        <div id="smsSendResultDiv" style="display: none"></div>
+    </form>
+</div>

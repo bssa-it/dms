@@ -1,0 +1,342 @@
+<style type="text/css">
+   #tblMeeting,#tblPhoneCall,#tblEmail {
+        background-color: #F0F0F0;
+        border: 3px solid #254B7C;
+        padding: 10px;
+    }
+    #activity_type_id {
+        font-size: 18pt;
+        padding: 3px;
+        border: 3px solid #254B7C;
+    }
+    li input[type="radio"]{
+        width: 15px;
+        vertical-align: sub;
+    }
+    #frmActivities input[type="text"],#frmActivities input[type="datetime-local"] {
+        font-size: 12pt;
+        padding: 3px;
+        border: 2px solid #254B7C;
+        width: 260px;
+        float: left;
+    }
+    #activitySelectDiv {
+        width: 700px;
+        min-height: 40px;
+        height: auto !important;
+        overflow: hidden;
+        padding: 5px;
+        margin: auto;
+    }
+    .tblHeadingTd {
+        font-size:18pt;
+        font-weight: bold;
+    }
+    .addDiv {
+        font-weight: bold;
+        float: left;
+        padding: 8px;
+        cursor: pointer;
+    }
+    #details,#details_phone,#details_email {
+        border:  3px solid #254B7C;
+    }
+    select[name="email_id"],select[name="phone_id"],#status_id,#status_id_phone,#status_id_email {
+        font-size: 12pt;
+        padding: 3px;
+        border: 2px solid #254B7C;
+        width: 260px;
+    }
+    #ulCalendar,#ulTaskList {
+        padding:0;
+        margin:0;
+    }
+    .aCalendar {
+        color: inherit;
+    }
+    #tdCalendar,#tdTaskLists,#tdEmailTaskLists {
+        width: 210px;
+        padding-top: 10px;
+    }
+    .liCalendar,.liTaskList {
+        list-style: none;
+    }
+    #calendarDivHeading,#taskListsDivHeading {
+        font-size: 10pt;
+        font-weight: bold;
+        color: #FFF;
+        padding: 2px;
+        background-color: #254B7C;
+        width: 190px;
+        border: 2px solid #254B7C;
+    }
+    #calendarsDiv,#taskListsDiv {
+        font-size: 10pt;
+        padding: 2px;
+        padding-top: 5px;
+        padding-bottom: 10px;
+        width: 190px;
+        border: 2px solid #254B7C;
+    }
+    input[name="addZimbraCalendar"],input[name="addZimbraTask"] {
+        float: right;
+        width: 15px;
+    }
+    #taskDiv {
+        float:right;overflow: hidden;width: auto;height: auto;
+    }
+
+</style>
+<script type="text/javascript" language="javascript">
+    $(".addDiv").click(function (){
+        $(this).closest('tr').clone(true).insertAfter($(this).closest('tr'));
+    });
+    $("#btnSaveMeeting").click(function (){
+       if ($("#activity_date_time").val().trim().length==0) {
+            alert('Please select a date and time for the meeting');
+            $("#activity_date_time").focus();
+            return;
+       }
+       if ($("#location").val().trim().length==0) {
+            alert('Please enter the location of the meeting');
+            $("#location").focus();
+            return;
+       } 
+       if ($("#subject").val().trim().length==0) {
+            alert('Please enter the reason for the meeting');
+            $("#subject").focus();
+            return;
+       } 
+      frmPostActivity();
+    });
+    $("#btnSavePhoneCall").click(function () {
+       if ($("#phone_id").val().trim().length==0&&$("#phone_no").val().trim().length==0) {
+            alert('Please select a phone number or add a new one');
+            $("#phone_no").focus();
+            return;
+       }
+       if ($("#activity_date_time_phone").val().trim().length==0) {
+            alert('Please select a date and time for the phone call');
+            $("#activity_date_time_phone").focus();
+            return;
+       }
+       frmPostActivity();
+    });
+    $("#btnSaveEmail").click(function (){
+       if ($("#email_id").val().trim().length==0&&$("#email_address").val().trim().length==0) {
+            alert('Please select an email address or add a new one');
+            $("#email_address").focus();
+            return;
+       }
+       if ($("#activity_date_time_email").val().trim().length==0) {
+            alert('Please select a date and time for the email');
+            $("#activity_date_time_email").focus();
+            return;
+       }
+       frmPostActivity(); 
+    });
+    $("#activity_type_id").change(function (){
+       var selText = $("#activity_type_id option:selected").text().replace(' ','');
+       var tblId = 'tbl' + selText;
+       
+       $("#tblMeeting").hide();
+       $("#tblPhoneCall").hide();
+       $("#tblEmail").hide();
+       
+       $("#"+tblId).show();
+       if (selText=='Meeting'||selText=='Visitation') {
+        $("#tblMeeting").show();
+        $("#taskDiv").hide();
+       } else {
+        $("#taskDiv").show();
+       }
+    });
+    
+    function frmPostActivity(){
+       var $form = $( '#frmActivities' );
+       $( "#frmDiv" ).empty().append('<img src="/dms/img/loading.gif" style="vertical-align: middle" /> saving...');
+       var strUrl = $form.attr( "action" );
+       $.post( 
+           strUrl,
+           $form.serialize()  
+       ).done(function (data) {
+          resultContent = $.parseJSON(data);
+          if (resultContent.hasOwnProperty('activity_id')) {
+              var selText = $form.find("#activity_type_id option:selected").text().replace(' ','');
+              if (selText=='Meeting'||selText=='Visitation') {
+                   insertZimbraAppointment($form,resultContent.activity_id);
+              } else {
+                   insertZimbraTask($form,resultContent.activity_id);
+              }
+          }
+          reloadActivityList();
+          $("#editDonorCloseBtn").click();
+       });
+    }
+    function insertZimbraAppointment($form,aId){
+        
+        if ($form.find("#chkZimbraCalendar").length>0&&$form.find("#chkZimbraCalendar").is(":checked")) {
+            
+           var zimCalId = $form.find("input[name=zimbraCalendarId]:radio:checked").val().split('-');
+           var strCalendarType = zimCalId[0];
+           var strCalendarId = zimCalId[1];
+           var strDept = (zimCalId.length==3) ? zimCalId[2] : '';
+           var strLocation = $form.find("#location").val();
+           var strSubject = $form.find("#subject").val();
+           strSubject += ' dms-' + aId;
+           var strAppointmentDateTime = $form.find("#activity_date_time").val();
+           var strContactName = $form.find("#display_name").val();
+           var strDetails = $form.find("#details").val();
+           var dnrNo = $("#dnr_no").val();
+           if (strContactName.length>0) strDetails =  strContactName + ' (' + dnrNo + ')<br /><br />Meeting Details:<br />' + strDetails;
+           strDetails = htmlEscape(strDetails);
+           $.post( 
+               '/dms/zimbra.soap.insert.appointment.php',
+               {
+                calendarType: strCalendarType,
+                calendarId: strCalendarId,
+                location: strLocation,
+                subject: strSubject,
+                appointmentDateTime: strAppointmentDateTime,
+                details: strDetails,
+                department: strDept
+               }  
+           )
+           .done(function (data) {
+              //alert(data);
+           })
+           .fail(function(data){
+               alert(data);
+           });
+       }
+    }
+    
+    function insertZimbraTask($form,tId){
+        if ($form.find("#chkZimbraTask").length>0&&$form.find("#chkZimbraTask").is(":checked")) {
+           var zimTskId = $form.find("input[name=taskListId]:radio:checked").val().split('-');
+           var strTaskListType = zimTskId[0];
+           var strTaskListId = zimTskId[1];
+           var strDept = (zimTskId.length==3) ? zimTskId[2] : '';
+           var selText = $form.find("#activity_type_id option:selected").text().replace(' ','');
+           var strContactName = $form.find("#display_name").val();
+           if (selText=='PhoneCall') {
+            var strAppointmentDateTime = $form.find("#activity_date_time_phone").val();
+            var strSubject = 'Phone Call';
+            var strDetails = $form.find("#details_phone").val();
+            strDetails += (strContactName.length>0) ? ', ' + strContactName:'';
+            var strPhone = ($form.find("#phone_no").val().length>0) ? $form.find("#phone_no").val():$form.find("#phone_id option:selected").text();
+            strDetails += (strPhone.length>0) ? ', Phone No: ' + strPhone:'';  
+           } else {
+            var strAppointmentDateTime = $form.find("#activity_date_time_email").val();
+            var strSubject = 'Email';
+            var strDetails = $form.find("#details_email").val();
+            strDetails += (strContactName.length>0) ? ', ' + strContactName:'';
+            var strEmail = ($form.find("#email_address").val().length>0) ? $form.find("#email_address").val():$form.find("#email_id option:selected").text();
+            strDetails += (strEmail.length>0) ? ', Email Address: ' + strEmail:'';
+           }
+           strSubject += ' dms-' + tId;
+           $.post( 
+               '/dms/zimbra.soap.insert.task.php',
+               {
+                taskListType: strTaskListType,
+                taskListId: strTaskListId,
+                taskDateTime: strAppointmentDateTime,
+                details: strDetails,
+                department: strDept,
+                subject: strSubject
+               }  
+           ).done(function (data) {
+              //alert(data);
+           }).fail(function(data){
+               alert(data);
+           });
+       }
+    }
+    function reloadActivityList(){
+        var dnrNo = $("#dnr_no").val();
+      $( "#bodyDiv" ).empty().append( '<div class="waitingDiv"><img src="/dms/img/loading.gif" title="loading..." align="middle" style="margin-right: 15px;" /> loading...</div>' );
+      $.get( "load.contact.activity.php", { d: dnrNo })
+        .done(function( data ) {
+            $( "#bodyDiv" ).empty().append( data );
+        });
+    }
+    
+    $("input[name='assigned_to[]']").keyup(function(){
+        if ($(this).val().trim().length>0) {
+            $.post('/dms/helper.staffSearch.php',{search: $(this).val()}).done(function(data){
+                $("#csResultsDiv").empty().append(data);
+            });
+        }
+    });
+    $("input[name='assigned_to[]']").focus(function(){
+        var curPos = $(this).position();
+        var newTop = $(this).outerHeight() + curPos.top + 5;
+        var bgColor = $("#contactSearchResultdiv").css('background-color');
+        var brdrColor = $("#contactSearchResultdiv").css('border-color');
+        var col = $("#contactSearchResultdiv").css('color');
+        
+        $("#csResultsDiv").empty();
+        $("#contactSearchResultdiv").show();
+        $("#contactSearchResultdiv").css({top: newTop+'px',left: curPos.left+'px'});
+        $(this).css({'background-color':bgColor, color: col,'border-color': brdrColor});
+        $(this).addClass('fillMe');
+        
+    });
+    $("input[name='assigned_to[]']").focusout(function(){
+        $(this).css({'background-color':'', color: '','border-color': ''});
+    });
+    function fillMe(){
+        $(".fillMe").val($(this).attr('dnrno'));
+        $(".fillMe").each(function(){
+            $(this).removeClass('fillMe');
+        });
+        $("#contactSearchResultdiv").hide();
+    };
+</script>
+<div id="frmContentDiv">
+    <form action="save.contact.activity.php" method="POST" id="frmActivities">
+        <input type="hidden" name="contact_id" value="<?php echo $contactId; ?>" />
+        <input type="hidden" id="display_name" value="<?php echo $dnr['display_name']; ?>" />
+        <?php echo $withContactIdCurrent; ?>
+        <?php echo $activityIdInput.$with_contacts; ?>
+        <div id="activitySelectDiv">
+            <select id="activity_type_id" name="activity_type_id">
+                <?php echo $activityTypeOpts; ?>
+            </select>
+            <?php echo $taskList; ?>
+        </div>
+        <table id="tblMeeting" align="center" width="700" cellpadding="5" cellspacing="0" <?php echo (empty($aTypeId)) ? $displayTable[1]:$displayTable[$aTypeId]; # 1 - Meeting/49 - Visitation ?>> 
+            <tr><td colspan="3" class="tblHeadingTd"><?php echo $meetingHeading; ?></td></tr>
+            <?php echo $meetingRows; ?>
+            <tr><td><label for="activity_date_time">Date &amp; time *</label></td><td><input type="datetime-local" name="activity_date_time" id="activity_date_time" value="<?php echo $activityDateTime; ?>" /></td><td id="tdCalendar" rowspan="3" valign="top"><?php echo $calendar; ?></td></tr>
+            <tr><td><label for="location">Location *</label></td><td><input type="text" name="location" id="location" value="<?php echo $location; ?>" /></td></tr>
+            <tr><td><label for="subject">Subject *</label></td><td><input type="text" name="subject" id="subject" value="<?php echo $subject; ?>" /></td></tr>
+            <tr><td><label for="details">Detail</label></td><td colspan="2"><textarea name="details" id="details" cols="50" rows="6"><?php echo $details; ?></textarea></td></tr>
+            <?php echo $status; ?>
+            <tr><td><div class="btn" id="btnSaveMeeting">Save</div></td></tr>
+        </table>
+        <table id="tblPhoneCall" align="center" width="700" cellpadding="5" cellspacing="0" <?php echo $displayTable[2]; # 2 - Phone Call ?>> 
+            <tr><td colspan="2" class="tblHeadingTd"><?php echo $phoneHeading; ?></td></tr>
+            <tr><td>Assigned To</td><td><input type="text" name="assigned_to[]" placeholder="donor no" value="<?php echo $assignedTo_phone; ?>" /></td></tr>
+            <tr><td>Select Phone No *</td><td><select name="phone_id" id="phone_id"><?php echo $phoneNos; ?></select></td></tr>
+            <tr><td>Or Add a new one *</td><td><input type="text" name="phone_no" id="phone_no" placeholder="phone number" /></td></tr>
+            <tr><td><label for="activity_date_time_phone">Date &amp; time *</label></td><td><input type="datetime-local" name="activity_date_time_phone" id="activity_date_time_phone" value="<?php echo $activityDateTime_phone; ?>" /></td></tr>
+            <tr><td><label for="details_phone">Detail</label></td><td colspan="2"><textarea name="details_phone" id="details_phone" cols="50" rows="6"><?php echo $details_phone; ?></textarea></td></tr>
+            <?php echo $status_phone; ?>
+            <tr><td><div class="btn" id="btnSavePhoneCall">Save</div></td></tr>
+        </table>
+        <table id="tblEmail" align="center" width="700" cellpadding="5" cellspacing="0" <?php echo $displayTable[3]; # 3 - Email ?>> 
+            <tr><td colspan="2" class="tblHeadingTd"><?php echo $emailHeading; ?></td></tr>
+            <tr><td>Assigned To</td><td><input type="text" name="assigned_to[]" placeholder="donor no" value="<?php echo $assignedTo_email; ?>" /></td></tr>
+            <tr><td>Select Email Address *</td><td><select name="email_id" id="email_id"><?php echo $emails; ?></select></td></tr>
+            <tr><td>Or Add a new one *</td><td><input type="text" name="email_address" id="email_address" placeholder="email address" /></td></tr>
+            <tr><td><label for="activity_date_time_email">Date &amp; time *</label></td><td><input type="datetime-local" name="activity_date_time_email" id="activity_date_time_email" value="<?php echo $activityDateTime_email; ?>" /></td></tr>
+            <tr><td><label for="details_email">Detail</label></td><td colspan="2"><textarea name="details_email" id="details_email" cols="50" rows="6"><?php echo $details_email; ?></textarea></td></tr>
+            <?php echo $status_email; ?>
+            <tr><td><div class="btn" id="btnSaveEmail">Save</div></td></tr>
+        </table>
+    </form>
+</div>
+<div id="divSaveResults" style="display:none">
+    <div id="divResult"></div>
+</div>

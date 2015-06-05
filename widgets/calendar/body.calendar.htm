@@ -1,0 +1,258 @@
+<style type="text/css">
+    #calendarContainerDiv {
+        width: auto;
+        height:auto;
+        overflow: hidden;
+    }
+    #calendarDiv {
+        min-width: 200px;
+        width: auto;
+        float: left;
+        padding: 20px;
+        padding-top: 0px;
+        padding-right: 0px;
+    }
+    #tblCalendar td {
+        text-align: center;
+    }
+    #tblCalendar {
+        font-size: 14px;
+    }
+    #tblCalendar thead {
+        background-color: #254B7C;
+    }
+    #activityListDiv {
+        padding: 2px;
+    }
+    #activityListContainer {
+        padding-top: 0px;
+        float: left;
+        width: 240px;
+        height: 180px;
+        overflow: auto;
+        margin-left: 10px;
+        margin-right: 20px;
+        background-color: rgba(37, 75, 124, 0.37);
+    }
+    #activityListHeading {
+        background-color: #254B7C;
+        padding: 5px;
+        font-size: 14px;
+        width: auto;
+        height: auto;
+        overflow: hidden;
+    }
+    #calendarHeadingDiv {
+        clear: both;
+        font-size: 20px;
+        font-weight: bold;
+        padding-left: 20px;
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
+    #spanYear {
+        font-weight: normal;
+    }
+    .eventDay {
+        background-color: rgba(205, 51, 51, 0.45);
+        cursor: pointer;
+    }
+    .selectedDay,.eventDay:hover,.apptHeading:hover {
+        background-color: #CD3333;
+    }
+    .apptDetails {
+        font-size: 12px;
+        padding: 1px;
+    }
+    .deets {
+        background-color: rgba(205, 51, 51, 0.45);
+        padding: 5px;
+    }
+    .apptHeading {
+        padding: 2px;
+    }
+    #showAllDiv {
+        float:right;
+        cursor: pointer;
+        font-size: 11px;
+        font-style: italic;
+        padding-right: 5px;
+    }
+</style>
+<script type="text/javascript">
+    var appts = [];
+    $(document).ready(function(){
+        retrieveAppointments();
+        $("#imgRefreshCalendar").click(function(){
+           $("#activityListDiv").empty().append('<div class="apptDetails" style="padding:10px;">loading <img src="img/loading-4.gif" align="center" /></div>');
+           retrieveAppointments();
+        });
+        $("#showAllDiv").click(function(){
+            $(".apptHeading").css('background-color','').show();
+            $(".deets").hide();
+            setMouseover();
+            $("#showAllDiv").hide();
+        });
+    });
+    function retrieveAppointments(){
+        $.get('get.zimbra.appointments.php').done(function(jData){
+            var json = $.parseJSON(jData);
+            var stillLoading = true;
+            
+            var d = new Date();
+            $.each(json,function(a,appt){
+                var apptNo = 0;
+                $.each(appt,function(b,v){
+                    var s = appt[b].inv[0].comp[0].s[0].d;
+                    var sDate = s.substr(0,4)+'/'+s.substr(4,2)+'/'+s.substr(6,2);
+                    var e = appt[b].inv[0].comp[0].e[0].d;
+                    var eDate = e.substr(0,4)+'/'+e.substr(4,2)+'/'+e.substr(6,2);
+                    var days = [];
+                    var noOfDays = daysBetween(sDate,eDate);
+                    var day = new Date(sDate);
+                    if (noOfDays>0) {
+                        var lastDayOfMonth = new Date(day.getFullYear(), day.getMonth()+1, 0).getDate();
+                        var n = 1;
+                        var x = day.getDate();
+                        for (var i=0;i<=noOfDays;i++) {
+                            if (x<=lastDayOfMonth) {
+                                days.push({d: x,m: day.getMonth(),y: day.getYear()});
+                                x++;
+                            } else {
+                                days.push({d: n,m: day.getMonth() +1,y: day.getYear()});
+                                n++;
+                            }
+                        }
+                    } else {
+                        days.push({d: day.getDate(),m: day.getMonth(),y: day.getYear()});
+                    }
+                    
+                    var venue = appt[b].inv[0].comp[0].loc;
+                    var addAppt = false;
+                    for (var i=0;i<days.length;i++) {
+                        if (days[i].m==d.getMonth()&&days[i].y==d.getYear()) setDayTd(days[i].d,apptNo);
+                        if (addAppt) continue;
+                        addAppt = (days[i].m==d.getMonth()&&days[i].y==d.getYear());
+                    }
+                    var n = appt[b].inv[0].comp[0].name;
+                    if (addAppt) $("#activityListDiv").append(function(){
+                        if (stillLoading) {
+                            $("#activityListDiv").empty();
+                            stillLoading = false;
+                        }
+                        var apptDate = s.substr(6,2)+'/'+s.substr(4,2);
+                        apptDate += (days.length>1) ? ' - '+e.substr(6,2)+'/'+e.substr(4,2):'';
+                        var apptTime = (s.substr(9,2).length>0) ? '<br />Time: ' + s.substr(9,2)+':'+s.substr(11,2):'';
+                        return '<div class="apptDetails"><div apptId="'+apptNo+'" class="apptHeading">'+n+'</div><div style="display:none" deets="'+apptNo+'"  class="deets">Date: '+apptDate+apptTime+'<br />Venue: '+venue+'</div></div>';
+                    });
+                    apptNo++;
+                });
+            });
+            var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+            if (stillLoading) $("#activityListDiv").empty().append('Nothing planned for ' + monthNames[d.getMonth()]);
+            setMouseover();
+        });
+    }
+    function setDayTd(dt,apptId) {
+        var ret = -1;
+        $("td").each(function(){
+            var rt = $(this).attr('idx');
+            if (typeof rt !== typeof undefined && rt !== false) {
+                var td = parseInt($(this).text());
+                if (td==parseInt(dt)) {
+                    ret = rt;
+                    $(this).removeClass().addClass('eventDay');
+                    appts.push({a: apptId,d: parseInt(rt)});
+                }
+            }
+        });
+        return ret;
+    }
+    function setMouseover(){
+        $(".eventDay").mouseover(function(){
+            var idx = $(this).attr('idx');
+            if (appts.length>0) {
+                $(".apptHeading").hide();
+                for (var i=0;i<appts.length;i++) {
+                    var apptid = appts[i].a;
+                    if (appts[i].d==idx) {
+                        $("div[apptid='"+apptid+"']").show();
+                    }
+                }
+            }
+        });
+        $(".eventDay").click(function(){
+            $(".apptHeading").css('background-color','').show();
+            $(".deets").hide();
+            var idx = $(this).attr('idx');
+            if (appts.length>0) {
+                $(".apptHeading").hide();
+                for (var i=0;i<appts.length;i++) {
+                    var apptid = appts[i].a;
+                    if (appts[i].d==idx) {
+                        $("div[apptid='"+apptid+"']").css('background-color','#CD3333').show();
+                        $("div[deets='"+apptid+"']").show();
+                    }
+                }
+                unBind();
+                $("#showAllDiv").show();
+            }
+        });
+        $(".eventDay").mouseleave(function(){
+            $(".apptHeading").css('background-color','').show();
+            $(".deets").hide();
+        });
+        $(".apptHeading").mouseover(function(){
+            var apptid = $(this).attr('apptid');
+            if (appts.length>0) {
+                for (var i=0;i<appts.length;i++) {
+                    var idx = appts[i].d;
+                    if (appts[i].a==apptid) {
+                        $("td[idx='"+idx+"']").addClass('selectedDay');
+                    }
+                }
+            }
+            $("div[deets='"+apptid+"']").show();
+        });
+        $(".apptHeading").mouseleave(function(){
+            var apptid = $(this).attr('apptid');
+            $("td").removeClass('selectedDay');
+            $("div[deets='"+apptid+"']").hide();
+        });
+    }
+    function unBind() {
+        $(".eventDay,.apptHeading").unbind('mouseleave');
+        $(".eventDay,.apptHeading").unbind('mouseover');
+    }
+</script>
+<div id="calendarContainerDiv">
+    <div id="calendarHeadingDiv">
+        <?php echo $currMonth; ?> <span id="spanYear"><?php echo $currYear; ?></span>
+        <div style="float:right;display: inline-block;margin-right: 15px;">
+            <img src="img/refresh.png" height="16" width="16" title="refresh" style="cursor:pointer" id="imgRefreshCalendar" />
+        </div>
+    </div>
+    
+    <div id="calendarDiv">
+        <table width="100%" cellpadding="6" cellspacing="0" id="tblCalendar">
+            <thead>
+                <tr>
+                    <td>Sun</td>
+                    <td>Mon</td>
+                    <td>Tue</td>
+                    <td>Wed</td>
+                    <td>Thu</td>
+                    <td>Fri</td>
+                    <td>Sat</td>
+                </tr>
+            </thead>
+            <?php echo $calRows; ?>
+        </table>
+    </div>
+    <div id="activityListContainer">
+        <div id="activityListHeading"><div style="float:left">Appointments</div><div style="display:none;" id="showAllDiv">show all</div></div>
+        <div id="activityListDiv">
+            <div class="apptDetails" style="padding:10px;">loading <img src="img/loading-4.gif" align="center" /></div>
+        </div>
+    </div>
+</div>

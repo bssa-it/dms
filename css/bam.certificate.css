@@ -1,0 +1,143 @@
+#certificateDiv {
+    float:left;
+    width: 1200px;
+    height: 800px;
+    color: #000;
+    position: relative;
+}
+#imgCertificate {
+    width: 1200px;
+    height: 800px;
+}
+#progressDiv {
+  background-color: #FFF;
+  margin: auto;
+  margin-top: 200px;
+  width: 600px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 10px solid #254B7C;
+  height: auto;
+  overflow: hidden;
+}
+.nameDiv,.bamRefDiv {
+    position: absolute;
+    z-index: 5;
+    text-align: center;
+}
+#screenProtectorDiv {
+    z-index: 10;
+}
+#name-1,#name-2 {
+    top: 113px;
+}
+#name-3,#name-4 {
+    top: 456px;
+}
+#name-1,#name-3 {
+    left: 110px;
+}
+#name-2,#name-4 {
+    left: 635px;
+}
+.nameDiv {
+    font-size: 25px;
+    background-color: pink;
+    width: 455px;
+    cursor: text;
+    font-family: "Castellar";
+}
+#ref-1,#ref-2 {
+    top: 238px;
+}
+#ref-3,#ref-4 {
+    top: 580px;
+}
+#ref-1,#ref-3 {
+    left: 176px;
+}
+#ref-2,#ref-4 {
+    left: 701px;
+}
+.bamRefDiv {
+    font-family: "Arial";
+    background-color: pink;
+}
+#certificateControlDiv{
+    float: left;
+    width: 140px;
+}
+#lang {
+    width: 130px;
+    border: 2px solid #254B7C;
+}
+.btn, #divSelect {
+    clear: both;
+    margin-bottom: 3px;
+}
+.spnRetry {
+    cursor:pointer;
+    font-weight:bold;
+    color: red;
+    text-shadow: 0 0 0.2em #F00;
+}
+.wtg {
+    padding: 2px;
+}
+#btnPrint {
+    margin-top: 10px;
+}
+#btnContinue {
+    margin-top: 20px;
+}
+
+@media print {
+    @page {
+        size: A4 landscape;
+        margin: 0cm;
+    }
+    #mainDiv {
+        padding: 0;
+        margin: 0;
+    }
+    #certificateControlDiv,#headingRow {
+        display: none;
+    }
+    .bamRefDiv,.nameDiv  {
+        background-color: transparent;
+    }
+    .nameDiv {
+        width: 498px;
+        font-family: "Castellar";
+    }
+
+    #mainDiv,#certificateDiv,#imgCertificate {
+        height: 100% !important;
+        width: 100% !important;
+    }
+    #name-1,#name-2 {
+        top: 136px;
+    }
+    #name-3,#name-4 {
+        top: 532px;
+    }
+    #name-1,#name-3 {
+        left: 124px;
+    }
+    #name-2,#name-4 {
+        left: 697px;
+    }
+    
+    #ref-1,#ref-2 {
+        top: 278px;
+    }
+    #ref-3,#ref-4 {
+        top: 675px;
+    }
+    #ref-1,#ref-3 {
+        left: 206px;
+    }
+    #ref-2,#ref-4 {
+        left: 778px;
+    }
+}

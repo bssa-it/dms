@@ -1,0 +1,222 @@
+<style type="text/css">
+    @media screen {
+        #headingDiv {
+            clear:both;
+            font-size:18pt;
+            font-weight: bold;
+            margin-bottom: 10px;
+            margin-left: 10px;
+            width: 1110px
+        }
+        #activityTblDiv {
+            float:left; 
+            width: 800px;
+            margin-left: 10px;
+        }
+        #tblActivities th {
+            text-align: left;
+        }
+        #tblActivities thead {
+            background-color: #7B7922;
+        }
+        #tblActivities tbody {
+            background-color: #98A148;
+        }
+        #tblActivities {
+            font-size: 11pt;
+            color: #FFF;
+        }
+        #tblActivities tr:hover {
+           background-color: #7B7922; 
+        }
+        input[type="checkbox"] {
+            width: 15px;
+        }
+        #btnAddActivity {
+            margin-right: 5px;
+            margin-bottom: 10px;
+        }
+        #comingSoonDiv {
+            background-color: #CD3333;
+            width: auto;
+            min-width: 280px;
+            min-height: 60px;
+            padding: 10px;
+            margin-left: 10px;
+        }
+        
+        .nextDateDiv:hover {
+            background-color: #A32A2A;
+        }
+        #comingSoonHeadDiv {
+            font-weight: bold;
+            color: #FFF;
+            border-bottom: 2px solid #FFF;
+            padding-bottom: 3px;
+            margin-bottom: 5px;
+            font-style: italic;
+        }
+        .dt {
+            float: left;
+            width: 80px;
+            margin-left: 5px;
+            margin-right: 15px;
+
+        }
+        .action {
+            float: left;
+        }
+        .d {
+            font-size: 28pt;
+            font-weight: bold;
+            float: left;
+            height: 40px;
+            margin-right: 5px;
+        }
+        .y,.m {
+            float: left;
+            font-size: 10pt;
+            height: 15px;
+        }
+        .m {
+            margin-top: 5px;
+        }
+        .t {
+            font-size: 10pt;
+        }
+        .cont {
+            font-size: 10pt;
+        }
+        .editable,.dsbld {
+            font-size: 11pt;
+            width: 120px;
+            border: 3px solid #7B7922;
+        }
+        .dsbld {
+            background-color: inherit;
+            color: #FFF;
+            border: none;
+        }
+        <?php if ($isDeleted) { ?>
+            .activityTable tr:nth-child(odd) { 
+                background-color:#BE2625;
+                color:#fff; 
+            }
+            .activityTable tr:nth-child(even) { 
+                background-color:#D04545;
+                color:#fff; 
+            }  
+        <?php } ?>
+        .editActivity {
+            cursor: pointer;
+        }
+        #divControl {
+            height: auto;
+            width: auto;
+            overflow: hidden;
+            margin-left: 10px;
+            margin-top: 5px;
+        }
+    }
+    #divCol2 {
+        float:left;
+    }
+    @media print {
+        #headingRow,#menuRow,#footerRow,#leftNavigationDiv,#divControl {
+            display: none;
+        }
+        * {
+            color: #000;
+            background-color: #FFF;
+        }
+        #headingDiv {
+            font-size: 18pt;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        th {
+            text-align: left;
+            background-color: #e7e7e7;
+        }
+    }
+</style>
+<script type="text/javascript" language="javascript">
+    $("#btnAddActivity").click(function () {
+        showEditForm('activity');
+    });
+    function updateStatus() {
+        var inpFullId = $(this).attr('id').split('-');
+        var recordId = inpFullId[1];
+        var val = $(this).val();
+        var dnr = $("#dnr_no").val();
+        var contactId = $("#contact_id").val();
+        $( "#frmDiv" ).empty().append('<img src="/dms/img/loading.gif" style="vertical-align: middle" /> saving status update...');
+        $.post( 
+            'save.contact.activityStatus.php',
+            { id: recordId, value: val, upd_contact_id: contactId }  
+        ).done(function (data) {
+           $.get( "load.contact.activity.php", { d: dnr })
+            .done(function( data ) {
+                $( "#bodyDiv" ).empty().append( data );
+            });
+        });
+    }
+    $(".nextDateDiv").click(function (){
+        var dtFullId = $(this).attr('id').split('-');
+        var recordId = dtFullId[1];
+        var dnr = $("#dnr_no").val();
+        $("#screenProtectorDiv").show();
+        $("#editDonorDiv").show();
+        $("#activity").click();
+        $( "#frmDiv" ).empty().append('<img src="/dms/img/loading.gif" style="vertical-align: middle" /> loading activity...');
+        $.get( "edit.contact.activity.php", { d: dnr,a: recordId })
+            .done(function( data ) {
+            $("#frmDiv").empty().append( data );
+        });
+    });
+    $(".editActivity").click(function (){
+        var aid = $(this).attr('aid');
+        var dnr = $("#dnr_no").val();
+        window.location.href = 'load.contact.php?d=' + dnr + '&s=civicrm&a=' + aid;
+    });
+    
+    <?php echo $jqueryBindings; ?>
+</script>
+<div id="headingDiv">
+    <?php echo $dnr['display_name'] . '&apos;s activity (' . $dnr['contact_id'] . '/' . $dnr['external_identifier'] . ')'; ?>              
+</div>
+<div id="activityTblDiv">
+    <input type="hidden" id="contact_id" name="contact_id" value="<?php echo $contactId; ?>" />
+    <input type="checkbox" id="showAll" style="display:none" />
+    <table cellpadding="5" cellspacing="0" align="center" class="activityTable" id="tblActivities" width="100%">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Action</th>
+                <th>Subject</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php echo $activityRows; ?>
+        </tbody>
+    </table>
+    <script type="text/javascript" language="javascript">
+        $('#tblActivities').oneSimpleTablePagination({rowsPerPage: 12,brdrColor: "#7B7922"});
+        $("#btnPrintActivities").click(function(){
+            $("#showAll").click();
+            window.print();
+            $("#showAll").click();
+        });
+    </script>
+</div>
+<div id="divCol2">
+    <div id="comingSoonDiv">
+        <div id="comingSoonHeadDiv">Upcoming</div>
+        <?php echo $comingSoonDivs; ?>
+    </div>
+    <div id="divControl">
+        <div id="btnAddActivity" class="btn">Add Activity</div>
+        <div id="btnPrintActivities" class="btn">Print</div>
+    </div>
+</div>

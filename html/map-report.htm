@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="css/global.css" />
+        <link rel="stylesheet" type="text/css" href="css/<?php echo $curScript; ?>.css" />
+
+        <script type="text/javascript" language="javascript" src="scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/global.js"></script>
+        
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $apiKey; ?>"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                //markMap('byLocation');
+                $("input[name='showWhat']").change(function() {
+                    markMap($(this).val()); 
+                });             
+                $("#btnReset").click(function() {
+                    initialize();
+                });
+                $("#btnShow").bind("click",showLocations);
+            });
+             <?php echo $java; ?>
+        </script>
+        <script type="text/javascript" language="javascript" src="scripts/<?php echo $curScript; ?>.js"></script>
+	</head>
+	<body>
+        <div id="screenProtectorDiv" style="display:none"></div>
+        <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+        <div id="headingRow">
+            <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+        </div>
+        <div id="menuRow">
+            <?php echo $menu; ?>
+        </div>
+        <div id="mainDiv">
+            <div id="posDiv"></div>
+            <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+            <div id="notificationsDiv" style="display: none"></div>
+            <div id="contentDiv">
+                <div id="map-control">
+                    <!--ul id="radBtns">
+                        <li><input type="radio" value="byLocation" name="showWhat" id="byLocation" checked /><label for="byLocation">By Location</label></li>
+                        <li><input type="radio" value="byDepartment" name="showWhat" id="byDepartment" /><label for="byDepartment">By Department</label></li>
+                        <li><input type="radio" value="byValue" name="showWhat" id="byValue" /><label for="byValue">By Value</label></li>
+                    </ul-->
+                    <div class="btn" id="btnShow">Show</div>
+                    <div class="btn" id="btnReset" style="margin-right: 0px;">Reset</div>
+                </div>
+                <div id="map-canvas"></div>
+            </div>
+        </div>
+        <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+	</body>
+</html>

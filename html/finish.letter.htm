@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="css/global.css" />
+        <link rel="stylesheet" type="text/css" href="css/<?php echo $curScript; ?>.css" />
+        
+        <script type="text/javascript" language="javascript" src="scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/global.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/tablePaging.js"></script>
+        <script type="text/javascript" src="scripts/jquery.tablesorter.js"></script>
+        <script type="text/javascript">
+        	$(function() {
+        		// Hover states on the static widgets
+        		$( "#dialog-link, #icons li" ).hover(
+        			function() {
+        				$( this ).addClass( "ui-state-hover" );
+        			},
+        			function() {
+        				$( this ).removeClass( "ui-state-hover" );
+        			}
+        		);
+        	});
+            
+        	$(function() {
+        		$("#tblResults").tablesorter();
+        	});
+                $(function() {
+                    var w = $("#pdfCntDiv").width();
+                    var x = (160-w)/2;
+                    $("#pdfCntDiv").css('margin-left',x);
+                });
+    	</script>
+	</head>
+	<body>
+        <div id="screenProtectorDiv" style="display:none"></div>
+        <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+        <div id="headingRow">
+            <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+        </div>
+        <div id="menuRow">
+            <?php echo $menu; ?>
+        </div>
+         <div id="mainDiv">
+            <div id="posDiv"></div>
+            <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+            <div id="notificationsDiv" style="display: none"></div>
+            <div id="topRowDiv">
+                <div class="counterDiv">
+                    <div class="counterHeader">Email Count</div>
+                    <?php echo $emailCnt; ?>
+                </div>
+                <div class="counterDiv">
+                    <div class="counterHeader">PDF Count</div>
+                    <div id="pdfCntDiv"><?php echo $pdfCnt; ?></div>
+                    <?php if (empty($consolidatedFilename)) { ?>
+                    <div id="consPDFDiv">&nbsp;</div>    
+                    <?php } else { ?>
+                    <div id="consPDFDiv" title="view all" onclick="window.location='<?php echo $consolidatedFilename; ?>'"><img src="img/pdf.png" width="30" height="30" align="middle" /></div>
+                    <?php } ?>
+                </div>
+                <div class="counterDiv">
+                    <div class="counterHeader">Total Count</div>
+                    <?php echo $totalCnt; ?>
+                </div>
+            </div>
+            
+            <div id="resultDiv">
+                <table cellpadding="5" cellspacing="0" align="center" id="tblResults">
+                    <thead>
+                        <tr>
+                            <th>Receipt No</th>
+                            <th style="text-align: right;padding-right: 10px;">Contribution Amount</th>
+                            <th>Donor No</th>
+                            <th>Donor Name</th>
+                            <th>Email Address</th>                        
+                            <th>Print/Send Date</th>
+                            <th>Send Result</th>
+                            <th>Document</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php echo $resultRows; ?>
+                    </tbody>
+                </table>
+                <script type="text/javascript" language="javascript">$('#tblResults').oneSimpleTablePagination({rowsPerPage: 12});</script>
+            </div>
+        </div>
+        <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+	</body>
+</html>

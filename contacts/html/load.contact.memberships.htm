@@ -1,0 +1,48 @@
+<script lang="text/javascript">
+    $("#imgCertificate").click(function(){
+        var m = $(this).attr('mid');
+        window.open('bam/'+m+'-bam-certificate.pdf', 'BAM Certificate', "width=600, height=400");
+    });
+</script>
+<div style="margin-left: 20px;margin-right: 20px;" id="membershipDiv">
+    <div class="summaryContainer">
+        <input type="hidden" value="<?php echo $dnrNo; ?>" id="dnr_no" />
+        <div style="float: left;min-height: 80px;height: auto !important;width: 350px;">
+            <select id="membership" name="membership" style="padding: 3px;border: 5px solid #A7B526;margin-left: 15px;margin-top: 5px;" onchange="changeMembership();">
+                <?php echo $opts; ?>
+            </select>
+            <div class="detailContainerDiv" style="margin-left: 0px;margin-top:10px;">
+                <table cellpadding="3" cellspacing="0" width="100%" class="detailContainerTable"><tr><td>Membership Status</td><td><?php echo $membershipStatus; ?></td></tr><tr><td>Join Date</td><td><?php echo $joinDate; ?></td></tr></table>
+            </div>
+        </div>
+        <div class="detailContainerDiv" style="margin-top: 0px;">
+            <div class="detailContainerHeading">Transaction Summary</div>
+            <table cellpadding="3" cellspacing="0" width="100%" class="detailContainerTable"><tr><td>Total Contributions</td><td align="right">R <?php echo number_format($totContributions,2,'.',' '); ?></td></tr><tr><td>First Contribution</td><td align="right">R <?php echo number_format($fdonation,2,'.',' ') . ' ('.$fdate.')'; ?></td></tr><tr><td>Last Contribution</td><td align="right">R <?php echo number_format($ldonation,2,'.',' ') . ' ('.$ldate.')'; ?></td></tr></table>
+        </div>
+        <?php echo $bamClubDiv; ?>
+    </div>
+    <div style="width:100%;overflow:auto;margin-top:0px;">
+        <table cellpadding="3" cellspacing="0" align="center" class="contributionsTable" id="ackContributionsTbl">
+            <thead>
+                <tr style="background-color:#7B7922;font-weight:bold">
+                    <th>Date</th>
+                    <th>Trxn Id</th>
+                    <th>Payment Method</th>
+                    <th align="right" style="padding-right: 15px;">Amount</th>
+                    <th>Motivation</th>
+                    <th>Category</th>
+                    <th>Region</th>
+                    <th>Organisation Id</th>
+                    <th>Ack Date</th>
+                    <th>Ack By</th>
+                    <th>Ack Method</th>
+                    <th>Ack Doc</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php echo $contributionRows; ?>
+            </tbody>
+        </table>
+        <script type="text/javascript" language="javascript">$('#ackContributionsTbl').oneSimpleTablePagination({rowsPerPage: 15,brdrColor: "#7B7922"});</script>
+     </div>
+</div>

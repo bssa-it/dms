@@ -1,0 +1,174 @@
+<style type="text/css">
+    #tblBamAcknowledgements input {
+        width: 15px;
+    }
+    #tblBamAcknowledgements {
+        color: #FFF;
+        font-size: 9pt;
+    }
+    .whatNowDiv {
+        width: 250px;
+        float:left;
+        height:150px;
+        margin-top: 10px;
+        padding: 10px;
+        border: 2px solid #F8F8F8;
+        margin-right: 5px
+    }
+    #nextDiv {
+        padding-left:5px;
+        padding-right:5px;
+        padding-top:10px;
+        padding-bottom:10px;
+        background-color: #F8F8F8;
+        border: 8px solid #254B7C;
+        height: 250px;
+        width: 580px;
+        margin: 0 auto;
+        margin-top: 150px;
+        border-radius: 15px;
+        -moz-border-radius: 15px;
+        position: absolute;
+        z-index: 1;
+        top: 0px;
+        left: 300px;
+        color: #254B7C;
+    }
+    .detailContainerDiv {
+        width: 250px;
+        margin-right: 15px;
+        float: left;
+        color: #FFF;
+        padding:10px;
+        margin-bottom: 15px;
+        background-color: #ED8029;
+        border-radius: 15px;
+        -moz-border-radius: 15px;
+        clear: both;
+    }
+    .detailContainerHeading {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        font-weight: bold;
+        border-bottom: 2px solid #FF9F00;
+    }
+    .detailContainerTable {
+        font-size: 9pt;
+        color: #FFF;
+        margin-bottom: 15px;
+    }
+    .detailContainerTable td {
+        border-bottom: 2px solid #FF9F00;
+    }
+    #loadingDiv {
+        width:550px;
+        margin: auto;
+        text-align: center;
+        padding-top: 75px;
+    }
+</style>
+<script type="text/javascript" language="javascript">
+    function btnContinue_Click() {
+        var recordsSelectedCount = countSelected();
+        if (recordsSelectedCount==0) {
+            alert('Please select at least one record to export');
+            return;
+        }
+        showNextDiv();
+    }
+    function showNextDiv() {
+        var d = document.getElementById('screenProtectorDiv');
+        d.style.display = (d.style.display=='none') ? '':'none';
+        var n = document.getElementById('nextDiv');
+        n.style.display = (n.style.display=='none') ? '':'none';
+    }
+    function countSelected(){
+        var table = document.getElementById("tblBamAcknowledgements");
+        var cnt = 0;
+        for (var i = 1, row; row = table.rows[i]; i++) {
+            cnt += (row.cells.item(0).firstChild.checked) ? 1:0;
+        }
+        return cnt;
+    }
+    function validateBamAck() {
+        document.getElementById('searchLoadingDiv').style.display = 'none';
+        var fileName = document.getElementById('filename');
+        if (fileName.value.length==0){
+            alert('Please provide a filename for your extract');
+            return;
+        }
+        if (fileName.value.substr(fileName.value.length-4)!='.txt') {
+            alert('Your filename must end with .txt');
+            return;
+        }
+        document.getElementById('searchLoadingDiv').style.display = '';
+        document.frmBamAcknowledgements.submit();
+    }
+    function openTemplateManager() {
+        document.frmBamAcknowledgements.action = 'letter.php';
+        document.frmBamAcknowledgements.submit();
+    }
+    function selectAll(){
+        var sa = document.getElementById('chkSelectAll');
+        var table = document.getElementById("tblBamAcknowledgements");
+        for (var i = 1, row; row = table.rows[i]; i++) {
+            row.cells.item(0).firstChild.checked=sa.checked;
+        }
+    }
+    function refreshBamAcknowledgements() {
+        $("#bamAckDetailsDiv").hide();
+        $("#loadingDiv").show();
+        var wid = $("#bamAckWid").val();
+        $.get('widgets/bamacknowledgement/get.bamAcknowledgement.php',{wid: wid}).done(function(data){
+            $("#bamAckRows").empty().append(data);
+            $("#tablePagination").remove();
+            $('#tblBamAcknowledgements').oneSimpleTablePagination({rowsPerPage: 6,brdrColor: "#7B7922",navigationPosition : "left"});
+            $("#loadingDiv").hide();
+            $("#bamAckDetailsDiv").show();
+        });
+    }
+    $(document).ready(function(){
+       refreshBamAcknowledgements(); 
+       $("#imgRefreshBamAcknowledgements").bind('click',refreshBamAcknowledgements);
+    });
+</script>
+<form name="frmBamAcknowledgements" id="frmBamAcknowledgements" method="POST" action="update.acknowledgements.php">
+<div class="widgetHeader">
+    <?php echo $w->wid_name; ?> 
+    <div style="float:right;display: inline-block;margin-right: 30px;">
+        <img src="img/refresh.png" height="16" width="16" title="refresh" style="cursor:pointer" id="imgRefreshBamAcknowledgements" />
+        <img src="img/settings.png" height="16" width="16" title="edit settings" style="cursor:pointer" onclick="showAppSettings(<?php echo $w->wid_id; ?>)" />
+    </div>
+</div>
+<div style="padding:10px;padding-top:0px;width:520px;height:210px;display:none" id="bamAckDetailsDiv">
+    <input type="hidden" id="bamAckWid" value="<?php echo $w->wid_id; ?>" />
+    <table width="100%" align="center" cellpadding="2" cellspacing="0" id="tblBamAcknowledgements">
+        <thead style="background-color: #7B7922;font-weight:bold">
+            <td><input type="checkbox" id="chkSelectAll" onchange="selectAll();" /></td>
+            <td>Donor No</td>
+            <td>Donor Name</td>
+            <td>Date Received</td>
+            <td align="right" style="padding-right: 5px;">Amount Received</td>
+        </thead>
+        <tbody id="bamAckRows"><tr><td colspan="0">No Transactions Found<td></tr></tbody>
+    </table>
+    <div class="btn" style="position:relative;top: -35px;left: 440px;" onclick="btnContinue_Click();">Continue</div>
+</div>
+<div id="loadingDiv"><img src="img/loading-4.gif" align="center" /> &nbsp;loading...</div>
+<div>
+<div id="nextDiv" style="display:none">
+    <div class="detailContainerHeading" style="font-size:16pt;">What would you like to do now?<div style="float:right;font-weight: bold;font-size: 14pt;padding-right: 5px;padding-bottom: 10px;cursor:pointer" onclick="showNextDiv();">x</div></div>
+    <div class="whatNowDiv" style="margin-left:10px;">
+        <div class="detailContainerHeading">Create Mail Merge File</div>
+        <input type="text" placeholder="Filename (????.txt)" value="" name="filename" id="filename" style="padding:5px;width:220px;border: 3px solid #254B7C;margin-bottom: 10px;" />
+        <div class="btn" onclick="validateBamAck();" style="clear:both">Create</div>
+        <div style="float:left;display:none;font-style:italic;font-size:9pt;padding-right:15px;" id="searchLoadingDiv"><img align="right" src="img/loading2.gif" style="margin-left: 10px;" /> loading </div>
+    </div>
+    <div class="whatNowDiv">
+        <div class="detailContainerHeading">Choose Template for PDF/Email</div>
+        <img src="img/pdf.png" height="110" width="110" title="pdf" style="float:left" />
+        <div class="btn" <?php if ($_SESSION['dms_user']['authorisation']->isSuperUser) { ?>onclick="openTemplateManager();"<?php } else { ?> onclick="alert('choose template');" <?php } ?>>Select Template</div>
+    </div>
+</div>
+</div>
+</form>

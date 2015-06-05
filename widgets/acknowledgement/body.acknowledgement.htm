@@ -1,0 +1,60 @@
+<style type="text/css">
+    #summaryChartDiv,#detailChartDiv {
+        float:left;
+    }
+    #chartsDiv {
+        width:550px;
+        margin: auto;
+        text-align: center;
+        padding-top: 90px;
+    }
+    .counterDisplay{
+        font-size: 48pt;
+        font-weight:bold;
+        float:left;
+        text-align: center;
+        height: 90px;
+        width: 180px;
+        border: 1px solid #B44010;
+        margin-bottom: 10px;
+    }
+    .counterDisplayHeading {
+        font-size: 14pt;
+        font-weight:bold;
+        float:left;
+        text-align: center;
+        height: auto !important;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        width: 180px;
+        background-color: #B44010;
+        border: 1px solid #B44010;
+    }
+    video {
+        margin-left: 20px;
+    }
+    
+</style>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#chartsDiv").empty().append('<img src="img/loading-white.gif" align="center" /> loading ...');
+        loadAcknowledgements();
+        $("#btnRefreshAcknowledgements").bind("click",loadAcknowledgements);
+    });
+    function loadAcknowledgements() {
+        var strFromDate = $("#xmlFromDate").val();
+        $.get('widgets/acknowledgement/get.acknowledgement.php',{fromDate: strFromDate}).done(function(data){
+            $("#chartsDiv").empty().append(data);
+            $("#chartsDiv").css({padding: '0px',textAlign: 'inherit'});
+        });
+    }
+</script>
+<div class="widgetHeader">
+    <?php echo $w->wid_name; ?> 
+    <div style="float:right;display: inline-block;margin-right: 30px;">
+        <input type="hidden" id="xmlFromDate" value="<?php echo (string)$prompts->fromDate; ?>" />
+        <img id="btnRefreshAcknowledgements" src="img/refresh.png" height="16" width="16" title="refresh" style="cursor:pointer"/>
+        <img src="img/settings.png" height="16" width="16" title="edit settings" style="cursor:pointer" onclick="showAppSettings(<?php echo $w->wid_id; ?>);" />
+    </div>
+</div>
+<div id="chartsDiv"></div>

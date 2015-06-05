@@ -1,0 +1,15 @@
+<mySettings>
+    <userType>Secretary</userType>
+    <acknowledgement>
+        <departments>
+            <department code="A" impersonate="Y">
+                <secretary>Dr QE Heine</secretary>
+            </department>
+        </departments>
+    </acknowledgement>
+    <donorSearch>
+        <defaultDatabase>civiDb</defaultDatabase>
+        <defaultBamOnly>N</defaultBamOnly>
+        <defaultDonorDeleted></defaultDonorDeleted>
+    </donorSearch>
+</mySettings>

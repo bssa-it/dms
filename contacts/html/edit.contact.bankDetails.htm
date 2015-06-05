@@ -1,0 +1,93 @@
+<style type="text/css">
+    thead {
+        background-color: #254B7C;
+        color: #FFF;
+    }
+</style>
+<script type="text/javascript" language="javascript">
+    
+</script>
+<div id="frmContentDiv">
+    <div id="divAccountList">
+        <table id="tblAccountList" width="100%" cellpadding="5" cellspacing="0">
+            <thead>
+                <tr>
+                    <td>Account Number</td>
+                    <td>Bank</td>
+                    <td>Reference</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php echo $accountRows; ?>
+            </tbody>
+        </table>
+    </div>
+    <div id="tblDiv" style="display:none">
+        <table id="tblForm" width="100%" cellpadding="5" cellspacing="0">
+            <tr>
+                <td colspan="2">
+                    <select name="ord_type" id="ord_type">
+                        <option value="6">Stop Order</option>
+                        <option value="7">Debit Order</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Amount</td>
+                <td><input type="text" name="ord_amount" id="ord_amount" /></td>
+            </tr>
+            <tr>
+                <td>Frequency</td>
+                <td>
+                    <select name="ord_frequency" id="ord_frequency">
+                        <option value="monthly">Monthly</option>
+                        <option value="quarterly">Quarterly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>    
+                </td>
+            </tr>
+            <tr>
+                <td>Debit</td>
+                <td>
+                    <select name="ord_account_type_id" id="ord_account_type_id">
+                        <option value="1">Current/Cheque Account</option>
+                        <option value="2">Transmission Account</option>
+                        <option value="3">Savings Account</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Account Holder Name</td>
+                <td><input type="text" name="ord_name" id="ord_name" /></td>
+            </tr>
+            <tr>
+                <td>Bank</td>
+                <td>
+                    <select name="ord_bank_id" id="ord_bank_id">
+                        <option value="1">ABSA</option>
+                        <option value="2">African Bank</option>
+                        <option value="3">Bidvest Bank</option>
+                        <option value="4">Capitec</option>
+                        <option value="5">First Rand Bank</option>
+                        <option value="6">FNB</option>
+                        <option value="7">Investec Bank</option>
+                        <option value="8">Nedbank</option>
+                        <option value="9">Sasfin Bank</option>
+                        <option value="10">Standard Bank</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Branch Code</td>
+                <td><input type="text" name="ord_branch_code" id="ord_branch_code" /></td>
+            </tr>
+            <tr>
+                <td>Account Number</td>
+                <td><input type="text" name="ord_account_no" id="ord_account_no" /></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="divSaveResults" style="display:none">
+    <div id="divResult"></div>
+</div>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="css/global.css" />
+        <link rel="stylesheet" type="text/css" href="css/<?php echo $curScript; ?>.css" />
+        
+        <script type="text/javascript" language="javascript" src="scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/global.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/<?php echo $curScript; ?>.js"></script>
+    </head>
+	<body onload="initializeMe();">
+        <div id="screenProtectorDiv" style="display:none"></div>
+        <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+        <div id="headingRow">
+            <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+        </div>
+        <div id="menuRow">
+            <?php echo $menu; ?>
+        </div>
+         <div id="mainDiv">
+            <div id="posDiv"></div>
+            <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+            <div id="notificationsDiv" style="display: none"></div>
+            <div id="mainContent">
+                <div id="leftTopBox">
+                    <table cellpadding="5" cellspacing="0" id="tblUserdetail">
+                        <thead>
+                            <tr>
+                                <td colspan="2" style="cursor:pointer" onclick="initializeMe();">My Detail</td>
+                            </tr>
+                        </thead>
+                        <tbody id="tbdUserDetail">
+                            <tr>
+                                <td>Username</td>
+                                <td><?php echo $username; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Full name</td>
+                                <td><?php echo $userFullname; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Joomla User id</td>
+                                <td><?php echo $userId; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Donor id</td>
+                                <td><?php echo $dnrId; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Civi User id</td>
+                                <td><?php echo $civiId; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Login time</td>
+                                <td><?php echo $loginTime; ?></td>
+                            </tr>
+                            <tr>
+                                <td>IP address</td>
+                                <td><?php echo $ipaddress; ?></td>
+                            </tr>
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <td colspan="2">My Authority</td>
+                            </tr>
+                        </thead>
+                        <tbody id="tbdUserAuthority">
+                            <tr>
+                                <td>View</td>
+                                <td><?php echo $canView; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Edit</td>
+                                <td><?php echo $canEdit; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Insert</td>
+                                <td><?php echo $canInsert; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Delete</td>
+                                <td><?php echo $canDelete; ?></td>
+                            </tr>
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <td colspan="2">My Dashboard</td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id="rightBox"><img src="img/loading.gif" /></div>
+                <div id="leftBottomBox">
+                    <script>
+                        <?php echo $usersWidgets; ?>
+                        <?php echo $widJavaObj; ?>
+                    </script>
+                    <div id="widgetSelect" style="display:none">
+                        <div>Select a new widget</div>
+                        <div style="margin-top: 10px;margin-bottom: 10px">
+                            <input type="hidden" name="qtrNo" />
+                            <select name="newWidget">
+                                <?php echo $widOpts; ?>
+                            </select>
+                        </div>
+                        <div class="btn">Add</div>
+                    </div>
+                    <div style="width: 230px;height: 190px;margin: 0 auto;margin-top:10px">
+                        <div class="qtr" id="q1" wid="<?php echo $q1WidgetId; ?>"><div class="star">&#42;</div><div class="nwWidget" wid="<?php echo $q1WidgetId; ?>" qno="1">new widget</div></div>
+                        <div class="qtr" id="q2" wid="<?php echo $q2WidgetId; ?>"><div class="star">&#42;</div><div class="nwWidget" wid="<?php echo $q2WidgetId; ?>" qno="2">new widget</div></div>
+                        <div class="qtr" id="q3" wid="<?php echo $q3WidgetId; ?>")"><div class="star">&#42;</div><div class="nwWidget" wid="<?php echo $q3WidgetId; ?>" qno="3">new widget</div></div>
+                        <div class="qtr" id="q4" wid="<?php echo $q4WidgetId; ?>"><div class="star">&#42;</div><div class="nwWidget" wid="<?php echo $q4WidgetId; ?>" qno="4">new widget</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+	</body>
+</html>

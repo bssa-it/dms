@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>DMS</title>
+        <style type="text/css">
+            .filenam {
+                cursor: pointer;
+                list-style-type: square;
+            }
+        </style>
+        <script type="text/javascript" language="javascript" src="/dms/scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript">
+            $(document).ready(function(){
+                $('li').click(function(){
+                   window.location = $(this).attr('path');
+                });
+            });
+        </script>
+    </head>
+    <body>
+        Hello <?php echo (empty($_SESSION['dms_user']['fullname'])) ? 'Admin':$_SESSION['dms_user']['fullname']; ?> !!! &#9787;
+        <p>Here are the files in this directory:</p>
+        <ul id="ulFileList"><?php echo $fileList; ?></ul>
+    </body>
+</html>

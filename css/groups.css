@@ -1,0 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21 Jan 2015, 10:34:52 AM
+    Author     : Chezre
+*/
+
+#contentDiv {
+    width: 1000px;
+    height: auto;
+    max-height: 580px;
+    overflow: auto;
+    margin-left: 40px;
+}
+#groupsDiv {
+    padding-left: 10px;
+}
+.groupSummaryDiv {
+    cursor: pointer;
+    background-color: #A7B526;
+    min-width: 350px;
+    width: auto;
+    float: left;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    color: #fff;
+    padding: 10px;
+    border: 5px solid #A7B526;
+    border-radius: 10px;
+    font-size: 20px;
+    font-style: italic;
+}
+.groupSummaryDiv:hover {
+    border: 5px solid #254B7C;
+    color: #254B7C;
+}
+.groupName {
+    float: left;
+}
+.groupTotal {
+    float: right;
+}

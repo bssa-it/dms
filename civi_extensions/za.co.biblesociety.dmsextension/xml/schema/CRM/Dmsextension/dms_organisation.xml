@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>Organisation</class>
+  <name>civicrm_dms_organisation</name>
+  <comment>Organisation code table</comment>
+  <log>true</log>
+
+  <field>
+    <name>org_id</name>
+    <type>varchar</type>
+    <length>15</length>
+    <required>true</required>
+    <comment>Unique Organisation ID</comment>
+  </field>
+  <primaryKey>
+    <name>org_id</name>
+  </primaryKey>
+
+  <field>
+    <name>org_name</name>
+    <type>varchar</type>
+    <length>255</length>
+    <comment>Organisation name</comment>
+    <title>Organisation Name</title>
+  </field>
+
+  <field>
+    <name>org_region</name>
+    <type>int</type>
+    <length>11</length>
+    <comment>Region the organisation is linked to</comment>
+    <title>Region</title>
+  </field>
+</table>

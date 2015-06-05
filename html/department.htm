@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="css/global.css" />
+        <link rel="stylesheet" type="text/css" href="css/<?php echo $curScript; ?>.css" />
+
+        <script type="text/javascript" language="javascript" src="scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/global.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/<?php echo $curScript; ?>.js"></script>
+	<script type="text/javascript" language="javascript" src="scripts/Chart.js"></script>
+    </head>
+    <body>
+            <div id="screenProtectorDiv" style="display:none">
+                <div id="frmDiv" class="rightColDiv">
+                    <div id="frmHeading">Edit Department</div>
+                    <div class="circle64" id="departmentId">&nbsp;</div>
+                    <div id="departmentForm">
+                        <table id="tblDepartmentFrm" width="100%" cellpadding="5" cellspacing="0" align="center">
+                        <form action="save.department.php" method="POST" id="frmSave" name="frmSave">
+                            <input name="dep_id" id="dep_id" type="hidden"/>
+                            <tr>
+                                <td><label for="dep_name">Full Name</label></td>
+                                <td><input type="text" id="dep_name" name="dep_name" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="dep_defaultRegion">Default Region</label></td>
+                                <td>
+                                    <select name="dep_defaultRegion" id="dep_defaultRegion">
+                                        <option value="">-- Region --</option>
+                                        <?php echo $rg_options; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="dep_isNational">Multi Region?</label></td>
+                                <td>
+                                    <select name="dep_isNational" id="dep_isNational">
+                                        <option value="N">N</option>
+                                        <option value="Y">Y</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="dep_budgetAllocation">Allocated Budget</label></td>
+                                <td><input type="text" id="dep_budgetAllocation" name="dep_budgetAllocation" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="dep_chartColor">Chart Color</label></td>
+                                <td><input type="color" id="dep_chartColor" name="dep_chartColor" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="dep_fromEmailName">Email Name</label></td>
+                                <td><input type="text" id="dep_fromEmailName" name="dep_fromEmailName" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="dep_fromEmailAddress">Email Address</label></td>
+                                <td><input type="text" id="dep_fromEmailAddress" name="dep_fromEmailAddress" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="dep_contact_id">CiviCRM Contact Id</label></td>
+                                <td><input type="text" id="dep_contact_id" name="dep_contact_id" /></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <div class="btn" id="btnEdit">Save</div>
+                                    <div class="btn" id="btnClose">Close</div>
+                                </td>
+                            </tr>
+                        </form>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+        <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+        <div id="headingRow">
+            <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+        </div>
+        <div id="menuRow">
+            <?php echo $menu; ?>
+        </div>
+        <div id="mainDiv">
+            <div id="posDiv"></div>
+            <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+            <div id="notificationsDiv" style="display: none"></div>
+            <div id="contentDiv">
+                <div id="budgetDiv">
+                    <div>Budget Total</div>
+                    <div id="budgetTotalDiv">R <?php echo $totalAllocatedBudget; ?></div>
+                </div>
+                <div id="detailsDiv">
+                    <table cellspacing="0" cellpadding="5" align="center" id="tblData">
+                        <tr style="font-weight: bold;color: #fff;background-color: #254B7C;">
+                            <td>DP</td>
+                            <td>Full Name</td>
+                            <td>Region</td>
+                            <td>Nat</td>
+                            <td align="right">Budget</td>
+                            <td>Chart</td>
+                            <td>Email Name</td>
+                            <td>Email Add</td>
+                            <td>Civi Id</td>
+                            <td>% total</td>
+                        </tr>
+                        <tbody id="tblBody">
+                            <?php echo $departmentDetails; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+	</body>
+</html>

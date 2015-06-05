@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <field label='Department' id='department' />
+    <field label='Doc Type' id='receiptDocType' />
+    <field label='Language' id='language' />
+    <field label='Category' id='category' />
+    <field label='Receipt No' id='receiptNo' />
+    <field label='Donor No' id='donorNo' />
+    <field label='Salutation' id='salutation' />
+    <field label='Name' id='displayName' />
+    <field label='Emailto Name' id='emailToName' />
+    <field label='Email' id='emailAddress' />;
+    <field label='Address 1' id='addressLine1' />
+    <field label='Address 2' id='addressLine2' />
+    <field label='Address 3' id='addressLine3' />
+    <field label='Address 4' id='town' />
+    <field label='Postal Code' id='postalCode' />
+    <field label='Alternate Receipt No' id='alternateReceiptNo' />
+    <field label='Contribution Date' id='contributionDate' />
+    <field label='Contribution Amount' id='contributionAmount' />
+    <field label='New Donor' id='newDonor' />
+    <field label='MTD Trxn No' id='mtdTrxnNo' />
+    <field label='Cellphone' id='cellphone' />
+    <field label='Region' id='region' />
+    <field label='Preferred Communication Method' id='preferredCommunicationMethod' />
+    <field label='Unacknowledged Total' id='unacknowledgedTotal' />
+    <field label='contact_id' id='contactId' />
+    <field label='Birthday' id='birthday' />
+    <field label='Date of Birth' id='dob' />
+    <field label="Initials" id="initials" />
+    <field label="Organisation Id" id="organisationId" />
+    <field label="First Name" id="firstName" />
+    <field label="Middle Name" id="middleName" />
+    <field label="Last Name" id="lastName" />
+    <field label="Title" id="title" />
+    <field label="Total Trxn Count" id="trxnCnt" />
+    <field label="Total Contributions" id="totalContributions" />
+    <field label="Extra Salutation" id="extraSalutation" />
+    <field label="Address Heading" id="addressHeading" />
+    <field label="contribution_id" id="contribution_id" />
+</root>

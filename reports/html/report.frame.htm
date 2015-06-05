@@ -1,0 +1,25 @@
+<script type="text/javascript" lang="javascript" src="scripts/report.frame.js"></script>
+<?php echo $javascript; ?>
+<?php echo $css; ?>
+<div id="reportBody">
+    <input type="hidden" id="reportId" value="<?php echo $reportId; ?>" />
+    <input type="hidden" id="chartPhp" value="<?php echo $chartPhp; ?>" />
+    <input type="hidden" id="bodyPhp" value="<?php echo $bodyPhp; ?>" />
+    <div id="reportControl">
+        <div id="leftNavigationDiv">
+                <ul id="navList">
+                    <li <?php echo $bodySelected .' fn="'.$bodyPhp.'"'; ?>>Detail</li>
+                    <li <?php echo $graphSelected .' fn="'.$chartPhp.'"'; ?>>Chart</li>
+                </ul>
+        </div>
+        <div id="promptContainer" style="display: none;">
+            <div class="promptHeading">Prompts</div>
+            <div id="inReportPrompts"></div>
+            <div id="btnRun" class="btn">Run</div>
+        </div>
+        <div class="btn" id="btnBack">Back</div>
+    </div>
+    <div id="reportContent">
+        <?php echo $reportContent; ?>
+    </div>
+</div>

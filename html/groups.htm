@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="/dms/css/global.css" />
+        <link rel="stylesheet" type="text/css" href="css/<?php echo $curScript; ?>.css" />
+
+        <script type="text/javascript" language="javascript" src="/dms/scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="/dms/scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="/dms/scripts/global.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/<?php echo $curScript; ?>.js"></script>
+    </head>
+    <body>
+    <div id="screenProtectorDiv" style="display:none"></div>
+    <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+    <div id="headingRow">
+        <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+    </div>
+    <div id="menuRow">
+        <?php echo $menu; ?>
+    </div>
+    <div id="mainDiv">
+        <div id="posDiv"></div>
+        <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+        <div id="notificationsDiv" style="display: none"></div>
+        <div id="contentDiv">
+            <div class="heading1">Group Totals</div>
+            <div id="groupsDiv"><img src="img/loading.gif" align="center" class="margin-right: 10px;" /> loading ...</div>
+        </div>
+    </div>
+    <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+    </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>ETL Logs</title>
+        <link rel="stylesheet" type="text/css" href="css/global.css" />
+        <link rel="stylesheet" type="text/css" href="css/letter.css" />
+        <script type="text/javascript" language="javascript" src="scripts/ckeditor/ckeditor.js"></script>
+        <script type="text/javascript" language="javascript">
+        <?php echo $java; ?>
+        </script>
+        <script type="text/javascript" language="javascript" src="scripts/letter.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/global.js"></script>
+	</head>
+	<body>
+        <div id="screenProtectorDiv" style="display:none"></div>
+        <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+        <div id="mainDiv">
+            <div id="posDiv"></div>
+            <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+            <div id="notificationsDiv" style="display: none"></div>
+            <div id="contentDiv">
+                <form action="save.letter.php" method="POST" id="frmTemplate" name="frmTemplate">
+                   <div id="topControlRow1">
+                        <label for="tpl_id">Template Name</label>
+                        <div class="input" style="margin-right: 20px;">
+                            <select id="tpl_id" name="tpl_id" onchange="changeTemplate()">
+                                <option value="">-- NEW --</option>
+                                <?php echo $templateOptions; ?>
+                            </select>
+                        </div>
+                       <label for="tpl_accessLevel">Access Level</label> 
+                       <div class="input" style="margin-right: 20px">
+                        <select name="tpl_accessLevel" id="tpl_accessLevel">
+                            <?php echo $accessOptions; ?>
+                        </select>
+                       </div>
+                       <label>Margins</label>
+                       <div class="input">
+                            <input class="mgn" type="text" name="tpl_marginLeft" id="tpl_marginLeft" value="L" />
+                            <input class="mgn" type="text" name="tpl_marginTop" id="tpl_marginTop" value="T" />
+                            <input class="mgn" type="text" name="tpl_marginRight" id="tpl_marginRight" value="R" />
+                            <input class="mgn" type="text" name="tpl_marginBottom" id="tpl_marginBottom" value="B" />
+                       </div> 
+                   </div>
+                    <div id="letterEditorDiv"><textarea class="ckeditor" name="letterEditor" id="letterEditor"></textarea></div>
+                    <div id="controlDiv">
+                        <div style="margin-bottom: 10px;height: 40px;">
+                            <div class="btn" style="float: left;margin-left: 0px;" onclick="openPreview()">Preview</div>
+                        <?php if (!empty($_POST['trxns'])) { ?>
+                            <div class="btn" onclick="mergeRecords();">Merge</div>
+                        </div>
+                        <div style=""><input type="checkbox" name="saveTemplate" id="saveTemplate" style="width: 25px;" value="Y" /> <label for="saveTemplate">Save Template</label></div>
+                        <?php } else { ?>
+                            <div class="btn" onclick="saveTemplate();">Save</div>
+                        </div>
+                        <?php } ?>
+                        <div style="float:right;width: auto !important" align="right"><input type="text" name="tpl_name" id="tpl_name" placeholder="template name" /></div>
+                    </div>
+                    
+                    <?php echo $hiddenTrxns; ?>
+                </form>
+            </div>
+        </div>
+        <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+	</body>
+</html>

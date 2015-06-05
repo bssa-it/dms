@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="css/global.css" />
+        <link rel="stylesheet" type="text/css" href="css/<?php echo $curScript; ?>.css" />
+
+        <script type="text/javascript" language="javascript" src="scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/global.js"></script>
+        
+        <script type="text/javascript" language="javascript" src="scripts/ckeditor/ckeditor.js"></script>
+        <script type="text/javascript" language="javascript">
+        <?php echo $java."\n\n".$jFilelist."\n\n" . $jDepartments; ?>
+        </script>
+        <script type="text/javascript" language="javascript" src="scripts/<?php echo $curScript; ?>.js"></script>
+    </head>
+    <body>
+        <div id="screenProtectorDiv" style="display:none"></div>
+        <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+        <div style="display: none" id="progressDivBackground">
+            <div id="progressDiv">
+                <div class="detailContainerHeading">Processing...</div>
+                <div id="statusDiv">
+                    <div style="padding: 10px;" id="progressBar"><progress value="0" max="<?php echo $totalLetters; ?>" class="html5"></progress></div>
+                    <div id="cntDiv"><span id="totalCompleted">0</span>/<?php echo $totalLetters; ?></div>
+                    <div id="perComplete">0 %</div>
+                </div>
+                <span id="startingTotal" style="display:none"><?php echo $totalLetters; ?></span>
+            </div>
+        </div>
+        <div id="headingRow">
+            <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+        </div>
+        <div id="menuRow">
+            <?php echo $menu; ?>
+        </div>
+        <div id="mainDiv">
+            <div id="posDiv"></div>
+            <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+            <div id="notificationsDiv" style="display: none"></div>
+            <form action="finish.letter.php" method="POST" id="frmLetter" name="frmLetter">
+                <input type="hidden" name="filename" id="filename" value="<?php echo $filename; ?>" />
+                <input type="hidden" name="xmlFilename" id="xmlFilename" value="<?php echo $fileList[0]; ?>" />
+                <input type="hidden" name="htmlFilename" id="htmlFilename" value="<?php echo $htmlFilename; ?>" />
+                <input type="hidden" name="department" id="department" value="<?php echo $dept; ?>" />
+                <input type="hidden" name="previewAll" id="previewAll" value="N" />
+                <input type="hidden" name="contact_id" id="contact_id" value="<?php echo $contact_id; ?>" />
+                <input type="hidden" name="contribution_id" id="contribution_id" value="<?php echo $contribution_id; ?>" />
+                <input type="hidden" name="region" id="region" value="<?php echo $region; ?>" />
+            <div id="topControlDiv">
+                <div id="methodDiv">
+                    <label for="method">Method</label>
+                    <select name="method" id="method" onchange="showEmail(this);">
+                        <?php echo $methods; ?>
+                    </select>
+                </div>
+                <div id="emailDiv"<?php echo $showEmailDiv; ?>>
+                    <div>
+                        <label for="emailname">To Name</label><br />
+                        <input type="text" name="emailname" id="emailname" placeholder="to name" value="<?php echo $emailToName; ?>" />
+                    </div>
+                    <div>
+                        <label for="email">To Email Address</label><br />
+                        <select name="email" id="email"><?php echo $emailAddressOpts; ?></select>
+                    </div>
+                    <div>
+                        <label for="subject">Subject</label><br />
+                        <input type="text" name="subject" id="subject" placeholder="email subject" value="<?php echo $emailSubject; ?>" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <label>Send As</label><br />
+                        <input type="radio" name="impersonate" id="impDepartment" value="Y"<?php echo $mustImpersonate; ?> style="width:25px" /> <label for="impDepartment" id="lblDepartment"><?php echo $departmentFromName; ?></label><br />
+                        <input type="radio" name="impersonate" id="impUser" value="N"<?php echo $dontImpersonate; ?> style="width:25px" /> <label for="impUser"><?php echo $userFromName; ?></label>
+                    </div>
+                </div>
+                <div id="printDiv"<?php echo $showPrintDiv; ?>>
+                    <div style="margin-top: 10px;">Margins</div>
+                    <div>
+                        <label for="tpl_marginLeft">left</label><br />
+                        <input type="text" name="tpl_marginLeft" id="tpl_marginLeft" value="<?php echo $marginLeft; ?>" title="left margin" />
+                    </div>
+                    <div>
+                        <label for="tpl_marginTop">top</label><br />
+                        <input type="text" name="tpl_marginTop" id="tpl_marginTop" value="<?php echo $marginTop; ?>" title="top margin" />
+                    </div>
+                    <div>
+                        <label for="tpl_marginRight">right</label><br />
+                        <input type="text" name="tpl_marginRight" id="tpl_marginRight" value="<?php echo $marginRight; ?>" title="right margin" />
+                    </div>
+                    <div style="margin-right: 0px;">
+                        <label for="tpl_marginBottom">bottom</label><br />
+                        <input type="text" name="tpl_marginBottom" id="tpl_marginBottom" value="<?php echo $marginBottom; ?>" title="bottom margin" />
+                    </div>
+                </div>
+                
+             </div>
+            <div id="bottomDiv">
+                <div id="leftControlDiv">
+                    <div id="readyDiv">
+                        <div style="margin-bottom: 15px;min-height: 10px;height: auto !important;background-color: #254B7C;color: #FFF;padding: 5px;font-size: 9pt;text-align: left;">
+                            <input type="checkbox" name="ready" id="ready" value="Y" style="width: 20px;" onchange="showUpdateBtn()"<?php echo $isReadyChecked; ?> />
+                            <label for="ready">this letter is ready</label>
+                        </div>
+                        letter <span style="font-size:24pt;font-weight: bold;" id="letterCnt">1</span> of <span><?php echo count($fileList); ?></span>
+                    </div>
+                    <div id="navLeftDiv">
+                        <img src="img/back-green.png" id="prevBtn" style="display:none" onclick="openPrevious()" title="previous" />&nbsp;
+                    </div>
+                    <div id="navMiddleDiv">
+                        <div style="margin: auto;width: 24px;"><img src="img/<?php echo $exportImage; ?>" height="24" width="24" align="middle" style="<?php echo $showExportBtn; ?>" id="updateBtn" onclick="sendForm();" title="update and export" /></div>
+                    </div>
+                    <div id="navRightDiv">
+                        <?php if (count($fileList)>1) { ?><img src="img/next-green.png" id="nextBtn" onclick="openNext()" title="Next" />
+                        <?php } else { ?>&nbsp; <?php } ?>
+                    </div>
+                    <div class="btn" style="clear:both;margin: auto;margin-top: 10px" onclick="preview('N');" style="margin-left: 10px;">Preview</div>
+                    <div class="btn" style="margin-left:10px;margin-top: 10px" onclick="saveLetter()">Save</div>
+                    <div class="btn" style="clear:both;margin: auto;margin-top: 10px" id="btnDelLetter">Delete</div>
+                    <input type="hidden" id="updateAll" name="updateAll" value="N" />
+                    <div class="btn" style="clear:both;margin: auto;position: absolute;bottom: 0;margin-bottom: 15px;" title="Update all records and then print or email" align="center" onclick="updateAll();">Update &amp; Export All</div>
+                    <div class="btn" style="clear:both;margin: auto;position: absolute;bottom: 0;margin-bottom: 60px;" onclick="preview('Y');">Preview All</div>
+                </div>
+                <div id="letterDiv">
+                    <textarea class="ckeditor" name="letterEditor" id="letterEditor"><?php echo $html; ?></textarea>
+                </div>
+            </div>
+            </form>
+        </div>
+        <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+    </body>
+</html>

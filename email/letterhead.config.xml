@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <headerImage>2014-letterhead-header.png</headerImage>
+    <sideImage>2014-letterhead-sidebar.png</sideImage>
+    <footerImage>
+        <image region="10" filename="2014-letterhead-footer.png" />
+        <image region="20" filename="2014-letterhead-footer.png" />
+        <image region="31" filename="2014-letterhead-footer.png" />
+        <image region="32" filename="2014-letterhead-footer.png" />
+        <image region="33" filename="2014-letterhead-footer.png" />
+        <image region="34" filename="2014-letterhead-footer.png" />
+        <image region="41" filename="2014-letterhead-footer.png" />
+        <image region="42" filename="2014-letterhead-footer.png" />
+        <image region="50" filename="2014-letterhead-footer.png" />
+        <image region="60" filename="2014-letterhead-footer.png" />
+        <image region="70" filename="2014-letterhead-footer.png" />
+    </footerImage>
+</root>

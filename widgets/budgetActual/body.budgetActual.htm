@@ -1,0 +1,88 @@
+<style type="text/css">
+    .chartsDiv {
+        width:auto;
+        height:auto;
+        overflow: hidden;
+        margin: auto;
+    }
+    #budActChart {
+        width: auto;
+        height: 180px;
+        overflow: hidden;
+        padding: 10px;
+        color: #FFF;
+    }
+    #loadingDiv {
+        width:550px;
+        margin: auto;
+        text-align: center;
+        padding-top: 75px;
+    }
+</style>
+<script type="text/javascript">
+    var dSource = [];
+    var chartOptions = {
+        dataSource: dSource,
+        commonSeriesSettings: {
+            type: "spline",
+            argumentField: "month",
+            font: { color: "#FFF" }
+        },
+        commonAxisSettings: {
+            color: 'white',
+            grid: {
+                visible: true,
+                color: 'white'
+            },
+            label: {
+                font: { color: 'white' }
+            }
+        },
+        series: [
+            { valueField: "pactual", name: "Previous", color: "#000" },
+            { valueField: "budget", name: "Budget", color: "#254B7C" },
+            { valueField: "actual", name: "Actual", color: "#CD3333" }
+        ],
+        tooltip:{
+            enabled: true,
+            format: 'largeNumber'
+        },
+        legend: {
+            visible: false
+        },
+        commonPaneSettings: {
+            border:{
+                visible: false
+            }
+        },
+        valueAxis: [{
+            label: {
+                format: 'largeNumber'
+            }
+        }]
+    };
+    $(document).ready(function(){
+        refreshBudgetActualChart();
+    });
+    function refreshBudgetActualChart() {
+        $.get('widgets/budgetActual/get.budgetActual.php').done(function(data){
+            dSource = $.parseJSON(data);
+            chartOptions.dataSource = dSource;
+            
+            $("#loadingDiv").hide();
+            $("#budActChart").show();
+            $("#budActChart").dxChart(chartOptions);
+         });
+    }
+</script>
+<div class="widgetHeader">
+    <span style="color:  #000;font-weight: bold;font-size: 18px;">Previous</span> vs <span style="color: #254B7C;font-weight: bold;font-size: 18px;">Budget</span> vs <span style="color:  #CD3333;font-weight: bold;font-size: 18px;">Actual</span>
+    <div style="float:right;display: inline-block;margin-right: 30px;">
+        <img src="img/refresh.png" height="16" width="16" title="refresh" style="cursor:pointer" onclick="refreshBudgetActualChart();" />
+        <img src="img/settings.png" height="16" width="16" title="edit settings" style="cursor:pointer" onclick="showAppSettings(<?php echo $w->wid_id; ?>);" />
+    </div>
+</div>
+<div class="chartsDiv">
+    <div id="budActChart" style="display:none"></div>
+    <div id="loadingDiv"><img src="img/loading-4.gif" align="center" /> &nbsp;loading...</div>
+</div>

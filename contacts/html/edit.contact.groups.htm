@@ -1,0 +1,98 @@
+<style type="text/css">
+    #newGroupDiv {
+        clear: left;
+        width: 190px;
+        float: left;
+        margin-top: 3px;
+    }
+    #allGroupsDiv {
+        margin-left: 0px;
+        margin-top: 0px;
+        margin-bottom: 15px;
+    }
+    #group_id {
+        font-size: 12pt;
+        padding: 3px;
+        border: 3px solid #254B7C;
+        width: 180px;
+        margin-bottom: 3px;
+    }
+    #emailSelect,#emailInput {
+        border: 3px solid #254B7C;
+        padding: 2px;
+    }
+    #emailAdddressDiv {
+        clear: both;
+    }
+</style>
+<script type="text/javascript" language="javascript">
+    $("#btnSaveGroups").click(function(){
+        if ($("#group_id").val().length==0){
+            alert('Please select a group to add this contact to');
+            $("#group_id").focus();
+            return;
+        }
+        var emlReq = $('option:selected', "#group_id").attr('emailRequired');
+        
+        if (emlReq.indexOf('Y')>=0) {
+            if ($("#emailInput").val().trim().length>0) $("#email").val($("#emailInput").val());
+            if ($("#email").val().length==0) {
+                alert('Please insert the email address for the ' + $('option:selected', "#group_id").text() + ' group');
+                return;
+            }
+        }
+        var $form = $( '#frmGroups' );
+        $.post("save.contact.groups.php",$form.serialize(),function(data){
+            resultContent = $.parseJSON(data);
+            reloadSummary();
+            $("#groups").click();
+        });
+    });
+    $(".delImg").click(function(){
+        var cid = $("#cid").val();
+        var gcid = $(this).attr('gcid');
+        $("#donorGroupsFrmDiv").empty().append("removing group ...");
+        $.post('../remove.group.php',{id: gcid,contact_id: cid},function(data){
+            resultContent = $.parseJSON(data);
+            reloadSummary();
+            $("#groups").click();
+        });
+    });
+    $("#group_id").change(function(){
+        $("#emailAdddressDiv").hide();
+        var emlReq = $('option:selected', this).attr('emailRequired');
+        if (emlReq.indexOf('Y')>=0) $("#emailAdddressDiv").show();
+    });
+    $("#emailSelect").change(function(){
+       if ($("#emailInput").val().trim().length==0) {
+           var e = ($('option:selected', this).val()>0) ? $('option:selected', this).text():'';
+           $("#email").val(e);
+       }
+    });
+</script>
+<div id="frmContentDiv">
+    <form action="save.contact.groups.php" method="POST" id="frmGroups">
+        <input type="hidden" name="contact_id" value="<?php echo $contactId; ?>" />
+        <div class="detailContainerDiv" id="allGroupsDiv">
+            <div class="detailContainerHeading">Groups</div>
+            <table cellpadding="3" cellspacing="0" width="100%" class="detailContainerTable">
+                <?php echo $contactGroups; ?>
+            </table>
+        </div>
+        <?php if (!empty($groupOpts)) { ?>
+        <div id="newGroupDiv">
+            <select id="group_id" name="group_id">
+                <option value="">-- select --</option>
+                <?php echo $groupOpts; ?>
+            </select>
+        </div>
+        <div class="btn" id="btnSaveGroups">Add</div>
+        <input type="hidden" id="email" name="email" />
+        <input type="hidden" id="display_name" name="display_name" value="<?php echo $dnr['display_name']; ?>" />
+        <div id="emailAdddressDiv" style="display:none"><?php if (!empty($emailOpts)) { ?><select id="emailSelect"><option value="">-- select --</option><?php echo $emailOpts; ?></select> or <?php } ?><input type="email" id="emailInput" placeholder="email address" /></div>
+        <?php } ?>
+    </form>
+</div>
+<div id="divSaveResults" style="display:none">
+    <div id="divResult"></div>
+</div>

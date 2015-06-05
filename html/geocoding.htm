@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title><?php echo $title; ?></title>
+    <link rel="stylesheet" type="text/css" href="css/global.css" />
+    <link rel="stylesheet" type="text/css" href="css/<?php echo $curScript; ?>.css" />
+    <script type="text/javascript" language="javascript" src="scripts/global.js"></script>
+    <script type="text/javascript" language="javascript" src="scripts/<?php echo $curScript; ?>.js"></script>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=<?php echo $apiKey; ?>">
+    </script>
+    <script type="text/javascript" language="javascript" src="scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" language="javascript" src="scripts/jquery-ui-1.10.4.custom.js"></script>
+    <script type="text/javascript" language="javascript" src="scripts/tablePaging.js"></script>
+    <script type="text/javascript" src="scripts/jquery.tablesorter.js"></script>
+    <script type="text/javascript">
+        $(function() {
+    		$("#tblPostalCodes").tablesorter();
+    	});
+        var geocoder;
+        var map;
+        var markers = [];
+        google.maps.event.addDomListener(window, 'load', initialize); 
+    </script>
+  </head>
+  <body onload="initialize();">
+        <div id="screenProtectorDiv" style="display:none"></div>
+        <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+        <div id="headingRow">
+            <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+        </div>
+        <div id="menuRow">
+            <?php echo $menu; ?>
+        </div>
+        <div id="mainDiv" >
+            <div id="posDiv"></div>
+            <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+            <div id="notificationsDiv" style="display: none"></div>
+            <div id="contentDiv" style="height: 710px;">
+                <form action="save.geocoding.php" method="POST" name="frmGeocodes" id="frmGecodes">
+                <div id="map-control">
+                    <table cellpadding="3" cellspacing="0" width="100%" id="tblPostalCodes">
+                        <thead>
+                            <!--th><input type="checkbox" id="chkShowAll" value="A" onchange="showAll(this);" /></th-->
+                            <th>&nbsp;</th>
+                            <th>Area</th>
+                            <th>Suburb</th>
+                            <th>&nbsp;</th>
+                            <th>P Code</th>
+                            <th width="40">Lat</th>
+                            <th width="40">Lon</th>
+                        </thead>
+                        <tbody>
+                            <?php echo $tr; ?>
+                        </tbody>
+                    </table>
+                    <script type="text/javascript" language="javascript">$('#tblPostalCodes').oneSimpleTablePagination({rowsPerPage: 20});</script>
+                    <div class="btn" onclick="save()" style="margin-top: 10px;">Save</div>
+                    <div class="btn" onclick="reInitialize()" style="margin-top: 10px;">Reset</div>
+                    <div style="margin-top:10px;float:right;font-size:14pt;font-weight: bold;padding:10px" id="divLon">lon: </div>
+                    <div style="margin-top:10px;float:right;font-size:14pt;font-weight: bold;padding:10px" id="divLat">lat: </div>
+                    <div style="clear:both;"><a href="http://zaf.postcodebase.com/" target="_blank" style="cursor:pointer;color: #254B7C;">Post Code Helper</a></div>
+                </div>
+                </form>
+                <div id="map-canvas"></div>
+            </div>
+        </div>
+        <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+	</body>
+</html>

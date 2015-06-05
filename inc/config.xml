@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<dmsConfig>
+    <databaseConnection>
+        <host></host>
+        <username></username>
+        <password></password>
+        <database></database>
+    </databaseConnection>
+    <joomlaConnection>
+        <host></host>
+        <username></username>
+        <password></password>
+        <database></database>
+    </joomlaConnection>
+    <civiConnection>
+        <host></host>
+        <username></username>
+        <password></password>
+        <database></database>
+    </civiConnection>
+    <classes>
+        <db>class.db.php</db>
+        <functions>class.functions.php</functions>
+        <html2pdf>html2pdf.class.php</html2pdf>
+        <phpmailer>class.phpmailer.php</phpmailer>
+        <authorisation>class.authorisation.php</authorisation>
+        <user>class.user.php</user>
+        <widget>class.widget.php</widget>
+        <smtp>class.smtp.php</smtp>        
+        <donor>class.donor.php</donor>
+        <profile>class.profile.php</profile>
+        <remark>class.remark.php</remark>
+        <transaction>class.transaction.php</transaction>
+        <acknowledgement>class.acknowledgement.php</acknowledgement>
+        <region>class.region.php</region>
+        <department>class.department.php</department>
+        <denomination>class.denomination.php</denomination>
+        <synod>class.synod.php</synod>
+        <circuit>class.circuit.php</circuit>
+        <congregation>class.congregation.php</congregation>
+        <category>class.category.php</category>
+        <postalCodes>class.postalcodes.php</postalCodes>
+        <contact>class.contact.php</contact>
+        <budget>class.budget.php</budget>
+        <menu>class.menu.php</menu>
+        <civilink>class.civilink.php</civilink>
+        <template>class.template.php</template>
+        <etl_donorerror>class.etl_donorerror.php</etl_donorerror>
+        <etl_contributionerror>class.etl_contributionerror.php</etl_contributionerror>
+        <orgunit>class.orgunit.php</orgunit>
+        <phpmailer_extension>class.phpmailer.extension.php</phpmailer_extension>
+	<postalcodes_extension>class.postalcodes.extension.php</postalcodes_extension>
+    <JoomlaUser>class.joomlauser.php</JoomlaUser><acknowledgementPreferences>class.acknowledgementpreferences.php</acknowledgementPreferences><civicrm_dms_category>class.civicrm_dms_category.php</civicrm_dms_category><civicrm_dms_contact_other_data>class.civicrm_dms_contact_other_data.php</civicrm_dms_contact_other_data><civicrm_dms_contact_reporting_code>class.civicrm_dms_contact_reporting_code.php</civicrm_dms_contact_reporting_code><civicrm_dms_department>class.civicrm_dms_department.php</civicrm_dms_department><civicrm_dms_motivation>class.civicrm_dms_motivation.php</civicrm_dms_motivation><civicrm_dms_organisation>class.civicrm_dms_organisation.php</civicrm_dms_organisation><civicrm_dms_region>class.civicrm_dms_region.php</civicrm_dms_region><civicrm_dms_transaction>class.civicrm_dms_transaction.php</civicrm_dms_transaction><mergerecord>class.mergerecord.php</mergerecord><salutations>class.salutations.php</salutations><dmsMandrill>class.mandrill.php</dmsMandrill><dmsMailchimp>class.mailchimp.php</dmsMailchimp><financialDates>class.dates.php</financialDates></classes>
+    <importFiles>
+        <qbdonor>qb_donor</qbdonor>
+        <qbtrans>qb_trans</qbtrans>
+        <qbcategory>qb_category</qbcategory>
+        <qborgunit>qb_orgunit</qborgunit>
+        <qbprofile>qb_profile</qbprofile>
+        <bamlink>bam_link</bamlink>
+    </importFiles>
+    <authorisation>
+        <delete>14</delete>
+        <update>34</update>
+        <insert>34</insert>
+        <select>34</select>
+        <admin>14</admin>
+        <superUser>8</superUser>
+        <registeredGroup>2</registeredGroup>
+    </authorisation>
+    <accessLevels>
+        <user>Only me</user>
+        <system>Everyone :)</system>
+    </accessLevels>
+    <budget allowEdit="false"/>
+    <sowerLocationTypeId id="6"/>
+    <previousSowerLocationTypeId id="10"/>
+    <workLocationTypeId id="2"/>
+    <civiOptionGroups>
+        <phonetypes>35</phonetypes>
+	<titles>6</titles>
+	<gender>3</gender>
+        <languageCiviOptGroupId>75</languageCiviOptGroupId>
+    </civiOptionGroups>
+    <emailconfig>
+        <zimbraPreAuthKey></zimbraPreAuthKey>
+        <emailhost></emailhost>
+        <address></address>
+        <name>Donor Management System</name>
+        <password></password>
+        <domain></domain>
+        <mailchimpApiKey></mailchimpApiKey>
+        <mailchimpAdministrator contact_id="155626"/>
+        <mandrill>
+            <host>smtp.mandrillapp.com</host>
+            <port>587</port>
+            <smtpUsername></smtpUsername>
+            <smtpPassword></smtpPassword>
+        </mandrill>
+    </emailconfig>
+    <acknowledgementconfig>
+        <defaultemailsubject>Thank you</defaultemailsubject>
+    <marginLeft>25</marginLeft><marginTop>35</marginTop><marginRight>15</marginRight><marginBottom>35</marginBottom>
+        <preferences>
+		<frequencies>
+			<frequency value="0" desc="Every Contribution" default="Y"/>
+			<frequency value="1" desc="Monthly" default="N"/>
+			<frequency value="3" desc="Quarterly" default="N"/>
+			<frequency value="6" desc="Biannually" default="N"/>
+			<frequency value="12" desc="Annually" default="N"/>
+		</frequencies>	
+	</preferences>
+	<languages>
+		<language value="af_ZA" shortdesc="afr" desc="Afrikaans" salutation="Geagte ##title## ##lastName##"/>
+		<language value="en_GB" shortdesc="eng" desc="English (GB)" salutation="Dear ##title## ##lastName##"/>
+		<language value="en_ZA" shortdesc="eng" desc="English (ZA)" salutation="Dear ##title## ##lastName##"/>
+	</languages>
+        <salutations>
+            <type value="Extra Salutation" id="extraSalutation"/>
+            <type value="Address Heading" id="addressHeading"/>
+        </salutations>
+    </acknowledgementconfig>
+    <defaultPreferences>
+	<communicationMethodCiviOptGroupId>1</communicationMethodCiviOptGroupId>
+    </defaultPreferences>
+    <bam>
+        <civiMembershipTypeId>1</civiMembershipTypeId>
+    </bam>
+    <civicrmApi>
+        <crmConfigFile>/var/www/joomla/administrator/components/com_civicrm/civicrm/civicrm.config.php</crmConfigFile>
+        <crmCoreConfigFile>/var/www/joomla/administrator/components/com_civicrm/civicrm/CRM/Core/Config.php</crmCoreConfigFile>
+    </civicrmApi>
+	    <versions>
+        <civicrm>4.5.4</civicrm>
+        <dms>5.0.1</dms>
+    </versions>
+	<googleApiKey></googleApiKey>
+<activityconfig>
+    <civiOptionGroupId>2</civiOptionGroupId>
+    <civiStatusOptionGroupId>26</civiStatusOptionGroupId>
+    <activities>
+        <activity value="1" default="Y"/>
+        <activity value="2" default="N"/>
+        <activity value="3" default="N"/>
+        <activity value="6" default="N"/>
+        <activity value="7" default="N"/>
+        <activity value="8" default="N"/>
+        <activity value="12" default="N"/>
+        <activity value="13" default="N"/>
+        <activity value="14" default="N"/>
+        <activity value="17" default="N"/>
+        <activity value="19" default="N"/>
+        <activity value="22" default="N"/>
+        <activity value="34" default="N"/>
+        <activity value="33" default="N"/>
+        <activity value="35" default="N"/>
+        <activity value="36" default="N"/>
+        <activity value="40" default="N"/>
+        <activity value="44" default="N"/>
+        <activity value="46" default="N"/>
+        <activity value="47" default="N"/>
+        <activity value="48" default="N"/>
+	<activity value="49" default="N"/>
+    </activities>
+    <civiActivityRecordTypeIds>
+        <typeId value="1" desc="assigned_to"/>
+        <typeId value="2" desc="source_contact_id"/>
+        <typeId value="3" desc="with_contact_id"/>
+    </civiActivityRecordTypeIds>
+    <activitiesExcludedFromStatusUpdate>
+        <activity value="6"/>
+        <activity value="7"/>
+        <activity value="8"/>
+        <activity value="12"/>
+        <activity value="17"/>
+        <activity value="22"/>
+        <activity value="33"/>
+        <activity value="35"/>
+        <activity value="36"/>
+        <activity value="44"/>
+        <activity value="4"/>
+        <activity value="19"/>
+        <activity value="34"/>
+        <activity value="46"/>
+        <activity value="47"/>
+        <activity value="48"/>
+    </activitiesExcludedFromStatusUpdate>
+    <userActivities>
+        <activity value="1" default="Y"/>
+        <activity value="2" default="N"/>
+        <activity value="3" default="N"/>
+        <activity value="49" default="N"/>
+    </userActivities>
+    </activityconfig>
+    <showSql value="Y"/>
+    <civiGroups>
+        <sower>1</sower>
+    </civiGroups>
+    <sower>
+        <mailchimpLists>
+            <list id="913a5535c7" desc="eSower" groupId="2"/>
+            <list id="5ed4ccc363" desc="eSaaier" groupId="4"/>
+        </mailchimpLists>
+    </sower>
+    <financialYearStartMonth>November</financialYearStartMonth>
+</dmsConfig>

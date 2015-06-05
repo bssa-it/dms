@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="../css/global.css" />
+        <link rel="stylesheet" type="text/css" href="../css/user.css" />
+
+        <script type="text/javascript" language="javascript" src="../scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="../scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="../scripts/global.js"></script>
+        <script type="text/javascript" language="javascript" src="../scripts/user.js"></script>
+    </head>
+    <body>
+    <div id="screenProtectorDiv" style="display:none"></div>
+    <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+    <div id="headingRow">
+        <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+    </div>
+    <div id="menuRow">
+        <?php echo $menu; ?>
+    </div>
+    <div id="mainDiv">
+        <div id="posDiv"></div>
+        <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+        <div id="notificationsDiv" style="display: none"></div>
+        <div id="contentDiv">
+            <!-- content goes here -->
+            <form method="POST" action="create.user.php" id="frmUser" name="frmUser">
+                <div id="page-1" class="pg">
+                    <div class="pageHeading">User Detail</div>
+                    <div class="pageBody">
+                        <table width="100%" cellspacing="0" cellpadding="5" id="tblUserDetail">
+                            <tr><td><label for="email">User Email Address</label></td><td><input type="email" name="email" id="email" /></td></tr>
+                            <tr><td><label for="first_name">User&#39;s First Name</label></td><td><input type="text" name="first_name" id="first_name" /></td></tr>
+                            <tr><td><label for="last_name">User&#39;s Last Name</label></td><td><input type="text" name="last_name" id="last_name" /></td></tr>
+                            <tr><td><label for="userType">User Type</label></td><td><select name="userType" id="userType"><?php echo $userTypeOpts; ?></select></td></tr>
+                        </table>
+                        <div class="btn" id="btnNext1">Next</div>
+                    </div>
+                </div>
+                <div id="page-2" class="pg" style="display:none">
+                    <div class="pageHeading">Select Departments</div>
+                    <div class="pageBody">
+                        <input type="hidden" id="currentEmailDpt" value="<?php echo $currentEmail; ?>" />
+                        <table width="98%" align="left" cellpadding="5" cellspacing="0">
+                            <tr>
+                                <td colspan="3" valign="top" style="font-size: 9pt;">
+                                    <div><div style="background-color: rgba(37,75,124,0.1);padding:4px;font-weight: bold;"><input type="checkbox" id="chkAll" onclick="checkAllDepts();" /><label for="chkAll">CHECK ALL</label></div><?php echo $departmentChks; ?></div>
+                                    <div id="impersonateDiv">
+                                        Primary Department: 
+                                        <select name="primaryDepartment" id="primaryDepartment"></select>
+                                    </div>
+                                </td> 
+                            </tr>
+                        </table>
+                        <div class="btn" id="btnBack2">Back</div><div class="btn" id="btnNext2">Next</div>
+                    </div>
+                </div>
+                <div id="page-3" class="pg" style="display:none">
+                    <script>
+                        var usedWidgetList = [];
+                        <?php echo $widJavaObj; ?>
+                    </script>
+                    <div class="pageHeading">Widgets</div>
+                    <div class="pageBody">
+                        <div class="widget widget-1"><select name="widgets[]" id="q1"><?php echo $widOpts; ?></select></div>
+                        <div class="widget widget-2"><select name="widgets[]" id="q2"><?php echo $widOpts; ?></select></div>
+                        <div class="widget widget-3"><select name="widgets[]" id="q3"><?php echo $widOpts; ?></select></div>
+                        <div class="widget widget-4"><select name="widgets[]" id="q4"><?php echo $widOpts; ?></select></div>
+                        <div class="btn" id="btnBack3">Back</div><div class="btn" id="btnSave">Create User</div>
+                    </div>
+                </div>
+            </form>
+            <!-- end content -->
+        </div>
+    </div>
+    <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+    </body>
+</html>

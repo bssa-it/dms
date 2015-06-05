@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<prompts>
+    <periods>
+        <period id="M" value="monthly" active="Y" />
+        <period id="Y" value="yearly" active="N" />
+    </periods>
+</prompts>

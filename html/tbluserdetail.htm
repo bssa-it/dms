@@ -1,0 +1,52 @@
+    <div id="impersonateUserDiv" style="cursor:pointer" onclick="showHideImpersonatedUser();"><img src="img/user.png" title="User Impersonation" height="24" width="24" style="margin-right: 5px;" /><?php echo $_SESSION['dms_user']['fullname']; ?></div>
+        <div id="impersonateUserDetailDiv" style="display:none;">
+            <table cellpadding="5" cellspacing="0" id="tblUserdetail">
+                <thead>
+                    <tr>
+                        <td colspan="2" style="font-weight: bold;font-size:12pt" valign="top">
+                            <img src="img/user.png" title="User Impersonation" height="24" width="24" style="margin-right: 5px;" /> 
+                            <?php echo $_SESSION['dms_user']['fullname']; ?>
+                            <div style="float: right;font-weight: bold;margin-right: 5px;cursor:pointer" onclick="showHideImpersonatedUser();">x</div>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody id="tbdUserDetail">
+                    <tr>
+                        <td>User id</td>
+                        <td><?php echo $_SESSION['dms_user']['userid']; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Username</td>
+                        <td><?php echo $_SESSION['dms_user']['username']; ?></td>
+                    </tr>
+                    <tr>
+                        <td>IP Address</td>
+                        <td><?php echo $_SESSION['dms_user']['ipaddress']; ?></td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <td colspan="2">Permissions</td>
+                    </tr>
+                </thead>
+                <tbody id="tbdUserAuthority">
+                    <tr>
+                        <td>View</td>
+                        <td><?php echo (!$_SESSION['dms_user']['authorisation']->canSelect) ? 'No':'Yes'; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Edit</td>
+                        <td><?php echo (!$_SESSION['dms_user']['authorisation']->canUpdate) ? 'No':'Yes'; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Insert</td>
+                        <td><?php echo (!$_SESSION['dms_user']['authorisation']->canInsert) ? 'No':'Yes'; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Delete</td>
+                        <td><?php echo (!$_SESSION['dms_user']['authorisation']->canDelete) ? 'No':'Yes'; ?></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="cursor:pointer;margin-top:5px;font-size:10pt" onclick="window.location='clear.impersonation.php'">Cancel Impersonation</div>
+        </div>

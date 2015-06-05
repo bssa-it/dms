@@ -1,0 +1,64 @@
+#frmSearch input,select {
+    width: 240px;
+    padding: 3px;
+    font-size: 9pt;
+    float: right;
+    border: 3px solid #254B7C;
+}
+#frmSearch label {
+    font-size: 11pt;
+}
+#contentDiv {
+  height: auto;
+  max-height: 600px;
+  overflow: auto;
+  width: 1250px;
+  margin: auto;
+  background-color: rgba(37, 75, 124, 0.1);
+  padding: 20px;
+  padding-right: 0px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+}
+#searchDiv {
+    background-color: rgba(66,174,194,0.3);
+    clear:left;
+    margin-top: 15px;
+}
+#searchDiv input {
+    width: 20px;
+    float: none;
+}
+.searchGroupingDiv {
+    float:left;
+    padding: 10px;
+    width: 380px;
+    height: auto !important;
+    cursor: pointer;
+}
+.searchGroupingHeadingDiv {
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #254B7C;
+    margin-bottom: 5px;
+    font-size: 13pt;
+}
+.tblFields {
+    display:none;
+}
+#frmSearch input[type="checkbox"] {
+    width: 15px;
+    float: none;
+}
+.dateDiv {
+    height: auto;
+    overflow: hidden;
+    text-align: right;
+}
+.dateDiv div {
+    margin-top: 5px;
+      margin-right: 5px;
+      float: left;
+      text-align: right;
+      width: 80px;
+}

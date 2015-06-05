@@ -1,0 +1,76 @@
+#tblDepartments table {
+    font-size: 11pt;
+}
+#tblDepartments input {
+    width:  20px;
+}
+#tblDepartments li {
+     list-style:none;
+}
+
+ #primaryDepartment {
+    font-size: 11pt;
+    color: #254B7C;
+    font-weight: bold;
+    background-color: rgba(37,75,124,0.1);
+    padding: 3px;
+}
+#impersonateDiv {
+    padding-top: 10px;
+    clear:both;
+    font-size: 12pt;
+}
+.dptChckDiv {
+    width: 260px;
+    float: left;
+    font-size: 11pt;
+}
+.widget {
+    border-radius: 5px;
+    padding: 10px;
+    width: 300px;
+    margin: 5px;
+}
+.widget-1 {
+    background-color: #42AEC2;
+}
+.widget-2 {
+    background-color: #ED8029;
+}
+.widget-3 {
+    background-color: #A7B526;
+}
+.widget-4 {
+    background-color: #5595A7;
+}
+#contentDiv {
+    padding: 20px;
+    width: 900px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+    margin: auto;
+}
+.pageHeading {
+    background-color: #A7B526;
+    padding: 10px;
+    font-size: 20px;
+    color: #FFF;
+}
+.pg {
+    border: 3px solid #A7B526;
+    height: auto;
+    overflow: auto;
+}
+.pageBody {
+    padding: 5px;
+    height: auto;
+    overflow: hidden;
+}
+#frmUser input[type="checkbox"] {
+    width: 15px;
+}
+#frmUser input,#frmUser select {
+    padding: 2px;
+    border: 2px solid #A7B526;
+}

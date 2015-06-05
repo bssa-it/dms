@@ -1,0 +1,114 @@
+#mainDiv {
+    overflow: auto;
+}
+.heading {
+    font-size: 14pt;
+    font-weight: bold;
+    width: auto !important;
+    color: #254B7C;
+    border-bottom: 2px solid #FF9F00;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.tblConnection {
+    margin-right: 15px;
+    margin-bottom: 10px;
+    font-size: 10pt;
+    float: left;
+}
+
+#connectionsDiv {
+    height: auto !important;
+    width: 1250px;
+}
+
+input,select {
+    width: 150px;
+    font-size: 11pt;
+    padding: 3px;
+    border: 2px solid #254B7C;
+}
+
+#authorisationFrmDiv,#systemClassesFrmDiv,#otherSettingsDiv {
+    width: 1250px;
+    height: auto !important;    
+}
+#newClassDiv {
+    width: auto !important;
+    float: left;
+}
+#configDiv {
+    height: 650px;
+    width: 1300px;
+    overflow:  auto;
+}
+
+#tabContentDiv {
+    width:  1250px;
+    min-height: 500px;
+    height: auto !important;
+    overflow: auto;
+    padding: 5px;
+    border: 8px solid #254B7C;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    clear:both;
+}
+
+.tab, .tabSelected {
+    float: left;
+    border: 8px solid #254B7C;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-bottom-left-radius: 0px;
+    -moz-border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    -moz-border-bottom-right-radius: 0px;
+    border-bottom: none;
+    padding: 5px;
+    min-height: 15px;
+    height: auto !important;
+    min-width: 50px;
+    width: auto !important;
+    font-weight: bold;
+    margin-left: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+.tabSelected {
+    color: #FFF;
+    background-color: #254B7C;
+}
+.settingsDiv {
+    float:left;
+    padding: 10px;
+    width: 380px;
+    min-height: 80px;
+    height: auto !important;
+    background-color: rgba(37,75,124,0.2);
+    margin: 3px;
+}
+.settingsHeader {
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #254B7C;
+    margin-bottom: 5px;
+    font-size: 13pt;
+}
+.addSettingDiv {
+    min-height: 10px;
+    padding: 3px;
+    width: auto !important;
+}
+
+#authorisationDiv {
+    min-height: 150px;
+    height: auto !important;
+    width: 320px;
+    float: left;
+}
+
+#frmEmail input,#frmAcknowledgement input{
+    width: 300px;
+    margin-left: 10px;
+}

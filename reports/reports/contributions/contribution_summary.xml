@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <active>Y</active>
+    <prompts>
+        <prompt function="getSelect" defaultValue="" label="Department" validate="Y" name="department_id" visible="Y">
+            <otherParameters>
+                <showAll>Y</showAll>
+                <showEmpty>Y</showEmpty>
+                <showValueWithText>Y</showValueWithText>
+                <options>
+                    <option>
+                        <db>db</db>
+                        <tableName>dms_department</tableName>
+                        <valueField>dep_id</valueField>
+                        <textField>dep_name</textField>
+                    </option>
+                    <!--option>
+                        <value>A1</value>
+                        <text>Chezre</text>
+                    </option>
+                    <option>
+                        <value>A2</value>
+                        <text>Colin</text>
+                    </option-->
+                </options>
+            </otherParameters>
+        </prompt>
+        <prompt function="getInput" defaultValue="" label="Month" validate="N" name="date" visible="Y">
+            <otherParameters>
+                <type>month</type>
+            </otherParameters>
+        </prompt>
+        <prompt function="getInput" defaultValue="0019" label="Category" validate="N" name="category_id" visible="N">
+            <otherParameters>
+                <type>hidden</type>
+            </otherParameters>
+        </prompt>
+        <prompt function="getInput" defaultValue="Y" label="Legacy" validate="N" name="include_legacy" visible="N">
+            <otherParameters>
+                <type>hidden</type>
+            </otherParameters>
+        </prompt>
+        <prompt function="getInput" defaultValue="0" label="Level" validate="N" name="level_id" visible="N">
+            <otherParameters>
+                <type>hidden</type>
+            </otherParameters>
+        </prompt>
+    </prompts>
+    <authorisation>
+        <userGroup group="34" />
+    </authorisation>
+    <javascriptIncludes>
+        <file filename="contribution_summary.js" />
+    </javascriptIncludes>
+    <cssIncludes>
+        <file filename="contribution_summary.css" />
+    </cssIncludes>
+    <tablePhp>table.contribution_summary.php</tablePhp>
+    <chartPhp>chart.contribution_summary.php</chartPhp>
+</root>

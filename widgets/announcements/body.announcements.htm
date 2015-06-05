@@ -1,0 +1,121 @@
+<style type="text/css">
+    #announcementsDiv {
+        float: left;
+        width: 530px;
+        overflow: hidden;
+        margin-top: 10px;
+        position: relative;
+        margin-left: 10px;
+    }
+    #announcementLogoDiv {
+        float: left;
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        bottom: 0px;
+        left: 10px;
+        z-index: 1;
+    }
+    #currentAnnouncementDiv {
+        width: 520px;
+        height: 240px;
+    }
+    #AnnNavigationDiv {
+        height: 20px;
+        width: 35px;
+        overflow: hidden;
+        position: absolute;
+        bottom: 0px;
+        right: 10px;
+        z-index: 1;
+    }
+    #prevBtn {
+        margin-right: 3px;
+    }
+    #nextBtn,#prevBtn {
+        float: left;
+        width: 15px;
+        cursor: pointer;
+        background-color: #254B7C;
+        text-align: center;
+        border-radius: 5px;
+    }
+    #nextBtn {
+        float: right;
+    }
+</style>
+<script type="text/javascript">
+    var filelist = [];
+    var fileIdx = 0;
+    var timer;
+    $(document).ready(function() {
+        $("#currentAnnouncementDiv").empty().append('<img src="img/loading-4.gif" align="center" /> loading ...');
+        $.get('get.announcements.php').done(function(data){
+           filelist = $.parseJSON(data);
+           if (filelist.files.length>0) {
+               getNextFile(fileIdx);
+               fileIdx++;
+           }
+           announcementLoop();
+        });
+        $("#nextBtn").click(function(){
+            if (fileIdx==filelist.files.length) fileIdx = 0;
+            getNextFile(fileIdx);
+            fileIdx++;
+            announcementLoop();
+        });
+        $("#prevBtn").click(function(){
+            fileIdx -= 2;
+            if (fileIdx<0) fileIdx = 0;
+            getNextFile(fileIdx);
+            fileIdx++;
+            announcementLoop();
+        });
+
+    });
+    function getNextFile(idx) {
+        var f = filelist.files[idx].path;
+        $.get(f).done(function(data){
+            $("#currentAnnouncementDiv").empty().append(data);
+        });
+        if (filelist.files.length>0) {
+            $("#prevBtn,#nextBtn").show();
+            if (idx==0) {
+                $("#prevBtn").hide();
+            }
+            var lastA = filelist.files.length-1;
+            if (idx==lastA) {
+                $("#nextBtn").hide();
+            }
+        } else {
+            $("#nextBtn,#prevBtn").hide();
+        }
+    }
+    function announcementLoop() {
+        clearInterval(timer);
+        if (filelist.files.length>0) {
+            timer = setInterval(function(){
+                refreshFilelist();
+                if (fileIdx==filelist.files.length) fileIdx = 0;
+                getNextFile(fileIdx); 
+                fileIdx++;
+            }, 30000);
+
+        } else {
+            $("#currentAnnouncementDiv").empty().append(filelist.message);
+        }
+    }
+    function refreshFilelist() {
+        $.get('get.announcements.php').done(function(data){
+           filelist = $.parseJSON(data);
+        });
+    }
+</script>
+<div id="announcementsDiv">
+    <div id="currentAnnouncementDiv"></div>
+    <div id="announcementLogoDiv"><img src="img/announcement.png" title="announcements" width="32" height="32" /></div>
+    <div id="AnnNavigationDiv">
+        <div id="prevBtn">&lt;</div>
+        <div id="nextBtn">&gt;</div>
+    </div>
+</div>

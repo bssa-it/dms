@@ -1,0 +1,36 @@
+.letter {
+    width: 800px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #FEFEFE;
+    padding:  30px;
+    padding-top: 10px;
+    border: 10px solid #A7B526;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+.control {
+    width: 800px;
+    min-height: 30px;
+    height: auto !important;
+    margin: auto;
+    background-color: #FEFEFE;
+    padding:  10px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    margin-top: 15px;
+}
+#emailHeaderDiv {
+    width: 670px;
+    min-height: 100px;
+    margin: auto;
+    margin-bottom: 15px;
+    font-size: 10pt;
+}
+input {
+    width: 100%;
+    padding: 5px;
+    font-size: 12pt;
+    border: 2px solid #254B7C;
+}

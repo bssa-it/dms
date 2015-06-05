@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Configuration Manager</title>
+        <script type="text/javascript" language="javascript" src="../scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="../scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="../scripts/global.js"></script>
+        <script type="text/javascript" language="JavaScript" src="../scripts/configuration.js"></script>
+        <link rel="stylesheet" type="text/css" href="../css/global.css" />
+        <link rel="stylesheet" type="text/css" href="../css/configuration.css" />
+    </head>
+    <body>
+        <div id="headingRow">
+            <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+        </div>
+        <div id="menuRow">
+            <div id="navigationDiv">
+            	<ul id="navigator">
+            		<li>
+                        <a href="../index.php">Dashboard</a>
+            		</li>
+            	</ul>
+            </div>
+        </div>
+        <div id="mainDiv" style="height: 750px;">
+            <div id="posDiv"></div>
+            <div id="configDiv">
+            
+                <div id="tabDiv">
+                    <script language="javascript" type="text/javascript">
+                        var arrTabDivs = [];
+                        arrTabDivs.push('connectionsDiv');
+                        arrTabDivs.push('systemClassesFrmDiv');
+                        arrTabDivs.push('authorisationFrmDiv');
+                        arrTabDivs.push('otherSettingsDiv');
+                        arrTabDivs.push('emailSettingsDiv');
+                        arrTabDivs.push('acknowledgmentSettingsDiv');
+                    </script>
+                    <div class="tabSelected" style="margin-left:15px;" onclick="showDiv('connectionsDiv',this);">Connections</div>
+                    <div class="tab" onclick="showDiv('systemClassesFrmDiv',this);">Classes</div>
+                    <div class="tab" onclick="showDiv('authorisationFrmDiv',this);">Authorisation</div>
+                    <div class="tab" onclick="showDiv('otherSettingsDiv',this);">Other</div>
+                    <div class="tab" onclick="showDiv('emailSettingsDiv',this);">Email</div>
+                    <div class="tab" onclick="showDiv('acknowledgmentSettingsDiv',this);">Acknowledgement</div>
+                </div>
+                <div id="tabContentDiv">
+                    <div id="connectionsDiv">
+                        <div class="heading">CONNECTIONS</div>
+                        <form action="save.connection.configuration.php" method="POST" id="frmConnections" name="frmConnections">
+                        <table cellpadding="5" cellspacing="0" style="border: 2px solid #0099D3;" id="tblDMSConnection" class="tblConnection">
+                            <tr>
+                                <td style="background-color: #0099D3;color: #FFF;font-weight: bold" colspan="2"><?php echo $dms_connectionResult; ?></td>
+                            </tr>
+                            <tr> 
+                                <td style="background-color: #F8F8F8;color: #000;"><label for="dms_host">Host</label></td>
+                                <td style="background-color: #F8F8F8;"><input type="text" name="dms_host" value="<?php echo $dms_host; ?>" id="dms_host" /></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #F8F8F8;color: #000;"><label for="dms_username">Username</label></td>
+                                <td style="background-color: #F8F8F8;"><input type="text" name="dms_username" value="<?php echo $dms_username; ?>" id="dms_username" /></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #F8F8F8;color: #000;"><label for="dms_password">Password</label></td>
+                                <td style="background-color: #F8F8F8;"><input type="password" name="dms_password" value="<?php echo $dms_password; ?>" id="dms_password" /></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #F8F8F8;color: #000;"><label for="dms_database">Database</label></td>
+                                <td style="background-color: #F8F8F8;"><input type="text" name="dms_database" value="<?php echo $dms_database; ?>" id="dms_database" /></td>
+                            </tr>
+                        </table>
+                        <table cellpadding="5" cellspacing="0" style="border: 2px solid #0099D3;" id="tblJMLConnection" class="tblConnection">
+                            <tr>
+                                <td  style="background-color: #0099D3;color: #FFF;font-weight: bold" colspan="2"><?php echo $jml_connectionResult; ?></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #F8F8F8;color: #000;"><label for="jml_host">Host</label></td>
+                                <td style="background-color: #F8F8F8;"><input type="text" name="jml_host" value="<?php echo $jml_host; ?>" id="jml_host" /></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #F8F8F8;color: #000;"><label for="jml_username">Username</label></td>
+                                <td style="background-color: #F8F8F8;"><input type="text" name="jml_username" value="<?php echo $jml_username; ?>" id="jml_username" /></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #F8F8F8;color: #000;"><label for="jml_password">Password</label></td>
+                                <td style="background-color: #F8F8F8;"><input type="password" name="jml_password" value="<?php echo $jml_password; ?>" id="jml_password" /></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #F8F8F8;color: #000;"><label for="jml_database">Database</label></td>
+                                <td style="background-color: #F8F8F8;"><input type="text" name="jml_database" value="<?php echo $jml_database; ?>" id="jml_database" /></td>
+                            </tr>
+                        </table>                
+                        <table cellpadding="5" cellspacing="0" style="border: 2px solid #0099D3;" id="tblCIVConnection" class="tblConnection">
+                            <tr>
+                                <td style="background-color: #0099D3;color: #FFF;font-weight: bold" colspan="2"><?php echo $civ_connectionResult; ?></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #F8F8F8;color: #000;"><label for="civ_host">Host</label></td>
+                                <td style="background-color: #F8F8F8;"><input type="text" name="civ_host" value="<?php echo $civ_host; ?>" id="civ_host" /></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #F8F8F8;color: #000;"><label for="civ_username">Username</label></td>
+                                <td style="background-color: #F8F8F8;"><input type="text" name="civ_username" value="<?php echo $civ_username; ?>" id="civ_username" /></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #F8F8F8;color: #000;"><label for="civ_password">Password</label></td>
+                                <td style="background-color: #F8F8F8;"><input type="password" name="civ_password" value="<?php echo $civ_password; ?>" id="civ_password" /></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #F8F8F8;color: #000;"><label for="civ_database">Database</label></td>
+                                <td style="background-color: #F8F8F8;"><input type="text" name="civ_database" value="<?php echo $civ_database; ?>" id="civ_database" /></td>
+                            </tr>
+                        </table>
+                        <div style="clear: both;">
+                            <table width="800" cellpadding="5" cellspacing="0" style="margin-top:10px;color:#000;font-size: 10pt;border: 2px solid #0099D3;" >
+                                <tr>
+                                    <td style="background-color: #0099D3;color: #FFF;font-weight: bold" colspan="2">
+                                        CiviCRM API Config
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label for="apiCrmConfig">CRM API directory</label></td>
+                                    <td><input type="text" name="apiCrmConfig" id="apiCrmConfig" style="width:600px" value="<?php echo $apiCrmConfig; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="apiCrmCoreConfig">CRM API Core directory</label></td>
+                                    <td><input type="text" name="apiCrmCoreConfig" id="apiCrmCoreConfig" style="width:600px" value="<?php echo $apiCrmCoreConfig; ?>" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="btn" onclick="saveConnections()" style="clear: left;margin-top: 10px;">Update</div>
+                        </form>
+                    </div>
+                    
+                    <div id="systemClassesFrmDiv" style="display: none">
+                        <form action="save.class.configuration.php" method="POST" name="frmClass" id="frmClass">
+                        <div class="heading">SYSTEM CLASSES</div>
+                        <div id="classesListDiv">
+                            <table width="100%" cellpadding="8" cellspacing="0" id="tblClasses">
+                                <?php echo $tblClassesRows; ?>
+                            </table>
+                        </div>
+                        <div class="heading">ADD NEW CLASS</div>
+                        <div id="newClassFrmDiv">
+                            <div id="newClassDiv">
+                                <table>
+                                    <tr>
+                                        <td align="right"><label for="className">Class Name</label></td>
+                                        <td><input type="text" id="className" name="className" value="" style="margin-left:10px;margin-right:10px;width: 300px" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right"><label for="classFilename">Filename</label></td>
+                                        <td><input type="text" id="classFilename" name="classFilename" value="" style="margin-left:10px;margin-right:10px;width: 300px;" /></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="btn" onclick="insertClass()">Insert</div>
+                        </div>
+                        </form>
+                    </div>
+                
+                    <div id="authorisationFrmDiv" style="display:none">
+                        
+                        <div class="heading">AUTHORISATION GROUPS</div>
+                        <div id="authorisationDiv">
+                            <form action="save.authorisation.configuration.php" method="POST" id="frmAuthorisation" name="frmAuthorisation">
+                            <table width="300"  cellpadding="5" cellspacing="0" style="border: 2px solid #0099D3;" align="left" class="tblConnection" id="tblClasses">
+                            <?php if ($dms_connectionOk&&$jml_connectionOk) { ?>
+                                <tr>
+                                    <td style="background-color: #0099D3;color: #FFF;font-weight: bold">PERMISSION</td>
+                                    <td style="background-color: #0099D3;color: #FFF;font-weight: bold">JOOMLA GROUP</td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #F8F8F8;color: #000;"><label for="aut_select">SELECT</label></td>
+                                    <td style="background-color: #F8F8F8;"><select id="aut_select" name="aut_select"><?php echo $opts_select; ?></select></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #F8F8F8;color: #000;"><label for="aut_insert">INSERT</label></td>
+                                    <td style="background-color: #F8F8F8;"><select id="aut_insert" name="aut_insert"><?php echo $opts_insert; ?></select></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #F8F8F8;color: #000;"><label for="aut_update">UPDATE</label></td>
+                                    <td style="background-color: #F8F8F8;"><select id="aut_update" name="aut_update"><?php echo $opts_update; ?></select></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #F8F8F8;color: #000;"><label for="aut_delete">DELETE</label></td>
+                                    <td style="background-color: #F8F8F8;"><select id="aut_delete" name="aut_delete"><?php echo $opts_delete; ?></select></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color: #F8F8F8;color: #000;"><label for="aut_admin">ADMIN</label></td>
+                                    <td style="background-color: #F8F8F8;"><select id="aut_admin" name="aut_admin"><?php echo $opts_admin; ?></select></td>
+                                </tr>
+                            </table> 
+                            <?php } else { ?>
+                                <tr>
+                                    <td style="background-color: #0099D3;color: #FFF;font-weight: bold">PERMISSION</td>
+                                    <td style="background-color: #0099D3;color: #FFF;font-weight: bold">JOOMLA GROUP</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="background-color: #F8F8F8;color: #000;">First Connect to Joomla &amp; DMS dbs</td>
+                                </tr>
+                            </table>
+                            <?php } ?>
+                            <div class="btn" onclick="saveAuth()" style="clear:left;margin-top: 10px;">Update</div>
+                            </form>
+                        </div>
+                        <div style="float: left;">
+                            <form id="frmImpersonateUser" name="frmImpersonateUser" method="POST" action="../impersonate.user.php">
+                                Impersonate a user <br />
+                                <select style="margin-top: 10px;margin-bottom: 10px;" name="impUserId" id="impUserId"><?php echo $allUsers; ?></select> 
+                                <div class="btn" onclick="document.frmImpersonateUser.submit();">Go</div>
+                            </form>
+                        </div>
+                    </div>
+                
+                    <div id="otherSettingsDiv" style="display: none">
+                        <div class="heading">OTHER SETTINGS</div>
+                        
+                        <div class="settingsDiv" style="float: right">
+                            <form action="save.budget.configuration.php" method="POST" name="frmBudget" id="frmBudget">
+                            <div class="settingsHeader">Budget</div>
+                            <div class="addSettingDiv">
+                                Allow Edit 
+                                <select name="allowBudgetEdit" id="allowBudgetEdit">
+                                    <option value="Y" <?php echo $budgetYSelected; ?>>Yes</option>
+                                    <option value="N" <?php echo $budgetNSelected; ?>>No</option>
+                                </select>
+                            </div>
+                            <div class="btn" onclick="saveBudget()">Save</div>
+                            </form>
+                        </div>
+                        
+                        <div class="settingsDiv" style="float: right">
+                            <form action="save.versions.configuration.php" method="POST" name="frmVersions" id="frmVersions">
+                            <div class="settingsHeader">Versions</div>
+                            <div class="addSettingDiv">
+                                Civicrm <input type="text" name="civicrmVersion" id="civicrmVersion" style="width:50px;" value="<?php echo $civicrmVersion; ?>" />
+                            </div>
+                            <div class="addSettingDiv">
+                                DMS <input type="text" name="dmsVersion" id="dmsVersion" style="width:50px;" value="<?php echo $dmsVersion; ?>" />
+                            </div>
+                            <div class="btn" id="btnVersions">Update</div>
+                            </form>
+                        </div>
+                        
+                        <div class="settingsDiv" style="float: right">
+                            <form action="save.civioptgroups.configuration.php" method="POST" name="frmCiviOptGroups" id="frmCiviOptGroups">
+                            <div class="settingsHeader">Civi Option Groups</div>
+                            <div class="addSettingDiv">
+                                Phone Types Opt Group Id <input type="text" name="phoneTypesOptGroup" id="phoneTypesOptGroup" style="width:50px;" value="<?php echo $civiPhoneTypesOptGroup; ?>" />
+                            </div>
+                            <div class="addSettingDiv">
+                                Languages <input type="text" name="languageOptGroup" id="languageOptGroup" style="width:50px;" value="<?php echo $languageOptGroup; ?>" />
+                            </div>
+                            <div class="addSettingDiv">
+                                Titles <input type="text" name="titlesOptGroup" id="titlesOptGroup" style="width:50px;" value="<?php echo $titlesOptGroup; ?>" />
+                            </div>
+                            <div class="addSettingDiv">
+                                Gender <input type="text" name="genderOptGroup" id="genderOptGroup" style="width:50px;" value="<?php echo $genderOptGroup; ?>" />
+                            </div>
+                            <div class="addSettingDiv">
+                                Communication Methods <input type="text" name="communicationOptGroup" id="communicationOptGroup" style="width:50px;" value="<?php echo $communicationOptGroup; ?>" />
+                            </div>
+                            <div class="btn" id="btnCiviOptGroups">Update</div>
+                            </form>
+                        </div>
+                        
+                        <div class="settingsDiv" style="float: right">
+                            <form action="save.sower.configuration.php" method="POST" name="frmSowerSettings" id="frmSowerSettings">
+                            <div class="settingsHeader">Sower Settings</div>
+                            <div class="addSettingDiv">
+                                Sower Address Type Id <input type="text" name="sowerAddressTypeId" id="sowerAddressTypeId" style="width:50px;" value="<?php echo $sowerAddressTypeId; ?>" />
+                            </div>
+                            <div class="btn" id="btnSowerSettings">Update</div>
+                            </form>
+                        </div>
+                        
+                        
+                        
+                        <div class="settingsDiv" style="clear: left;">
+                            <form action="save.bam.configuration.php" method="POST" name="frmBam" id="frmBam">
+                            <div class="settingsHeader">BIBLE-A-MONTH Club Config</div>
+                            <div class="addSettingDiv">
+                                Membership Type Id <input type="text" name="bamMemTypeId" id="bamMemTypeId" style="width:75px;" value="<?php echo $bamMemTypeId; ?>" />
+                            </div>
+                            <div class="btn" onclick="saveBam()">Update</div>
+                            </form>
+                        </div>
+                        
+                        <div class="settingsDiv" style="clear: left;">
+                            <form action="save.sql.configuration.php" method="POST" name="frmSql" id="frmSql">
+                            <div class="settingsHeader">SQL Config</div>
+                            <div class="addSettingDiv">
+                                Show Queries 
+                                <select name="showSql" id="showSql">
+                                    <?php echo $showSqlOpts; ?>
+                                </select>
+                            </div>
+                            <div class="btn" onclick="saveSql()">Update</div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                    <div id="emailSettingsDiv" style="display:none">
+                        
+                            <form action="save.email.configuration.php" method="POST" name="frmEmail" id="frmEmail">
+                            <div class="settingsHeader">Email Config</div>
+                            <table>
+                                <tr>
+                                    <td align="right"><label for="emailHost">Email Host Server</label></td>
+                                    <td><input type="text" id="emailHost" name="emailHost" value="<?php echo $emailHost; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="emailAddress">DMS email address</label></td>
+                                    <td><input type="text" id="emailAddress" name="emailAddress" value="<?php echo $emailAddress; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="emailFromName">DMS email from name</label></td>
+                                    <td><input type="text" id="emailFromName" name="emailFromName" value="<?php echo $emailFromName; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="emailPassword">DMS zimbra password</label></td>
+                                    <td><input type="text" id="emailPassword" name="emailPassword" value="<?php echo $emailPassword; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="emailDomain">Email domain</label></td>
+                                    <td><input type="text" id="emailDomain" name="emailDomain" value="<?php echo $emailDomain; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="zimbraPreAuthKey">Zimbra Pre Auth Key</label></td>
+                                    <td><input type="text" id="zimbraPreAuthKey" name="zimbraPreAuthKey" value="<?php echo $zimbraPreAuthKey; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="mailchimpApiKey">Mailchimp Api Key</label></td>
+                                    <td><input type="text" id="mailchimpApiKey" name="mailchimpApiKey" value="<?php echo $mailchimpApiKey; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="mandrillHost">Mandrill Host</label></td>
+                                    <td><input type="text" id="mandrillHost" name="mandrillHost" value="<?php echo $mandrillHost; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="mandrillPort">Mandrill Port</label></td>
+                                    <td><input type="text" id="mandrillPort" name="mandrillPort" value="<?php echo $mandrillPort; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="mandrillUsername">Mandrill Username</label></td>
+                                    <td><input type="text" id="mandrillUsername" name="mandrillUsername" value="<?php echo $mandrillUsername; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="mandrillApiKey">Mandrill Api Key/Smtp password</label></td>
+                                    <td><input type="text" id="mandrillApiKey" name="mandrillApiKey" value="<?php echo $mandrillApiKey; ?>" /></td>
+                                </tr>
+                            </table>
+                            <div class="btn" id="btnEmail" style="margin-top:10px;">Update</div>
+                            </form>
+                        
+                    </div>
+                    <div id="acknowledgmentSettingsDiv" style="display: none">
+                       <form action="save.acknowledgement.configuration.php" method="POST" name="frmAcknowledgement" id="frmAcknowledgement">
+                            <div class="settingsHeader">Acknowledgement Config</div>
+                            <table>
+                                <tr>
+                                    <td align="right"><label for="acknowledgementSubject">Default Email Subject</label></td>
+                                    <td><input type="text" id="acknowledgementSubject" name="acknowledgementSubject" value="<?php echo $acknowledgementSubject; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="marginLeft">Default Print Margin Left</label></td>
+                                    <td><input type="text" id="marginLeft" name="marginLeft" value="<?php echo $marginLeft; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="marginTop">Default Print Margin Top</label></td>
+                                    <td><input type="text" id="marginTop" name="marginTop" value="<?php echo $marginTop; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="marginRight">Default Print Margin Right</label></td>
+                                    <td><input type="text" id="marginRight" name="marginRight" value="<?php echo $marginRight; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="marginBottom">Default Print Margin Bottom</label></td>
+                                    <td><input type="text" id="marginBottom" name="marginBottom" value="<?php echo $marginBottom; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="afrDefaultSalutation">Default Afrikaans Salutation</label></td>
+                                    <td><input type="text" id="afrDefaultSalutation" name="afrDefaultSalutation" value="<?php echo $afrSalutation; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><label for="engDefaultSalutation">Default English Salutation</label></td>
+                                    <td><input type="text" id="engDefaultSalutation" name="engDefaultSalutation" value="<?php echo $engSalutation; ?>" /></td>
+                                </tr>
+                            </table>
+                            <div class="btn" id="btnAcknowledgement" style="margin-top:10px;">Update</div>
+                            </form>
+                    </div>
+                </div>
+            </div> 
+         </div>
+         <div id="footerRow">&nbsp;</div>    
+	</body>
+</html>

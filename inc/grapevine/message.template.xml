@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gviSmsMessage>
+    <affiliateCode>###affiliateCode###</affiliateCode>
+    <authenticationCode>###authenticationCode###</authenticationCode>
+    <submitDateTime>###now###</submitDateTime>
+    <messageType>text</messageType>
+    <recipientList>
+        <message>###message###</message>
+        ###msisdns###
+    </recipientList>
+</gviSmsMessage>

@@ -1,0 +1,19 @@
+#map-canvas { height: 700px;width: 1100px; margin: auto; border:2px solid #254B7C; margin-bottom: 10px;}
+#map-control { float: left; margin-left: 10px; padding:5px; border: 1px solid black;font-size: 9pt; }
+#radBtns li { list-style: none;}
+#radBtns {
+    padding-left: 0px;
+}
+#map-control {
+    border: 2px solid #254B7C;
+    background-color: #F0F0F0;
+    margin-left: 10px;
+    padding: 10px;
+    position: absolute; 
+    top: 140px; 
+    left: 600px; 
+    z-index: 99;
+}
+input[name="showWhat"] {
+    width: 15px;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="css/global.css" />
+        <link rel="stylesheet" type="text/css" href="css/<?php echo $curScript; ?>.css" />
+
+        <script type="text/javascript" language="javascript" src="scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/global.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/<?php echo $curScript; ?>.js"></script>
+		
+        <script type="text/javascript" language="JavaScript" src="scripts/datafn.js"></script>
+        <script type="text/javascript" language="javascript">
+            <?php echo $departmentJavascriptArray; ?>;
+            <?php echo "\n".$depChartData; ?>
+            <?php echo "\n".$colorPallette; ?>
+        </script>
+        <script src="scripts/js/knockout-3.0.0.js"></script>
+        <script src="scripts/js/globalize.min.js"></script>
+        <script src="scripts/js/dx.chartjs.js"></script>
+    </head>
+	<body onload="createDonutCharts()">
+        <div id="screenProtectorDiv" style="display:none"></div>
+        <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+        <div id="headingRow">
+            <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+        </div>
+        <div id="menuRow">
+            <?php echo $menu; ?>
+        </div>
+        <div id="mainDiv">
+            <div id="posDiv"></div>
+            <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+            <div id="notificationsDiv" style="display: none"></div>
+            <div class="contentbox" style="height: 135px;">
+                <div class="heading">FILTER <span id="resetFilterLink"><a href="budget.reset.filter.php">&lt;reset&gt;</a></span>
+                <div id="budTotalDiv">TOTAL: R</div>
+                </div>
+                <form method="POST" id="frmFilter" name="frmFilter"> 
+                    <div id="filterDiv">
+                    <select class="selBudget" name="bud_department" id="bud_department" onchange="doSearch()">
+                        <option value="">-- Department --</option>
+                        <?php echo $departmentOptions; ?>
+                    </select>
+                    <br />
+                    <select class="selBudget" name="bud_region" id="bud_region" onchange="doSearch()">
+                        <option value="">-- Region --</option>
+                        <?php echo $regionOptions; ?>
+                    </select>
+                    <br />
+                    <select class="selBudget" id="sel_category" onchange="doSearch()">
+                        <option value="">-- Category --</option>
+                        <?php echo $categoryOptions; ?>
+                    </select>
+                    <input type="hidden" value="<?php echo $_SESSION['bud_category']; ?>" name="bud_category" id="bud_category" />
+                    </div>
+                    <div id="targetDiv">
+                        <label for="bud_amount">Budgeted Amount:</label><br />
+                        <input type="text" name="bud_amount" id="bud_amount" />
+                        <input type="hidden" name="bud_id" id="bud_id" value="0" />
+                        <div class="btn" id="btnInsertEdit" style="margin-top:4px;" onclick="<?php echo $editAllowed; ?>">Insert</div>
+                    </div>
+                </form>
+            </div>
+            <div class="summaryDiv"  id="tDiv"></div>
+            <div class="contentbox" style="margin-top: 15px;">
+                <div class="heading">DETAILS <div id="allocRemainderDiv">ALLOCATED AMOUNT: R | REMAINING AMOUNT: R </div></div>
+                <div id="detailsDiv">
+                <table cellspacing="0" cellpadding="5" align="center" id="tblData">
+                    <tr style="font-weight: bold;color: #fff;background-color: #254B7C;">
+                        <td class="idCol">&nbsp;</td><td>DEPARTMENT</td><td>REGION</td><td>CATEGORY</td><td align="right">BUDGET</td><td <?php echo $canDelete; ?>>&nbsp;</td><td class="idCol">&nbsp;</td>
+                    </tr>
+                    <?php echo $budgetDetails; ?>
+                </table>
+                </div>
+            </div>
+        </div>
+        <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+	</body>
+</html>
