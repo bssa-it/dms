@@ -9,6 +9,8 @@
  * @author      Chezre Fredericks
  * @date_created 05/12/2014
  * @Changes
+ * 05/06/2015 - Chezre Fredericks:
+ * BAM fix up
  * 
  */
 
