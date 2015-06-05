@@ -10,7 +10,9 @@
  * @date_created 05/12/2014
  * @Changes
  * 05/06/2015 - Chezre Fredericks:
- * BAM fix up
+ * BAM fix up 
+ *      1. contributions without join_date not going into civicrm_membership_payment table
+ *      2. contributions without region_id not going into civicrm_dms_transaction table
  * 
  */
 
@@ -63,7 +65,7 @@ SELECT
 	`civ_contribution_status_id` `contribution_status_id`,
 	`trns_motivation_id` `motivation_id`,
 	`R`.`category_id` `category_id`,
-	`O`.`org_region` `region_id`,
+	CASE WHEN `O`.`org_region` IS NULL THEN 10 ELSE `O`.`org_region` END `region_id`,
 	`R`.`organisation_id` `organisation_id`,
 	`trns_acknowledgement_date` `thankyou_date`,
 	`D`.`civ_contact_id` `contact_id`,
@@ -131,6 +133,7 @@ foreach ($contributions as $k=>$v) {
                             $bamPaymentResult = civicrm_api('MembershipPayment','create',$bamPayment);
 
                             $membershipParams['id'] = $vm['id'];
+                            if (empty($membershipParams['join_date'])) $membershipParams['join_date'] = $v['receive_date'];
                             $membershipParams['start_date'] = $v['receive_date'];
                             $membershipParams['skipStatusCal'] = 0;
                             $mResult = civicrm_api('Membership', 'create', $membershipParams);

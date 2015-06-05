@@ -64,7 +64,7 @@ foreach ($donors as $k=>$v) {
     $refNo = $v['bam_ref_no'];
     $certificatePrinted = $v['bam_certificate_printed'];
     $contactId = $v['civ_contact_id'];
-    $joinDate = $v['bam_join_date'];
+    $joinDate = (empty($v['bam_join_date'])) ? date("Y-m-d") : $v['bam_join_date'];
    
     try { 
         
