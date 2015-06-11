@@ -3,27 +3,16 @@
 Class civicrm_dms_office { 
 
         var $id;
+	var $business_manager_contact_id;
 	var $name;
 	var $address_eng;
 	var $address_afr;
-	var $contact_id;
-	var $business_manager_contact_id;
+	var $telephone;
+	var $fax;
 	
 
         function __construct($id=null) {
-            if (!empty($id)) {
-                $sql = "SELECT * FROM `civicrm_dms_office` where `id` = $id";
-                $GLOBALS['functions']->showSql($sql);
-                $result = $GLOBALS['civiDb']->select($sql);
-                if (!$result) {
-                    return false;
-                } else {
-                    foreach ($result[0] as $k => $v) {
-                        $this->$k = stripslashes($v);
-                    }
-                    return true;
-                }
-            }
+            if (!empty($id)) $this->Load($id);
         }
 
         function Load($id) {
@@ -49,27 +38,30 @@ Class civicrm_dms_office {
             if (isset($this->id) && !empty($this->id)) {
                 $sql = "
                     UPDATE `civicrm_dms_office` SET
-                        `name` = '$this->name',
+                        `business_manager_contact_id` = '$this->business_manager_contact_id',
+			`name` = '$this->name',
 			`address_eng` = '$this->address_eng',
 			`address_afr` = '$this->address_afr',
-			`contact_id` = '$this->contact_id',
-			`business_manager_contact_id` = '$this->business_manager_contact_id'
+			`telephone` = '$this->telephone',
+			`fax` = '$this->fax'
                     WHERE
                       `id` = '$this->id';";
             } ELSE {
                 $sql = "
                     INSERT INTO `civicrm_dms_office` (
-                        `name`,
+                        `business_manager_contact_id`,
+			`name`,
 			`address_eng`,
 			`address_afr`,
-			`contact_id`,
-			`business_manager_contact_id`
+			`telephone`,
+			`fax`
                     ) VALUES (
-                        '$this->name',
+                        '$this->business_manager_contact_id',
+			'$this->name',
 			'$this->address_eng',
 			'$this->address_afr',
-			'$this->contact_id',
-			'$this->business_manager_contact_id'
+			'$this->telephone',
+			'$this->fax'
                     );";
             }
             $GLOBALS['functions']->showSql($sql);

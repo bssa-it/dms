@@ -17,19 +17,7 @@ Class civicrm_dms_transaction {
 	
 
         function __construct($id=null) {
-            if (!empty($id)) {
-                $sql = "SELECT * FROM `civicrm_dms_transaction` where `id` = $id";
-                $GLOBALS['functions']->showSql($sql);
-                $result = $GLOBALS['civiDb']->select($sql);
-                if (!$result) {
-                    return false;
-                } else {
-                    foreach ($result[0] as $k => $v) {
-                        $this->$k = stripslashes($v);
-                    }
-                    return true;
-                }
-            }
+            if (!empty($id)) $this->Load($id);
         }
 
         function Load($id) {
