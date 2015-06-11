@@ -11,6 +11,7 @@ Class civicrm_dms_contact_other_data_extension extends civicrm_dms_contact_other
         $GLOBALS['functions']->showSql($sql);
         $result = $GLOBALS['civiDb']->select($sql); 
         if (!$result) {
+            $this->contact_id = $contact_id;
             return false;
         } else {
             foreach ($result[0] as $k => $v) {

@@ -11,6 +11,7 @@ Class civicrm_dms_department_extension extends civicrm_dms_department {
         $GLOBALS['functions']->showSql($sql);
         $result = $GLOBALS['civiDb']->select($sql);
         if (!$result) {
+            $this->dep_id = $depId;
             return false;
         } else {
             foreach ($result[0] as $k => $v) {

@@ -129,20 +129,20 @@
                 dName = $("#organization_name").val();
                 break;
         }
-        var src = 'img/' + $("#contact_sub_type").val() + '.png';
+        var src = '/dms/img/' + $("#contact_sub_type").val() + '.png';
         $( "#frmDiv" ).empty().append('<img src="/dms/img/loading.gif" style="vertical-align: middle" /> saving...');
         var strUrl = $form.attr( "action" );
         $.post( 
             strUrl,
             $form.serialize(),
            function (data) {
-               /* uncomment for testing
+                //uncomment for testing
                 resultContent = $.parseJSON(data);
                 reloadSummary();
                 $("#imgPageHeading").attr("src" , src.toLocaleLowerCase());
                 $("#spanDonorName").empty().append(dName);
-                $("#personalDetails").click();*/
-                window.location.reload();
+                $("#personalDetails").click();
+                //window.location.reload();
            });
     }
    });
