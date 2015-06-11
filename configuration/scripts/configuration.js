@@ -170,6 +170,8 @@ function saveBam() {
 }
 
 function insertClass() {
+    
+    $("#saveInsertClassResult").hide();
     var a = document.getElementById('className');
     var b = document.getElementById('classFilename');
     
@@ -185,22 +187,17 @@ function insertClass() {
         return;
     }
     
-    var targetTable = document.getElementById('tblClasses');
-    var fname = b.value;
-    while(fname.indexOf(' ')>-1) fname = fname.replace(' ','');
-    for (var rowIndex = 0; rowIndex < targetTable.rows.length; rowIndex++) {
-        var row = targetTable.rows.item(rowIndex);
-        for (var cellIndex = 0; cellIndex < row.cells.length; cellIndex++) {
-            var cell = row.cells.item(cellIndex); 
-            if (cell.textContent.indexOf(fname)>-1) {
-                alert('This file is already part of the classes list');
-                b.focus();
-                return;
-            }  
-        }
-    }
-    
-    document.frmClass.submit();
+    $.post("save.class.configuration.php",$("#frmClass").serialize()).done(function(data){
+        var json = $.parseJSON(data);
+        $.get("get.classes.php").done(function(data){
+            $("#classesListDiv").empty().append(data); 
+            $("#saveInsertClassResult").empty().append(json.result);
+            $("#saveInsertClassResult").show();
+            $("#className").val('');
+            $("#classFilename").val('');
+            $("#isExtension").attr('checked', false);
+        });
+    });
 }
 
 function showDiv(divId,el) {
@@ -363,4 +360,8 @@ $(document).ready(function() {
         }
         $("#frmVersions").submit();
     });
+    $.get("get.classes.php").done(function(data){
+       $("#classesListDiv").empty().append(data); 
+    });
+    $("#btnInsertClass").bind("click",insertClass);
 });

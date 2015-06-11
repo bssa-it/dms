@@ -146,23 +146,6 @@ if ($dms_connectionOk&&$jml_connectionOk) {
     if (!empty($jmUsers)) foreach ($jmUsers as $u) $allUsers .= '<option value="'.$u['id'].'">'.$u['name'].'</option>';
 }
 
-#   GET THE CLASSES THAT ARE LOADED WITH THE BOOSTRAPPER
-$classConfig             = $config->classes->children();
-$tblClassesRows          = '<tr>';
-$cnt                     = 1;
-foreach ($classConfig as $class) {
-    $newRow = ($cnt==1);
-    $tblClassesRows .= ($newRow) ? '</tr><tr>':'';
-    $tblClassesRows .= '<td>'.(string)$class.'</td>';
-    $newRow = false;
-    if ($cnt==5) {
-        $cnt = 1;   
-    } else {
-        $cnt++;
-    }
-}
-$tblClassesRows         .= '</tr>';
-
 #   SHOW THE MYSQL TABLES THAT GET IMPORTED FROM THE SCO SERVERS   (SEE ETL PROCEDURE FOR MORE INFO)
 $allImportFiles = $config->importFiles->children();
 $importFiles = '';
@@ -233,4 +216,4 @@ $dmsVersion = (string)$config->versions->dms;
 $civicrmVersion = (string)$config->versions->civicrm;
     
 #   ADD THE HTML
-require('../html/configuration.htm');
+require('html/configuration.htm');

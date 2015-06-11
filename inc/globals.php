@@ -15,6 +15,9 @@
  * 5.0.1
  * 26/03/2015 - Chezre Fredericks:
  * use absolute path to find inc directory.
+ * 
+ * 10/06/2015 - Chezre Fredericks:
+ * Restructure class includes
  */
 
 ini_set('display_errors',1);
@@ -23,12 +26,23 @@ error_reporting(-1);
 define('DMS_PATH', '/var/www/joomla/dms/');
 $GLOBALS['dms_base_path'] = DMS_PATH;
 
+#   Include classes
+#       Start with DB classes
+$classes = glob(DMS_PATH ."inc/db-classes/class.*.php");
+foreach ($classes as $class) require($class);
+#       Then DB class extensions
+$classes = glob(DMS_PATH ."inc/db-class-extensions/class.*.php");
+foreach ($classes as $class) require($class);
+#       Then classes from config file
+$xmlConfig = simplexml_load_file(DMS_PATH . "inc/classes.config.xml");
+$classesConfig = $xmlConfig->includes->children();
+foreach ($classesConfig as $class) require($class);
+#       Then class extensions from config file
+$classesConfig = $xmlConfig->extensions->children();
+foreach ($classesConfig as $class) require($class);
+
 #   Get XML configurations
 $xmlConfig = simplexml_load_file(DMS_PATH . "inc/config.xml");
-
-#   Include classes
-$classesConfig          = $xmlConfig->classes->children();
-foreach ($classesConfig as $class) require($class);
 
 #   Load GLOBAL functions
 $GLOBALS['functions']   = new functions;

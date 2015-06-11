@@ -1,56 +1,23 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <dmsConfig>
     <databaseConnection>
-        <host></host>
-        <username></username>
-        <password></password>
-        <database></database>
+        <host>129.47.16.21</host>
+        <username>root</username>
+        <password>4u!2c1</password>
+        <database>dms</database>
     </databaseConnection>
     <joomlaConnection>
-        <host></host>
-        <username></username>
-        <password></password>
-        <database></database>
+        <host>129.47.16.225</host>
+        <username>root</username>
+        <password>4u!2c1</password>
+        <database>joomla</database>
     </joomlaConnection>
     <civiConnection>
-        <host></host>
-        <username></username>
-        <password></password>
-        <database></database>
+        <host>129.47.16.21</host>
+        <username>root</username>
+        <password>4u!2c1</password>
+        <database>civicrm</database>
     </civiConnection>
-    <classes>
-        <db>class.db.php</db>
-        <functions>class.functions.php</functions>
-        <html2pdf>html2pdf.class.php</html2pdf>
-        <phpmailer>class.phpmailer.php</phpmailer>
-        <authorisation>class.authorisation.php</authorisation>
-        <user>class.user.php</user>
-        <widget>class.widget.php</widget>
-        <smtp>class.smtp.php</smtp>        
-        <donor>class.donor.php</donor>
-        <profile>class.profile.php</profile>
-        <remark>class.remark.php</remark>
-        <transaction>class.transaction.php</transaction>
-        <acknowledgement>class.acknowledgement.php</acknowledgement>
-        <region>class.region.php</region>
-        <department>class.department.php</department>
-        <denomination>class.denomination.php</denomination>
-        <synod>class.synod.php</synod>
-        <circuit>class.circuit.php</circuit>
-        <congregation>class.congregation.php</congregation>
-        <category>class.category.php</category>
-        <postalCodes>class.postalcodes.php</postalCodes>
-        <contact>class.contact.php</contact>
-        <budget>class.budget.php</budget>
-        <menu>class.menu.php</menu>
-        <civilink>class.civilink.php</civilink>
-        <template>class.template.php</template>
-        <etl_donorerror>class.etl_donorerror.php</etl_donorerror>
-        <etl_contributionerror>class.etl_contributionerror.php</etl_contributionerror>
-        <orgunit>class.orgunit.php</orgunit>
-        <phpmailer_extension>class.phpmailer.extension.php</phpmailer_extension>
-	<postalcodes_extension>class.postalcodes.extension.php</postalcodes_extension>
-    <JoomlaUser>class.joomlauser.php</JoomlaUser><acknowledgementPreferences>class.acknowledgementpreferences.php</acknowledgementPreferences><civicrm_dms_category>class.civicrm_dms_category.php</civicrm_dms_category><civicrm_dms_contact_other_data>class.civicrm_dms_contact_other_data.php</civicrm_dms_contact_other_data><civicrm_dms_contact_reporting_code>class.civicrm_dms_contact_reporting_code.php</civicrm_dms_contact_reporting_code><civicrm_dms_department>class.civicrm_dms_department.php</civicrm_dms_department><civicrm_dms_motivation>class.civicrm_dms_motivation.php</civicrm_dms_motivation><civicrm_dms_organisation>class.civicrm_dms_organisation.php</civicrm_dms_organisation><civicrm_dms_region>class.civicrm_dms_region.php</civicrm_dms_region><civicrm_dms_transaction>class.civicrm_dms_transaction.php</civicrm_dms_transaction><mergerecord>class.mergerecord.php</mergerecord><salutations>class.salutations.php</salutations><dmsMandrill>class.mandrill.php</dmsMandrill><dmsMailchimp>class.mailchimp.php</dmsMailchimp><financialDates>class.dates.php</financialDates></classes>
     <importFiles>
         <qbdonor>qb_donor</qbdonor>
         <qbtrans>qb_trans</qbtrans>
@@ -83,19 +50,21 @@
         <languageCiviOptGroupId>75</languageCiviOptGroupId>
     </civiOptionGroups>
     <emailconfig>
-        <zimbraPreAuthKey></zimbraPreAuthKey>
-        <emailhost></emailhost>
-        <address></address>
+        <zimbraPreAuthKey>37a6bee27f1717af178b494c1c4dac64dd462a4f30f18a7c176562dfe8d7a015</zimbraPreAuthKey>
+        <emailhost>mymail.biblesociety.co.za</emailhost>
+        <address>civicrm@biblesociety.co.za</address>
         <name>Donor Management System</name>
-        <password></password>
-        <domain></domain>
-        <mailchimpApiKey></mailchimpApiKey>
+        <password>CiviDms12#</password>
+        <domain>@biblesociety.co.za</domain>
+        <!--mailchimpApiKey>03e687b391f1c030877b280bfa0296e9-us10</mailchimpApiKey-->
+        <mailchimpApiKey>3cb70092669fbda6cebdb889d5c7f245-us1</mailchimpApiKey>
+        <!--mailchimpAdministrator contact_id="304756" /-->
         <mailchimpAdministrator contact_id="155626"/>
         <mandrill>
             <host>smtp.mandrillapp.com</host>
             <port>587</port>
-            <smtpUsername></smtpUsername>
-            <smtpPassword></smtpPassword>
+            <smtpUsername>civicrm@biblesociety.co.za</smtpUsername>
+            <smtpPassword>1PGyZlsRlB6brIZYdshsTA</smtpPassword>
         </mandrill>
     </emailconfig>
     <acknowledgementconfig>
@@ -134,7 +103,7 @@
         <civicrm>4.5.4</civicrm>
         <dms>5.0.1</dms>
     </versions>
-	<googleApiKey></googleApiKey>
+	<googleApiKey>AIzaSyCUGfwjehI3OPkzrn1PhslT6LQiAMTVqm8</googleApiKey>
 <activityconfig>
     <civiOptionGroupId>2</civiOptionGroupId>
     <civiStatusOptionGroupId>26</civiStatusOptionGroupId>

@@ -49,8 +49,9 @@ $config = CRM_Core_Config::singleton();
 $session = new CRM_Core_Session;
 $session->set('userID',2);
 
-include("inc/class.acknowledgementpreferences.php");
-include("inc/class.civicrm_dms_contact_other_data.php");
+include("inc/db-classes/class.acknowledgementpreferences.php");
+include("inc/db-classes/class.civicrm_dms_contact_other_data.php");
+include("inc/db-class-extensions/class.civicrm_dms_contact_other_data.extension.php");
 include("inc/class.functions.php");
 
 $sql = "
@@ -193,8 +194,7 @@ function updateTransaction($contactId,$contributionId,$transId){
 }
 
 function updateLastDate($contactId,$lastDate,$lastAmount) {
-    $l = new civicrm_dms_contact_other_data();
-    $l->LoadByContactId($contactId);
+    $l = new civicrm_dms_contact_other_data_extension($contactId);
     $l->last_contribution_date = $lastDate;
     $l->last_contribution_amount = $lastAmount;
     $l->Save();

@@ -49,8 +49,7 @@ $jsonReturn['result'][] = array('request'=>$a,'result'=>$result);
 
 
 # dms civi fields
-$c = new civicrm_dms_contact_other_data();
-$c->LoadByContactId($apiParams['contact_id']);
+$c = new civicrm_dms_contact_other_data_extension($apiParams['contact_id']);
 $c->reminder_month = $_POST['reminder_month'];
 $result = $c->Save();
 $jsonReturn['result'][] = array('request'=>$c,'result'=>$result);

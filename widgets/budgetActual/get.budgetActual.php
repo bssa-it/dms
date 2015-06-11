@@ -34,11 +34,10 @@ $data = $GLOBALS['civiDb']->select($sql);
 $returnSource = array();
 
 if (!empty($data)) {
-    $d = new department();
-    $d->Load($primaryDepartment);
+    $d = new civicrm_dms_department_extension($primaryDepartment);
     $currMonth = '';
     $months = array(11=>1,12=>2,1=>3,2=>4,3=>5,4=>6,5=>7,6=>8,7=>9,8=>10,9=>11,10=>12);
-    $monthlyBudget = $d->dep_budgetAllocation/12;
+    $monthlyBudget = $d->dep_budget_allocation/12;
     $total = $pTotal = 0;
     foreach ($data as $k=>$v) {
         $total += $v['total_ytd'];

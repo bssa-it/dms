@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This config document lists the extra classes to be included in the DMS.
+-->
+<root>
+    <includes>
+        <!-- Classes to be included -->
+        <authorisation>class.authorisation.php</authorisation>
+        <financialDates>class.dates.php</financialDates>
+        <db>class.db.php</db>
+        <functions>class.functions.php</functions>
+        <JoomlaUser>class.joomlauser.php</JoomlaUser>
+        <Mailchimp>Mailchimp.php</Mailchimp>
+        <Mandrill>Mandrill.php</Mandrill>
+        <mergerecord>class.mergerecord.php</mergerecord>
+        <zimbra>class.zimbra.php</zimbra>  
+        <html2pdf>html2pdf.class.php</html2pdf>
+    </includes>
+    <extensions>
+        <!-- Extensions to be included -->
+        <dmsMailchimp>class.mailchimp.php</dmsMailchimp>
+        <dmsMandrill>class.mandrill.php</dmsMandrill>
+    </extensions>
+</root>

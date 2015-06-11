@@ -1,7 +1,5 @@
 <?php
 
-require_once 'Mandrill.php';
-
 class dmsMandrill extends Mandrill {
     
     function __construct() {

@@ -40,8 +40,7 @@ $apiParams['modified_date'] = date("Y-m-d H:i:s");
 $result = civicrm_api('Contact','create',$apiParams);
 $jsonReturn['result'][] = array('request'=>$apiParams,'result'=>$result);
 
-$c = new civicrm_dms_contact_other_data();
-$c->LoadByContactId($apiParams['id']);
+$c = new civicrm_dms_contact_other_data_extension($apiParams['id']);
 $c->id_number = $_POST['id_number'];
 $result = $c->Save();
 $jsonReturn['result'][] = array('request'=>$c,'result'=>$result);

@@ -12,19 +12,22 @@
  */
 
 #   LOAD THE CONFIG FILE
-$config = simplexml_load_file("../inc/config.xml");
+$config = simplexml_load_file("../inc/classes.config.xml");
 
 #   ADD/UPDATE THE NEW CLASS
 $className          = preg_replace('/ /','',$_POST['className']);
 $classFilename      = preg_replace('/ /','',$_POST['classFilename']);
-if (isset($config->classes->$className)) {
-    $config->classes->$className = $classFilename;
+
+$block = (!empty($_POST['isExtension'])&&$_POST['isExtension']=='Y') ? 'extensions':'includes';
+
+if (isset($config->$block->$className)) {
+    $config->$block->$className = $classFilename;
+    $return['result'] = 'class updated';
 } else {
-    $config->classes->addChild($className,$classFilename);   
+    $config->$block->addChild($className,$classFilename);
+    $return['result'] = 'class added';
 }
 
 #   SAVE THE CHANGES 
-$saveResult = file_put_contents('../inc/config.xml',$config->asXML());
-
-#   GO BACK TO THE CONFIGURATION PAGE
-header("location:index.php");
+$saveResult = file_put_contents('../inc/classes.config.xml',$config->asXML());
+echo json_encode($return);

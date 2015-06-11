@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+        <!-- These settings are in minutes -->
+        <outOfVPNSessionLength>15</outOfVPNSessionLength>
+        <insideVPNSessionLength>480</insideVPNSessionLength>
+        <regexVPNstring>129.[4][3-8].16.</regexVPNstring>
+</root>

@@ -71,13 +71,31 @@ if (!$_SESSION['dms_user']['authorisation']->canSelect) {
 }
 
 #   NOW THE USER HAS OFFICIALLY LOGGED ONTO THE DMS, THE LOGIN TIME CAN BE ESTABLISHED
-$_SESSION['dms_user']['logintime'] = (empty($_SESSION['dms_user']['logintime'])) ? 
-    date("Y-m-d H:i:s"):$_SESSION['dms_user']['logintime'];
-$_SESSION['dms_user']['ipaddress'] = (empty($_SESSION['dms_user']['ipaddress'])) ? 
-    $GLOBALS['functions']->getRealIpAddr():$_SESSION['dms_user']['ipaddress'];
+
+if (empty($_SESSION['dms_user']['ipaddress'])) $_SESSION['dms_user']['ipaddress'] =  $GLOBALS['functions']->getRealIpAddr();
+if (empty($_SESSION['dms_user']['logintime'])) $_SESSION['dms_user']['logintime'] =  date("Y-m-d H:i:s");
+if (!empty($_SESSION['dms_user']['lasttouch'])) {
+    $securitConfig = simplexml_load_file('/var/www/joomla/dms/inc/security.config.xml');
+    $lt = new DateTime($_SESSION['dms_user']['lasttouch']);
+    
+    #  dormant minutes
+    $diff = $lt->diff(new DateTime());
+    $dormantMinutes = ((int)$diff->h*60)+$diff->i;
+    $_SESSION['dms_user']['dormantminutes'] = $dormantMinutes."m:".$diff->s."s";
+    $kickUserOut = false;
+    $kickUserOut = ($dormantMinutes > (int)$securitConfig->insideVPNSessionLength);
+    
+    if (!$kickUserOut) $kickUserOut = (!preg_match('/'.(string)$securitConfig->regexVPNstring.'/',$_SESSION['dms_user']['ipaddress'])&&$dormantMinutes > (int)$securitConfig->outOfVPNSessionLength);
+    if ($kickUserOut) {
+        session_destroy();
+        header("location: /dms/login.php");
+        exit();
+    }
+}
+$_SESSION['dms_user']['lasttouch'] = date("Y-m-d H:i:s");
 
 #   LOAD USER DASHBOARD WIDGETS
-if (!class_exists('user')) require_once 'class.user.php';
+if (!class_exists('user')) require_once 'db-classes/class.user.php';
 $u = new user();
 $u->Load($user->id);
 $_SESSION['dms_user']['dashboard'] = $u;

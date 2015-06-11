@@ -59,7 +59,7 @@ if (!empty($contactTypes)) {
 
 $titleOptGroupId = (string)$GLOBALS['xmlConfig']->civiOptionGroups->titles;
 $titleOptsValues = $GLOBALS['functions']->getCiviOptionValues($titleOptGroupId);
-$contactTitle = $customValues[12]['latest'];
+$contactTitle = (!empty($customValues[12]['latest'])) ? $customValues[12]['latest']:'';
 $titleOpts = '';
 if (!empty($titleOptsValues)) {
     $showTitleHelp = (empty($dnr['prefix_id']));
