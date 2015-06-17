@@ -83,12 +83,13 @@ class dmsEmail {
     
     function addSignatureToBody($region,$html,$contact_id) {
         $contact = $GLOBALS['functions']->getCiviContact($contact_id);
-        $r = new region;
-        $r->Load($region);
+        $r = new civicrm_dms_region_extension($region);
+        $o = new civicrm_dms_office($r->reg_office_id);
+        
         $language = ($contact['preferred_language']=='af_ZA') ? 'afr':'eng';
-        $address = 'region_address_'.$language;
+        $address = 'address_'.$language;
         $patterns = array('/###tel###/','/###fax###/','/###address###/');
-        $replacements = array($r->region_telephone,$r->region_fax,$r->$address);
+        $replacements = array($r->region_telephone,$r->region_fax,$o->$address);
         $signatureFile = $language . '_signature.htm';
         $signature = preg_replace($patterns,$replacements,file_get_contents('email/signatures/'.$signatureFile));
         return $html.$signature;

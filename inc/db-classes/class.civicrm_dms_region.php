@@ -8,7 +8,6 @@ Class civicrm_dms_region {
 	var $reg_consol_id;
 	var $reg_joomla_group_id;
 	var $reg_office_id;
-	
 
         function __construct($id=null) {
             if (!empty($id)) $this->Load($id);
