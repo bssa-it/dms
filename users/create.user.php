@@ -20,7 +20,7 @@ include("../inc/class.user.extension.php");
 $sysUserConfigFile = 'user.config.xml';
 $sysConfig = simplexml_load_file($sysUserConfigFile);
 
-# Get/Create Joomlal detail
+# Get/Create Joomla detail
 $u = new createUser();
 $jmlUserId = $u->doesJoomlaUserExist($_POST['email']);
 $isAdmin = ($_POST['userType']=='Head Office');
