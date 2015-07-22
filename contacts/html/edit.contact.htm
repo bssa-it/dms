@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="/dms/css/global.css" />
+        <link rel="stylesheet" type="text/css" href="css/<?php echo $curScript; ?>.css" />
+
+        <script type="text/javascript" language="javascript" src="/dms/scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="/dms/scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="/dms/scripts/global.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/<?php echo $curScript; ?>.js"></script>
+    </head>
+    <body>
+        <div id="screenProtectorDiv" style="display:none">
+            <div id="duplicatesDiv">
+                <div id="duplicatesHdr">Checking for duplicates</div>
+                <div id="duplicatesDetail"></div>
+                <div class="btn" id="btnContinueAnyway">Continue Anyway</div>
+                <div class="btn" id="btnCancelSave">Cancel</div>
+                <input type="hidden" id="duplicateCheck" value="Y" />
+            </div>
+        </div>
+        <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+        <div id="headingRow">
+            <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+        </div>
+        <div id="menuRow">
+            <?php echo $menu; ?>
+        </div>
+        <div id="mainDiv">
+            <div id="posDiv"></div>
+            <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+            <div id="notificationsDiv" style="display: none"></div>
+            <div id="contentDiv">
+                <div id="frmElementsTemplateDiv">
+                    <div class="inputWrapperDiv" id="tplPhone">
+                        <div class="labelDiv"><label>Phone Number</label></div>
+                        <div class="inputDiv"><input type="text" name="phone[]" placeholder="" value="" /></div>
+                    </div>
+                    <div class="inputWrapperDiv" id="tplEmail">
+                        <div class="labelDiv"><label>Email Address</label></div>
+                        <div class="inputDiv"><input type="text" name="email[]" placeholder="" value="" /></div>
+                    </div>
+                    <div class="inputWrapperDiv" id="tplAddress">
+                        <div class="labelDiv"><label>Address</label></div>
+                        <div class="inputDiv"><input type="text" name="street_address[]" placeholder="Address 1" value="" /></div>
+                        <div class="labelDiv"><label>&nbsp;</label></div>
+                        <div class="inputDiv"><input type="text" name="supplemental_address_1[]" placeholder="Address 2" value="" /></div>
+                        <div class="labelDiv"><label>&nbsp;</label></div>
+                        <div class="inputDiv"><input type="text" name="supplemental_address_2[]" placeholder="Address 3" value="" /></div>
+                        <div class="labelDiv"><label>&nbsp;</label></div>
+                        <div class="inputDiv"><input type="text" name="supplemental_address_3[]" placeholder="Address 4" value="" /></div>
+                        <div class="newAddress" >
+                            <div class="labelDiv"><label>City</label></div>
+                            <div class="inputDiv"><input type="text" name="city[]" placeholder="" value="" /></div>
+                            <div class="labelDiv"><label>Postal Code</label></div>
+                            <div class="inputDiv"><input type="text" name="postal_code[]" placeholder="" value="" /></div>
+                        </div>
+                    </div>
+                </div>
+                <form id="frmNewContact" name="frmNewContact" action="save.contact.php" method="POST">
+                <div class="frmWrapperDiv" >
+                    <div class="hdg" frm="personalDetailsDiv">Personal Details</div>
+                    <div class="frmDiv" id="personalDetailsDiv">
+                        <div id="extraInfoDiv">
+                            <div class="addDetail" id="btnAddPhone" title="add phone">+ <img src="/dms/img/telephone.png" width="20" height="20" align="center" /></div>
+                            <div class="addDetail" id="btnAddEmail" title="add email">+ <img src="/dms/img/email-at.png" width="20" height="20" align="center" /></div>
+                            <div class="addDetail" id="btnAddAddress" title="add address">+ <img src="/dms/img/location.png" width="20" height="20" align="center" /></div>
+                        </div>
+                        
+                        <div class="inputWrapperDiv">
+                            <input type="hidden" name="contact_type" id="contact_type" value="Individual" />
+                            <div class="labelDiv"><label for="contact_sub_type">Contact Type</label></div>
+                            <div class="inputDiv">
+                                <select name="contact_sub_type" id="contact_sub_type">
+                                    <?php echo $contactTypeOpts; ?>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        
+
+                        <!--div class="inputWrapperDiv">
+                            <div class="labelDiv"><label for="prefix_id">Title</label></div>
+                            <div class="inputDiv">
+                                <select name="prefix_id" id="prefix_id">
+                                    <?php echo $titleOpts; ?>
+                                </select>
+                            </div>
+                        </div-->
+
+                        <div class="inputWrapperDiv Individual">
+                            <div class="labelDiv"><label for="first_name">First Name</label></div>
+                            <div class="inputDiv"><input type="text" name="first_name" id="first_name" placeholder="" value="" /></div>
+                        </div>
+
+                        <div class="inputWrapperDiv Individual">
+                            <div class="labelDiv"><label for="last_name">Last Name</label></div>
+                            <div class="inputDiv"><input type="text" name="last_name" id="last_name" placeholder="" value="" /></div>
+                        </div>
+                        
+                        <div class="inputWrapperDiv Household" style="display:none">
+                            <div class="labelDiv"><label for="household_name">Family Name</label></div>
+                            <div class="inputDiv"><input type="text" name="household_name" id="household_name" placeholder="" value="" /></div>
+                        </div>
+                        
+                        <div class="inputWrapperDiv Organization" style="display:none">
+                            <div class="labelDiv"><label for="organization_name">Organisation Name</label></div>
+                            <div class="inputDiv"><input type="text" name="organization_name" id="organization_name" placeholder="" value="" /></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="frmWrapperDiv" >
+                    <div class="hdg" frm="reportDetailsDiv">Department</div>
+                    <div class="frmDiv" id="reportDetailsDiv">
+                            <input type="hidden" id="organisation_id" name="organisation_id" value="<?php echo $myDepartment; ?>0000000" />
+                            <div id="departmentDiv">
+                                <div class="circle80" id="newDep" style="display:none">?</div>
+                                <div class="circle80" id="currDep" style="background-color: <?php echo $depColor; ?>;border-color: <?php echo $depColor; ?>;"><?php echo $department->dep_id; ?></div>
+                                <div id="depSelectDiv">
+                                    <div class="inputWrapperDiv">
+                                        <div class="labelDiv"><label for="dp"></label></div>
+                                        <div class="inputDiv">
+                                            <select id="dp">
+                                                <?php echo $departmentOpts; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="inputWrapperDiv">
+                                        <div class="labelDiv"><label for="dn"></label></div>
+                                        <div class="inputDiv">
+                                            <select id="dn">
+                                                <?php echo $denominationOpts; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="cnInputDiv">
+                                       <span id="orgIdPrefix"><?php echo $myDepartment; ?>00</span>
+                                       <input type="text" id="cn" maxlength="5" value="00000" placeholder="" />
+                                    </div>
+                                    <div id="lblCn"><label for="cn"><?php echo $organisationName; ?></label></div>    
+                                    
+                                </div>
+                                
+                            </div>
+                            
+                            <div id='regionList' style='display: none'>&nbsp;</div>
+                            
+                            <div class="inputWrapperDiv" id="categoryDiv">
+                                <div class="labelDiv" style="width:80px;"><label for="category_id">Category</label></div>
+                                <div class="inputDiv">
+                                    <select id="category_id" name="category_id">
+                                        <option value="">-- select --</option>
+                                        <?php echo $categoryOpts; ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+                </form>
+                <div class="btn" id="btnSaveContact">Save</div>
+                <div id="divSaving" style="display:none">Creating new contact...</div>
+            </div>
+            <div id="suburbDiv" style="display: none">
+                <div style="font-size: 11pt;font-weight: bold;padding: 5px;">Postal Code Helper</div>
+                <div id="suburbsDiv" style="">Start Typing in the town/postal code fields...</div>
+            </div>
+        </div>
+        <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+    </body>
+</html>
