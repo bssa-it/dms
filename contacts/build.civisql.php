@@ -45,6 +45,14 @@ if (count($searchVariables)>0) {
                     if ($where != ' WHERE ') $where .= ' AND ';
                     $where .= "nick_name LIKE '%$v%'";
                     break;
+                case 'srch_organizationName':
+                    if ($where != ' WHERE ') $where .= ' AND ';
+                    $where .= "(last_name LIKE '%$v%' OR organization_name LIKE '%$v%')";
+                    break;
+                case 'srch_householdName':
+                    if ($where != ' WHERE ') $where .= ' AND ';
+                    $where .= "(last_name LIKE '%$v%' OR household_name LIKE '%$v%')";
+                    break;
                 case 'srch_title':
                     if ($where != ' WHERE ') $where .= ' AND ';
                     $where .= "title_12 LIKE '%$v%'";

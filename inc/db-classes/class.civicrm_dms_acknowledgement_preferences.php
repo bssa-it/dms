@@ -8,7 +8,7 @@ Class civicrm_dms_acknowledgement_preferences {
 	var $frequency;
 	var $preferred_method;
 	var $last_acknowledgement_date;
-	var $last_acknowledgement_trns_id;
+	var $last_acknowledgement_contribution_id;
 	var $unacknowledged_total;
 	var $last_contribution_date;
 	
@@ -45,7 +45,7 @@ Class civicrm_dms_acknowledgement_preferences {
 			`frequency` = '$this->frequency',
 			`preferred_method` = '$this->preferred_method',
 			`last_acknowledgement_date` = '$this->last_acknowledgement_date',
-			`last_acknowledgement_trns_id` = '$this->last_acknowledgement_trns_id',
+			`last_acknowledgement_contribution_id` = '$this->last_acknowledgement_contribution_id',
 			`unacknowledged_total` = '$this->unacknowledged_total',
 			`last_contribution_date` = '$this->last_contribution_date'
                     WHERE
@@ -58,7 +58,7 @@ Class civicrm_dms_acknowledgement_preferences {
 			`frequency`,
 			`preferred_method`,
 			`last_acknowledgement_date`,
-			`last_acknowledgement_trns_id`,
+			`last_acknowledgement_contribution_id`,
 			`unacknowledged_total`,
 			`last_contribution_date`
                     ) VALUES (
@@ -67,7 +67,7 @@ Class civicrm_dms_acknowledgement_preferences {
 			'$this->frequency',
 			'$this->preferred_method',
 			'$this->last_acknowledgement_date',
-			'$this->last_acknowledgement_trns_id',
+			'$this->last_acknowledgement_contribution_id',
 			'$this->unacknowledged_total',
 			'$this->last_contribution_date'
                     );";

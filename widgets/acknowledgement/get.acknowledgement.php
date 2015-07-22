@@ -139,10 +139,18 @@ if (!empty($xmlFromDate)) {
             }
         </style>
     <?php } else { 
-        
             $allFiles = glob("img/*mp4");
-            $videoId = rand(0, count($allFiles)-1);
-            $video = basename($allFiles[$videoId]);
+            $userWidgetConfig = simplexml_load_file($_SESSION['dms_user']['userid'].".acknowledgement.xml");
+            $lastVideo = $userWidgetConfig->lastVideo;
+            $video = '';
+            while (empty($video)) {
+                $videoId = rand(0, count($allFiles)-1);
+                if (basename($allFiles[$videoId])!=$lastVideo) {
+                    $video = basename($allFiles[$videoId]);
+                    $userWidgetConfig->lastVideo = $video;
+                    file_put_contents($_SESSION['dms_user']['userid'].".acknowledgement.xml", $userWidgetConfig->asXML());
+                }
+            }
         ?>
         <style type="text/css">
             #ackSummaryDiv {

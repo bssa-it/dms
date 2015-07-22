@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <dmsConfig>
     <databaseConnection>
-        <host>129.47.16.21</host>
-        <username>root</username>
-        <password>4u!2c1</password>
-        <database>dms</database>
+        <host></host>
+        <username></username>
+        <password></password>
+        <database></database>
     </databaseConnection>
     <joomlaConnection>
-        <host>129.47.16.225</host>
-        <username>root</username>
-        <password>4u!2c1</password>
-        <database>joomla</database>
+        <host></host>
+        <username></username>
+        <password></password>
+        <database></database>
     </joomlaConnection>
     <civiConnection>
-        <host>129.47.16.21</host>
-        <username>root</username>
-        <password>4u!2c1</password>
-        <database>civicrm</database>
+        <host></host>
+        <username></username>
+        <password></password>
+        <database></database>
     </civiConnection>
     <importFiles>
         <qbdonor>qb_donor</qbdonor>
@@ -50,21 +50,21 @@
         <languageCiviOptGroupId>75</languageCiviOptGroupId>
     </civiOptionGroups>
     <emailconfig>
-        <zimbraPreAuthKey>37a6bee27f1717af178b494c1c4dac64dd462a4f30f18a7c176562dfe8d7a015</zimbraPreAuthKey>
+        <zimbraPreAuthKey></zimbraPreAuthKey>
         <emailhost>mymail.biblesociety.co.za</emailhost>
         <address>civicrm@biblesociety.co.za</address>
         <name>Donor Management System</name>
-        <password>CiviDms12#</password>
+        <password></password>
         <domain>@biblesociety.co.za</domain>
-        <!--mailchimpApiKey>03e687b391f1c030877b280bfa0296e9-us10</mailchimpApiKey-->
-        <mailchimpApiKey>3cb70092669fbda6cebdb889d5c7f245-us1</mailchimpApiKey>
+        <!--mailchimpApiKey></mailchimpApiKey-->
+        <mailchimpApiKey></mailchimpApiKey>
         <!--mailchimpAdministrator contact_id="304756" /-->
         <mailchimpAdministrator contact_id="155626"/>
         <mandrill>
             <host>smtp.mandrillapp.com</host>
             <port>587</port>
             <smtpUsername>civicrm@biblesociety.co.za</smtpUsername>
-            <smtpPassword>1PGyZlsRlB6brIZYdshsTA</smtpPassword>
+            <smtpPassword></smtpPassword>
         </mandrill>
     </emailconfig>
     <acknowledgementconfig>
@@ -170,6 +170,7 @@
             <list id="913a5535c7" desc="eSower" groupId="2"/>
             <list id="5ed4ccc363" desc="eSaaier" groupId="4"/>
         </mailchimpLists>
+        <mailchimpUnsubscribedGroupId>5</mailchimpUnsubscribedGroupId>
     </sower>
     <financialYearStartMonth>November</financialYearStartMonth>
 </dmsConfig>

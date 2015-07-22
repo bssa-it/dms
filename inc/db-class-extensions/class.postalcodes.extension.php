@@ -1,5 +1,6 @@
 <?php
 
+include_once("/var/www/joomla/dms/inc/db-classes/class.postalcodes.php");
 Class extendedPostalcodes extends postalcodes { 
 
     function ajaxSearchBySuburb($suburb,$bounds) {

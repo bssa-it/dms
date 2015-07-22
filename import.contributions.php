@@ -116,8 +116,8 @@ foreach ($contributions as $k=>$v) {
             updateLastDate($v['contact_id'],$v['receive_date'],$v['total_amount']);
             
             # civicrm_dms_transaction
-            $reportingCodesSql = "INSERT INTO `civicrm_dms_transaction` (`contribution_id`,`motivation_id`,`category_id`,`region_id`,`organisation_id`) ";
-            $reportingCodesSql .= "VALUES (" . $result['id'] ."," . $v['motivation_id'] . ", '" .str_pad($v['category_id'],4,'0',STR_PAD_LEFT). "',".$v['region_id'].",'" . $v['organisation_id'] . "');";
+            $reportingCodesSql = "INSERT INTO `civicrm_dms_transaction` (`contribution_id`,`motivation_id`,`category_id`,`region_id`,`organisation_id`,`contact_id`) ";
+            $reportingCodesSql .= "VALUES (" . $result['id'] ."," . $v['motivation_id'] . ", '" .str_pad($v['category_id'],4,'0',STR_PAD_LEFT). "',".$v['region_id'].",'" . $v['organisation_id'] . "',".$v['contact_id'].");";
             $civiDb->execute($reportingCodesSql);
 
             # BAM TRANSACTION RECORD

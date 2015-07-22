@@ -44,6 +44,12 @@ if (!empty($_GET['group'])) {
    include 'build.groupsql.php';
 }
 
+if (empty($_GET['format'])&&empty($_POST['format'])) {
+    $format = 'html';
+} else {
+    $format = (empty($_GET['format'])) ? $_POST['format']:$_GET['format'];
+}
+
 #   THEN GET DATASET
 if (isset($_SESSION['dmsDonorSearchResultset'])) {
     $donors = $_SESSION['dmsDonorSearchResultset'];
@@ -86,7 +92,7 @@ if (isset($_SESSION['dmsDonorSearchResultset'])) {
 #   FILL TABLE ROWS
 $searchResultRows = '<tr><td colspan="8" style="padding-left: 10px">No Results found</td></tr>';
 if (!empty($donors)) {
-    if (count($donors)==1) {
+    if (count($donors)==1&&$format=='html') {
         header('location:load.contact.php?d='.$donors[0]['dnr_no']);
         exit();
     }
@@ -123,5 +129,12 @@ foreach ($searchParamsRowsArray as $k=>$v) {
 #   ADD THE RESULTSET TO THE EXPORT SESSION VARIABLE SO THAT THE USER CAN DOWNLOAD IT LATER.
 $_SESSION['export']['filename'] = 'donor_search_results_'.date("Y-m-d-h-i-s").'.txt';
 
-#   ADD TEMPLATE
-require('html/'.$curScript.'.htm');
+#   RETURN REQUESTED FORMAT:
+switch ($format) {
+    case 'json':
+        echo json_encode($donors);
+        break;
+    default :
+        require('html/'.$curScript.'.htm');
+        break;
+}

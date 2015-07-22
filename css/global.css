@@ -580,6 +580,7 @@
         font-style: italic;
         margin-bottom: 15px;
     }
+    
 @media print {
     #menuRow,#footerRow {
         display: none;

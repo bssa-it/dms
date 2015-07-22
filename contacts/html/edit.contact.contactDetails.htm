@@ -192,35 +192,6 @@
         $( "#emailAddressDiv" ).show(500);
     }
     
-    $( "#city" ).focus(function () {
-       $( "#suburbDiv" ).show(500); 
-    });
-    $( "#city" ).keyup(function () {
-        getPostalCodes(null,'suburb');
-    });
-    $( "#postal_code" ).focus(function () {
-       $( "#suburbDiv" ).show(500); 
-    });
-    $( "#postal_code" ).keyup(function () {
-        getPostalCodes(null,'postal_code');
-    });
-    function getPostalCodes(bnds,qtype) {
-       var d = new Date();
-       var tim = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
-       var idVal = (qtype=='suburb') ? '#city':'#postal_code';
-       $.get(
-            '/dms/suburbHelper.php', { query: $( idVal ).val(), bounds: bnds, queryType: qtype, dt: tim }
-       ).done(function (data) {
-            $( "#suburbsDiv").empty().append(data);
-       });
-    }
-    function populateSuburb(dv) {
-        $(dv).children('div').each(function ( index,element) {
-           if (index===0) $( "#city" ).val($(element).text().replace(', ',''));
-           if (index===1) $( "#postal_code" ).val($(element).text()); 
-        });
-    }
-    
     function saveNewPrimary(chk) {
         var ref = $(chk).val();
         var contactId = $( "#contactId" ).val();
@@ -395,6 +366,9 @@
             }
        });
     });
+    $(document).ready(function(){
+      addSuburbSearcher();  
+    });
 </script>
 <div id="frmContentDiv">
     <input type="hidden" id="contactId" value="<?php echo $contactId; ?>" />
@@ -452,6 +426,8 @@
                         <input type="text" id="address4" name="supplemental_address_3" placeholder="" />
                     </td>
                 </tr>
+            </tbody>
+            <tbody>
                 <tr>
                     <td>
                         <label for="city">Town</label>
@@ -468,11 +444,12 @@
                         <input type="text" id="postal_code" name="postal_code" placeholder="7530" />
                     </td>
                 </tr>
+            </tbody>
+            <tbody>
                 <tr>
                     <td>&nbsp;</td>
                     <td><div id="btnSaveAddress" class="btn">Save</div><div class="btn" id="btnCancelAddress">Cancel</div></td>
                 </tr>
-                
             </tbody>
         </table>
         <div id="suburbDiv" style="display: none">

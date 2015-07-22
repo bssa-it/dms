@@ -1,9 +1,10 @@
 <?php
 
+include_once("/var/www/joomla/dms/inc/db-classes/class.civicrm_dms_region.php");
 Class civicrm_dms_region_extension extends civicrm_dms_region { 
     
     function __construct($orgId = null) {
-        if (!empty($orgId)) $this->LoadByOrgId ($orgId);
+        if (!is_null($orgId)) $this->LoadByOrgId ($orgId);
     }
     
     function LoadByRegionId($regId) {
@@ -21,4 +22,14 @@ Class civicrm_dms_region_extension extends civicrm_dms_region {
         }
     }
 
+    function getAll() {
+        $sql = "SELECT * FROM `civicrm_dms_region` order by reg_name";
+        $GLOBALS['functions']->showSql($sql);
+        $result = $GLOBALS['civiDb']->select($sql);
+        if (!$result) {
+            return array();
+        } else {
+            return $result;
+        }
+    }
 }

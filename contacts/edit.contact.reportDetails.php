@@ -43,8 +43,8 @@ if (!empty($allDepartments)) {
     foreach ($allDepartments as $d) {
         $selected = ($department==$d['dep_id']) ? ' SELECTED':'';
         $departmentOpts .= '<option value="' . $d['dep_id'] . '"'.$selected.'>' . $d['dep_id'] .' - '.$d['dep_name'].'</option>';
-        if ($department==$d['dep_id']&&empty($depColor)) $depColor = $d['dep_chartColor'];
-        $javaColors .= "\n" . 'dpColors.push({dept: "'.$d['dep_id'].'",color: "' . trim($d['dep_chartColor']) . '"});';
+        if ($department==$d['dep_id']&&empty($depColor)) $depColor = $d['dep_chart_color'];
+        $javaColors .= "\n" . 'dpColors.push({dept: "'.$d['dep_id'].'",color: "' . trim($d['dep_chart_color']) . '"});';
     }
     if (empty($depColor)) $depColor = '#A7B526';
 }

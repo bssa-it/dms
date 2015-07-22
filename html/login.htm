@@ -12,12 +12,9 @@
         <script type="text/javascript" language="javascript" src="scripts/<?php echo $curScript; ?>.js"></script>
     </head>
     <body>
-        <div id="contentDiv">
-            <div id="welcomeDiv">
-                <div id="greetingDiv">Good <?php echo $greeting; ?></div>
-                <div><p>Please use your Zimbra login details to login to the Donor Management System.</p><p>Have an awesome day !!!</p></div>
-                
-            </div>
+        <div id="welcomeDiv">
+            <div id="greetingDiv">Good <?php echo $greeting; ?></div>
+            
             <div id="loginDiv">
                 <form action="joomla.login.php" method="POST" id="frmLogin" name="frmLogin">
                     <div><input type="text" placeholder="Username" id="username" name="username" /></div>
@@ -29,6 +26,10 @@
                 </form>
                 <div id="resultDiv">&nbsp;</div>
             </div>
+            <div id="greetingMsg"><p>Please use your Zimbra (email) login details to access the BSSA Intranet.</p><p>Have an awesome day !!!</p></div>
+        </div>
+        <div id="contentDiv">
+            
             <div id="announcementsDiv">
                 <div id="announcementHeadingDiv"></div>
                 <div id="currentAnnouncementDiv"></div>
@@ -46,7 +47,7 @@
                 <img src="img/mandrill-logo.png" class="imag" />
             </div>
         </div>
-        <div id="bannerDiv"> <img src="img/sower-white-bg.png" width="24" height="24" align="center" /> &QUOT; so that all may experience the life-giving message of the word &QUOT; </div>
+        <div id="bannerDiv"> <img src="img/sower-clear-bg.png" width="24" height="24" align="center" /> &QUOT; so that all may experience the life-giving message of the word &QUOT; </div>
         
     </body>
 </html>

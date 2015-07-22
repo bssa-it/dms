@@ -889,9 +889,9 @@ WHERE ((`dnr_tax_certf` <> 'Z') AND (`dnr_last_date` > '1999-10-31'))";
          * @throws none
          * @return false on error;  An array of the resulting dataset.
          */
-    	$sql = "SELECT * FROM `dms_department` ORDER BY `dep_id`";
+    	$sql = "SELECT * FROM `civicrm_dms_department` ORDER BY `dep_id`";
     	$this->showSql($sql);
-        $result = $GLOBALS['db']->select($sql);
+        $result = $GLOBALS['civiDb']->select($sql);
     	if (!$result) {
     		return false;
     	} else {
@@ -951,9 +951,9 @@ WHERE ((`dnr_tax_certf` <> 'Z') AND (`dnr_last_date` > '1999-10-31'))";
          * @return false on error;  An array of the resulting dataset.
          */
         $where = ($isForBudget) ? 'WHERE `cat_id` not between 2000 and 4999 and `cat_id` not in (0,1000,2000,3000,4000,5000,6000,7000,8000,9000,9001)' : '';
-    	$sql = "SELECT * FROM `dms_category` $where ORDER BY `cat_id`";
+    	$sql = "SELECT * FROM `civicrm_dms_category` $where ORDER BY `cat_id`";
     	$this->showSql($sql);
-        $result = $GLOBALS['db']->select($sql);
+        $result = $GLOBALS['civiDb']->select($sql);
     	if (!$result) {
     		return false;
     	} else {
@@ -1886,40 +1886,12 @@ FROM dms_orgunit order by SUBSTR(org_id,4)";
         return $result;
     }
     
-    function getContactGroups($contactId) {
-        $gParams['version'] = 3;
-        $gParams['contact_id'] = $contactId;
-        $groups = civicrm_api('GroupContact','get',$gParams);
-        return $groups;
-    }
-    
     function deleteFromCiviGroup($contactGroupId) {
         $group['version'] = 3;
         $group['id'] = $contactGroupId;
         $result = civicrm_api('GroupContact', 'delete', $group);
         return $result;
-    }
-    
-    function logContactChange($contactId) {
-        $contactLastUpdate['version'] = '3';
-        $contactLastUpdate['contact_id'] = $contactId;
-        $contactLastUpdate['modified_date'] = date("Y-m-d H:i:s");
-        $contactLastUpdate['custom_20'] = $_SESSION['dms_user']['civ_contact_id'];
-        $update = civicrm_api('Contact','Create',$contactLastUpdate);
-        return $update;
-    }
-    
-    function getContactLog($contactId) {
-        $sql = "SELECT * FROM civicrm_log WHERE entity_id = $contactId AND entity_table = 'civicrm_contact'"
-                . " ORDER BY modified_date DESC";
-        $GLOBALS['functions']->showSql($sql);
-        $result = $GLOBALS['civiDb']->select($sql);
-        if (!$result) {
-            return false;
-        } else {
-            return $result;
-        }
-    }
+    }   
     
     function getPrevContact($dnrNo) {
         if (empty($_SESSION['dmsDonorSearchResultset'])) return null;

@@ -4,10 +4,12 @@ ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
 error_reporting(-1);
 
+include("inc/Mailchimp.php");
 include("inc/class.mailchimp.php");
 include("inc/class.functions.php");
 include("inc/class.db.php");
-include("inc/class.contact.php");
+include("contacts/inc/class.contact.php");
+
 $GLOBALS['functions'] = new functions();
 $GLOBALS['xmlConfig'] = simplexml_load_file('inc/config.xml');
 $connDetails = $GLOBALS['functions']->xml2array($GLOBALS['xmlConfig']->civiConnection);
@@ -24,7 +26,9 @@ file_put_contents('logs/mailchimp.log.htm',date('Y-m-d H:i:s').'<br />');
 $mc = new dmsMailchimp();
 $output = '';
 $allLists = $mc->lists->getList();
+$groupIds = array();
 foreach ($GLOBALS['xmlConfig']->sower->mailchimpLists->list as $mcl) {
+    $groupIds[] = (int)$mcl['groupId'];
     $total = 0;
     $loop = 0;
     foreach ($allLists['data'] as $l) if ((string)$mcl['id']==$l['id']) $listMemberTotal = $l['stats']['member_count'];
@@ -41,6 +45,11 @@ foreach ($GLOBALS['xmlConfig']->sower->mailchimpLists->list as $mcl) {
     }
     $output .= $total . " records inserted, group id " . $mcl['groupId'] . ', loops: ' . $loop. '<br />';
     file_put_contents('logs/mailchimp.log.htm', $total . " records inserted, group id " . $mcl['groupId'] . ', loops: ' . $loop. '<br />',FILE_APPEND);
+}
+if (!empty($groupIds)) {
+    updateUnsubscribes($groupIds);
+    $output .= '<p>Unsubscribes updated</p>';
+    file_put_contents('logs/mailchimp.log.htm', '<p>Unsubscribes updated</p>',FILE_APPEND);
 }
 echo $output;
 
@@ -108,4 +117,22 @@ function addContactToGroup($contact_id,$groupId,$emailId) {
     $sql = "INSERT INTO `civicrm_subscription_history` (contact_id,group_id,`date`,`method`,`status`) VALUES ($contact_id,$groupId,'".date("Y-m-d H:i:s")."','MC Sync','Added');";
     $result = $GLOBALS['civiDb']->execute($sql);
     return $result;
+}
+
+function updateUnsubscribes($groupIds) {
+    $mailchimpGroups = '';
+    foreach ($groupIds as $id) {
+        $mailchimpGroups .= (empty($mailchimpGroups)) ? $id:",$id";
+    }
+    $groupId = $GLOBALS['xmlConfig']->sower->mailchimpUnsubscribedGroupId;
+    deleteContactsFromGroup($groupId);
+    
+    $sql = "INSERT INTO civicrm_group_contact (contact_id,group_id,`status`)
+SELECT id,$groupId,'Removed' FROM `civicrm_contact` WHERE `external_identifier` > 901000
+AND id NOT IN (SELECT contact_id FROM `civicrm_group_contact` WHERE group_id IN ($mailchimpGroups));";
+    $GLOBALS['civiDb']->execute($sql);
+    $sql = "INSERT INTO `civicrm_subscription_history` (contact_id,group_id,`date`,`method`,`status`)
+select contact_id,$groupId,now(),'MC Sync','Removed' from `civicrm_group_contact` where group_id = $groupId and `status` = 'Removed'";
+    $GLOBALS['civiDb']->execute($sql);
+    
 }

@@ -136,13 +136,11 @@
             strUrl,
             $form.serialize(),
            function (data) {
-                //uncomment for testing
                 resultContent = $.parseJSON(data);
                 reloadSummary();
                 $("#imgPageHeading").attr("src" , src.toLocaleLowerCase());
                 $("#spanDonorName").empty().append(dName);
                 $("#personalDetails").click();
-                //window.location.reload();
            });
     }
    });

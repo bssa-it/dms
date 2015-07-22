@@ -1,9 +1,10 @@
 <?php
 
+include_once("/var/www/joomla/dms/inc/db-classes/class.civicrm_dms_organisation.php");
 Class civicrm_dms_organisation_extension extends civicrm_dms_organisation { 
     
     function __construct($orgId = null) {
-        if (!empty($orgId)) $this->LoadByOrgId ($orgId);
+        if (!is_null($orgId)) $this->LoadByOrgId ($orgId);
     }
     
     function LoadByOrgId($orgId) {
@@ -21,5 +22,15 @@ Class civicrm_dms_organisation_extension extends civicrm_dms_organisation {
             return true;
         }
     }
-
+    
+    function getAll() {
+        $sql = "SELECT * FROM `civicrm_dms_organisation` order by org_name";
+        $GLOBALS['functions']->showSql($sql);
+        $result = $GLOBALS['civiDb']->select($sql);
+        if (!$result) {
+            return array();
+        } else {
+            return $result;
+        }
+    }
 }

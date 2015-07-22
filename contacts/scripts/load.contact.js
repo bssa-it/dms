@@ -95,7 +95,6 @@ function emptyResults() {
 
 function showEditForm(frm) {
     $("#"+frm).click();
-    console.log("#"+frm);
 }
 
 function getEditForm(frm) {
@@ -130,7 +129,6 @@ function reloadSummary() {
 
 var resultContent = [];
 $(document).ready(function() {
-    
     $("#divNextRecord,#divPrevRecord").click(function(){
         var dnr = $(this).attr('d');
         window.location='load.contact.php?d='+dnr;
@@ -167,6 +165,11 @@ $(document).ready(function() {
         $('#screenProtectorDiv').show();
         checkForResult();
     });
+    
+    if ($("#editForm").val().length>0) {
+        showEditForm($("#editForm").val());
+    }
+    
 });
 
 function showResults() {
@@ -233,4 +236,17 @@ function checkForResult() {
             resultContent = [];
         });
     }
+}
+/* use this function if necessary */
+function showNextEditForm(frm) {
+    var foundSelectedNav = false;
+    if ($("#editForm").val().length==0) showEditForm(frm);
+    $(".navItem").each(function(){
+        if (foundSelectedNav) {
+            showEditForm($(this).attr('id'));
+            return false;
+        }
+        foundSelectedNav = ($(this).attr('class').indexOf('selectedNav'));
+    });
+    $("#editForm").val('');
 }

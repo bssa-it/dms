@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Login</title>
+        
+        <link rel="stylesheet" type="text/css" href="css/<?php echo $curScript; ?>.css" />
+
+        <script type="text/javascript" language="javascript" src="scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script src="scripts/jquery.countdownTimer.min.js" type="text/javascript"></script>
+        <script type="text/javascript" language="javascript" src="scripts/<?php echo $curScript; ?>.js"></script>
+    </head>
+    <body>
+        <div id="contentDiv">
+            <div id="welcomeDiv">
+                <div id="greetingDiv">Good <?php echo $greeting; ?></div>
+                <div><p>Please use your Zimbra (email) login details to access the BSSA Intranet.</p><p>Have an awesome day !!!</p></div>
+                
+            </div>
+            <div id="loginDiv">
+                <form action="joomla.login.php" method="POST" id="frmLogin" name="frmLogin">
+                    <div><input type="text" placeholder="Username" id="username" name="username" /></div>
+                    <div><input type="password" placeholder="Password" id="password" name="password" /></div>
+                    <div id="submitDiv">
+                        <div id="btnLogin">Login</div>
+                        <div id="loadingDiv"><img src="img/loading-4.gif" align="center" id="imgLoading" /> checking...</div>
+                    </div>
+                </form>
+                <div id="resultDiv">&nbsp;</div>
+            </div>
+            <div id="announcementsDiv">
+                <div id="announcementHeadingDiv"></div>
+                <div id="currentAnnouncementDiv"></div>
+                <div id="navigationDiv">
+                    <div id="timeDiv"><?php echo date("Y-m-d H:i:s"); ?><span id="time" style="display:none"></span></div>
+                    <div id="prevBtn">prev</div>
+                    <div id="nextBtn">next</div>
+                </div>
+            </div>
+            <div id="logoDiv" style="display:none">
+                <img src="img/sower-white-bg.png" class="imag" />
+                <img src="img/civi-logo.png" class="imag" />
+                <img src="img/zimbra-logo.png" class="imag" style="width: 96px;" />
+                <img src="img/mailchimp-logo.png" class="imag" />
+                <img src="img/mandrill-logo.png" class="imag" />
+            </div>
+        </div>
+        <div id="bannerDiv"> <img src="img/sower-white-bg.png" width="24" height="24" align="center" /> &QUOT; so that all may experience the life-giving message of the word &QUOT; </div>
+        
+    </body>
+</html>

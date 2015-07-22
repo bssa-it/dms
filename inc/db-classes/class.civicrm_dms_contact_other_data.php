@@ -9,7 +9,8 @@ Class civicrm_dms_contact_other_data {
 	var $id_number;
 	var $last_contribution_date;
 	var $last_contribution_amount;
-	
+	var $inserted_by_contact_id;
+	var $modified_by_contact_id;
 
         function __construct($id=null) {
             if (!empty($id)) $this->Load($id);
@@ -43,7 +44,9 @@ Class civicrm_dms_contact_other_data {
 			`reminder_month` = '$this->reminder_month',
 			`id_number` = '$this->id_number',
 			`last_contribution_date` = '$this->last_contribution_date',
-			`last_contribution_amount` = '$this->last_contribution_amount'
+			`last_contribution_amount` = '$this->last_contribution_amount',
+			`inserted_by_contact_id` = '$this->inserted_by_contact_id',
+			`modified_by_contact_id` = '$this->modified_by_contact_id'
                     WHERE
                       `id` = '$this->id';";
             } ELSE {
@@ -54,14 +57,18 @@ Class civicrm_dms_contact_other_data {
 			`reminder_month`,
 			`id_number`,
 			`last_contribution_date`,
-			`last_contribution_amount`
+			`last_contribution_amount`,
+			`inserted_by_contact_id`,
+			`modified_by_contact_id`
                     ) VALUES (
                         '$this->contact_id',
 			'$this->do_not_thank',
 			'$this->reminder_month',
 			'$this->id_number',
 			'$this->last_contribution_date',
-			'$this->last_contribution_amount'
+			'$this->last_contribution_amount',
+			'$this->inserted_by_contact_id',
+			'$this->modified_by_contact_id'
                     );";
             }
             $GLOBALS['functions']->showSql($sql);

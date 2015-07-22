@@ -106,6 +106,9 @@ $(document).ready(function() {
     $("#myConfigurationDiv").click(function(){
         window.location='/dms/myconfig.php';
     });
+    
+    //suburb helper
+    addSuburbSearcher();
 });
 
 
@@ -184,5 +187,65 @@ function checkForEmailDuplicates(eAddress,callback) {
         return result;
     }).fail(function(){
         callback(false);
+    });
+}
+
+
+/*  Suburb helper */
+var $el;
+function bindSuburbHelp($city,$pcode) {
+    $(".subHelp").click(function(){
+        $(this).children('div').each(function ( index,element) {
+            if (index===0) $city.val($(element).text().replace(', ',''));
+            if (index===1) $pcode.val($(element).text()); 
+        });
+        $("#suburbDiv").hide();
+    });
+}
+function getPostalCodes(bnds) {
+    if (!( $el instanceof jQuery )) {
+        alert('This is not a valid input');
+        return;
+    }
+    var d = new Date();
+    var tim = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+    var qtype = ($el.attr('name').indexOf('city')>-1) ? 'suburb':'postal_code';
+    $.get(
+         '/dms/suburbHelper.php', { query: $el.val(), bounds: bnds, queryType: qtype, dt: tim }
+    ).done(function (data) {
+         $( "#suburbsDiv").empty().append(data);
+         var $pcode = $('#postal_code');
+         var $city = $('#city');
+         if ($el.attr('name').indexOf('city')>-1) {
+             var $city = $el;
+             //if ($pcode.attr('name').indexOf('postal_code'));
+             if (typeof $pcode.attr('name') == typeof undefined) $pcode = $el.parent().parent().find('input[name="postal_code[]"]');
+         } else {
+             var $pcode = $el;
+             if (typeof $city.attr('name') == typeof undefined) $city = $el.parent().parent().find('input[name="city[]"]');
+         }
+         bindSuburbHelp($city,$pcode);
+    });
+}
+function populateSuburb(dv,$city,$pcode) {
+    $(dv).children('div').each(function ( index,element) {
+       if (index===0) $city.val($(element).text().replace(', ',''));
+       if (index===1) $pcode.val($(element).text()); 
+    });
+}
+function addSuburbSearcher() {
+    $( "input[name='city[]'],#city" ).keyup(function () {
+        $el = $(this);
+        getPostalCodes(null);
+    });
+    $( "input[name='city[]'],#city" ).focus(function () {
+       $( "#suburbDiv" ).show(500); 
+    });
+    $( "input[name='postal_code[]'],#postal_code" ).focus(function () {
+       $( "#suburbDiv" ).show(500); 
+    });
+    $( "input[name='postal_code[]'],#postal_code" ).keyup(function () {
+        $el = $(this);
+        getPostalCodes(null);
     });
 }

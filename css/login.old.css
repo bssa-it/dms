@@ -1,0 +1,137 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21 Jan 2015, 10:34:52 AM
+    Author     : Chezre
+*/
+
+body {
+    background-image:  url(../img/login-6.jpg);
+    background-size:   cover;                      /* <------ */
+    background-repeat: no-repeat;
+    font-family: sans-serif;
+    margin: 0px;
+    color: #FFF;   
+}
+input {
+    width: 300px;
+    font-size: 14pt;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+#contentDiv {
+    overflow: hidden;
+    margin: auto;
+    width: 950px;
+    margin-top: 75px;
+    margin-bottom: 30px;
+}
+#bannerDiv {
+    height: auto;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.27);
+    font-style: italic;
+    text-align: center;
+}
+#loginDiv {
+    background-color: rgba(255, 255, 255, 0.27);
+    width: 320px;
+    padding: 20px;
+    border-radius: 10px;
+    height: auto;
+    overflow: hidden;
+    text-align: center;
+    clear: left;
+    margin-top: 20px;
+    float: left;
+}
+#welcomeDiv {
+    float: left;
+    font-size: 20px;
+    width: 780px;
+    height: auto;
+    overflow: hidden;
+}
+#greetingDiv {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+#btnLogin {
+    width: 70px;
+    background-color: #254B7C;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    float: left;
+}
+#loadingDiv {
+    float: right;
+    margin: 10px;
+}
+#submitDiv {
+    width: auto;
+    height: auto;
+    overflow: hidden;
+}
+#resultDiv {
+    background-color: rgba(255, 255, 255, 0.34);
+    margin-top: 10px;
+    padding: 5px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+}
+.imag {
+    width: 32px;
+    height: 32px;
+}
+
+#announcementsDiv {
+    float: left;
+    padding: 20px;
+    margin-top: 40px;
+    margin-left: 20px;
+    background-color: rgba(255, 255, 255, 0.27);
+    width: 500px;
+    border-radius: 10px;
+    height: 300px;
+    overflow: auto;
+    margin-top: 20px;
+}
+#currentAnnouncementDiv {
+    height: 250px;
+    width: 500px;   
+}
+#navigationDiv {
+    height: auto;
+    width: 500px;
+    overflow: hidden;
+}
+#announcementHeadingDiv {
+    height: 30px;
+    width: 500px;
+    overflow: hidden;
+      font-size: 15pt;
+}
+#timeDiv {
+    float: left;
+    width: 430px;
+}
+#prevBtn {
+    margin-right: 10px;
+}
+#nextBtn,#prevBtn {
+    float: left;
+    width: 30px;
+    cursor: pointer;
+}
+#nextBtn {
+    float: right;
+}

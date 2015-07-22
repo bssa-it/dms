@@ -7,9 +7,12 @@ var filelist = [];
 var fileIdx = 0;
 var timer;
 $(document).ready(function() {
-    $("#contentDiv").css('height',$(window).height()*.75);
-    $("#contentDiv").css('margin-top',$(window).height()*.1);
-    $("#contentDiv").outerWidth($(window).width()*.8);
+    /*var r = Math.floor((Math.random() * 4) + 1);
+    $("body").css("background-image","url(img/login-"+r+".jpg)");
+    /* example of device display */
+    if ($(window).width()<1000) {
+        $("#contentDiv").css('margin-top','10px');
+    }
     $("#resultDiv").hide();
     $("#loadingDiv").hide();
     $("input").keypress(function(event){

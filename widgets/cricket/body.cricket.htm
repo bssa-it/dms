@@ -1,0 +1,85 @@
+<style type="text/css">
+    #matchTemplate,#matchList {
+        display: none;
+    }
+    #cricketScores {
+        padding: 10px;
+        padding-top: 0px;
+        max-height: 190px;
+        overflow: auto;
+        width: 515px;
+    }
+    #tblMatchList tr {
+        cursor: pointer;
+    }
+    #cricketDiv {
+        width: 540px;
+    }
+    .de {
+        padding: 20px;
+        font-size: 26pt;
+    }
+    #loadCricketDiv {
+        width: 520px;
+        margin: auto;
+        text-align: center;
+        padding-top: 75px;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function() {
+        bindTableRows();
+        loadMatch();
+    });
+    function loadMatch() {
+        $.get('widgets/cricket/get.match.php').done(function(data){
+           var json = $.parseJSON(data);
+           var elToCopy = '';
+           if (json.matchOk) {
+                $(".de").html(json.result[0].de);
+                $("#matchHeading").html(json.result[0].si);
+                $("#matchId").val(json.result[0].id);
+                elToCopy = '#matchTemplate';
+            } else {
+                elToCopy = '#matchList';
+            }
+            
+            var html = $(elToCopy).html();
+            $("#cricketScores").html(html);
+            bindTableRows();
+        });
+    }
+    function bindTableRows(){
+        $("#tblMatchList td").click(function () {
+            var attr = $(this).attr('mid');
+            if (typeof attr !== typeof undefined && attr !== false) saveMatch($(this).attr('mid'));
+        });
+    }
+    function saveMatch(mid) {
+        $("#matchId").val(mid);
+        $("#matchHeading").html('Cricket Matches underway:');
+        $("#cricketScores").html('<div id="loadCricketDiv"><img src="img/loading-4.gif" align="center" /> &nbsp;loading...</div>');
+        $.post('widgets/cricket/save.cricket.settings.php',{id: mid}).done(function(){
+            loadMatch();
+        });
+    }
+</script>
+<div id="cricketDiv">
+    <input type="hidden" id="matchId" value="" />
+    <div id="cricketHeadingDiv" class="widgetHeader">
+        <span id="matchHeading">Cricket Matches underway:</span>
+        <div style="float:right;display: inline-block;margin-right: 30px;">
+            <img src="img/refresh.png" height="16" width="16" title="refresh" style="cursor:pointer" onclick="loadMatch();" />
+            <img src="img/settings.png" height="16" width="16" title="edit settings" style="cursor:pointer" onclick="saveMatch('');" />
+        </div>
+    </div>
+    <div id="cricketScores"><div id="loadCricketDiv"><img src="img/loading-4.gif" align="center" /> &nbsp;loading...</div></div>
+</div>
+<div id="matchTemplate">
+    <div class="de"></div>
+</div>
+<div id="matchList">
+    <table cellspacing="0" cellpadding="3" id="tblMatchList">
+        <?php echo $tRows; ?>
+    </table>
+</div>

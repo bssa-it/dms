@@ -31,6 +31,7 @@ $database = (!empty($_GET['s'])) ? $_GET['s'] : $_SESSION['dmsDonorSearchCriteri
 $dnrNo = $_GET['d'];
 $cid = '';
 
+# GET VARIABLES
 if (!empty($_GET['a'])) {
     $loadActivity = '
         $("#screenProtectorDiv").show();
@@ -45,6 +46,7 @@ if (!empty($_GET['a'])) {
 } else {
     $loadActivity = '';
 }
+$edit = (!empty($_GET['edit'])) ? $_GET['edit']:'';
 
 #   SUBMENU NAVIGATION
 if (!empty($_SESSION['dmsDonorSearchResultset'])) {
