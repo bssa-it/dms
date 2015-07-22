@@ -11,7 +11,6 @@
 function _civicrm_api3_office_Create_spec(&$params) {
     
     dmsextension_civicrm_getParameterFields("CRM_Dmsextension_DAO_Office",$params);
-    $params['contribution_id']['api.required'] = 1;
   
 }
 
