@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>BatchHeader</class>
+  <name>civicrm_dms_batch_header</name>
+  <comment>civicrm_dms_batch_header schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>statement_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>transaction in the statement table to which this batch is linked</comment>
+    <title>statement id</title>
+  </field><field>
+    <name>statement_date</name>
+    <type>date</type>
+    
+            
+    <comment>Date on statement</comment>
+    <title>statement date</title>
+  </field><field>
+    <name>statement_reference</name>
+    <type>varchar</type>
+    <length>150</length>
+            
+    <comment>Reference on statement</comment>
+    <title>statement reference</title>
+  </field><field>
+    <name>statement_value</name>
+    <type>decimal</type>
+    
+            
+    <comment>Value on statement</comment>
+    <title>statement value</title>
+  </field><field>
+    <name>created_datetime</name>
+    <type>datetime</type>
+    
+            
+    <comment>date and time the batch created</comment>
+    <title>created datetime</title>
+  </field><field>
+    <name>created_by</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>User Id that created the batch</comment>
+    <title>created by</title>
+  </field><field>
+    <name>batch_title</name>
+    <type>varchar</type>
+    <length>150</length>
+            
+    <comment>Title for the batch</comment>
+    <title>batch title</title>
+  </field><field>
+    <name>batch_type</name>
+    <type>varchar</type>
+    <length>50</length>
+            
+    <comment>Type of batch</comment>
+    <title>batch type</title>
+  </field><field>
+    <name>batch_status</name>
+    <type>varchar</type>
+    <length>50</length>
+            
+    <comment>Status of Batch</comment>
+    <title>batch status</title>
+  </field><field>
+    <name>batch_total</name>
+    <type>decimal</type>
+    
+            
+    <comment>Total value for all entries in batch</comment>
+    <title>batch total</title>
+  </field><field>
+    <name>office_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>Office where batch was processed</comment>
+    <title>office id</title>
+  </field><field>
+    <name>bank_account_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>Bank Account to which the deposit was made</comment>
+    <title>bank account id</title>
+  </field><field>
+    <name>deposit_date</name>
+    <type>datetime</type>
+    
+            
+    <comment>Date cash and cheques were taken to the bank</comment>
+    <title>deposit date</title>
+  </field><field>
+    <name>completed_date</name>
+    <type>datetime</type>
+    
+            
+    <comment>Date and time the batch was completed</comment>
+    <title>completed date</title>
+  </field><field>
+    <name>completed_by</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>User Id that completed the batch</comment>
+    <title>completed by</title>
+  </field>
+  
+</table>

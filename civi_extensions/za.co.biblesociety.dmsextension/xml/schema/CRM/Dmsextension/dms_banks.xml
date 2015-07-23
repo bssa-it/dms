@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>Banks</class>
+  <name>civicrm_dms_banks</name>
+  <comment>civicrm_dms_banks schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>name</name>
+    <type>varchar</type>
+    <length>150</length>
+            
+    <comment>bank name</comment>
+    <title>name</title>
+  </field><field>
+    <name>type</name>
+    <type>varchar</type>
+    <length>50</length>
+            
+    <comment>type</comment>
+    <title>type</title>
+  </field>
+  
+</table>

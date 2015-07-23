@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>Acknowledgement</class>
+  <name>civicrm_dms_acknowledgement</name>
+  <comment>civicrm_dms_acknowledgement schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>contribution_id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>        
+    <comment>contribution id for the contribution being acknowledged</comment>
+    <title>contribution id</title>
+  </field><field>
+    <name>acknowledgement_datetime</name>
+    <type>datetime</type>
+    
+            
+    <comment>Date and time contact was acknowledged for contribution</comment>
+    <title>acknowledgement datetime</title>
+  </field><field>
+    <name>usr_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>user id who acknowledged the contact</comment>
+    <title>usr id</title>
+  </field><field>
+    <name>method</name>
+    <type>varchar</type>
+    <length>100</length>
+            
+    <comment>Method of acknowledgement</comment>
+    <title>method</title>
+  </field><field>
+    <name>document</name>
+    <type>varchar</type>
+    <length>255</length>
+            
+    <comment>Document name and path of acknowledgement</comment>
+    <title>document</title>
+  </field>
+  
+</table>

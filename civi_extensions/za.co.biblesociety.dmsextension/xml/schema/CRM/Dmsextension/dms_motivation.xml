@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>Motivation</class>
+  <name>civicrm_dms_motivation</name>
+  <comment>civicrm_dms_motivation schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>motivation_id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>        
+    <comment>Motivation Code Id</comment>
+    <title>motivation id</title>
+  </field><field>
+    <name>description</name>
+    <type>varchar</type>
+    <length>150</length>
+            
+    <comment>Motivation Code description</comment>
+    <title>description</title>
+  </field>
+  
+</table>

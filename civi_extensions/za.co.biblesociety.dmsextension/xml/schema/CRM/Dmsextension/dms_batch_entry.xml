@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>BatchEntry</class>
+  <name>civicrm_dms_batch_entry</name>
+  <comment>civicrm_dms_batch_entry schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>batch_id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>        
+    <comment>id in the civicrm_dms_batch_header table</comment>
+    <title>batch id</title>
+  </field><field>
+    <name>received_datetime</name>
+    <type>datetime</type>
+    
+            
+    <comment>date and time the batch entry was created</comment>
+    <title>received datetime</title>
+  </field><field>
+    <name>received_by</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>User Id that created the batch entry</comment>
+    <title>received by</title>
+  </field><field>
+    <name>receipt_no</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>        
+    <comment>Receipt no for the entry</comment>
+    <title>receipt no</title>
+  </field><field>
+    <name>receipt_amount</name>
+    <type>decimal</type>
+    
+            
+    <comment>Amount Received</comment>
+    <title>receipt amount</title>
+  </field><field>
+    <name>receipt_type</name>
+    <type>varchar</type>
+    <length>50</length>
+            
+    <comment>Receipt/Document type</comment>
+    <title>receipt type</title>
+  </field>
+  
+</table>

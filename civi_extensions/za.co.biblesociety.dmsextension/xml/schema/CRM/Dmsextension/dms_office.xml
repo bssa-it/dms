@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>Office</class>
+  <name>civicrm_dms_office</name>
+  <comment>civicrm_dms_office schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>business_manager_contact_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>Contact Id for the business manager</comment>
+    <title>business manager contact id</title>
+  </field><field>
+    <name>name</name>
+    <type>varchar</type>
+    <length>150</length>
+            
+    <comment>Name of office</comment>
+    <title>name</title>
+  </field><field>
+    <name>address_eng</name>
+    <type>varchar</type>
+    <length>255</length>
+            
+    <comment>Address in English</comment>
+    <title>address eng</title>
+  </field><field>
+    <name>address_afr</name>
+    <type>varchar</type>
+    <length>255</length>
+            
+    <comment>Address in Afrikaans</comment>
+    <title>address afr</title>
+  </field><field>
+    <name>telephone</name>
+    <type>varchar</type>
+    <length>20</length>
+            
+    <comment>Telephone number for signatures</comment>
+    <title>telephone</title>
+  </field><field>
+    <name>fax</name>
+    <type>varchar</type>
+    <length>20</length>
+            
+    <comment>Fax</comment>
+    <title>fax</title>
+  </field>
+  
+</table>

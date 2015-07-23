@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>Transaction</class>
+  <name>civicrm_dms_transaction</name>
+  <comment>civicrm_dms_transaction schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>contribution_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>contribution id from the civicrm_contribution table</comment>
+    <title>contribution id</title>
+  </field><field>
+    <name>motivation_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>motivation id from the civicrm_dms_motivation table</comment>
+    <title>motivation id</title>
+  </field><field>
+    <name>category_id</name>
+    <type>varchar</type>
+    <length>4</length>
+            
+    <comment>category id from the civicrm_dms_contact_reporting_code table</comment>
+    <title>category id</title>
+  </field><field>
+    <name>region_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>region id from the civicrm_dms_organisation table</comment>
+    <title>region id</title>
+  </field><field>
+    <name>organisation_id</name>
+    <type>varchar</type>
+    <length>15</length>
+            
+    <comment>category id from the civicrm_dms_contact_reporting_code table</comment>
+    <title>organisation id</title>
+  </field><field>
+    <name>must_acknowledge</name>
+    <type>varchar</type>
+    <length>1</length>
+            
+    <comment>must the contact be acknowledged for this contribution</comment>
+    <title>must acknowledge</title>
+  </field><field>
+    <name>completed_date</name>
+    <type>datetime</type>
+    
+            
+    <comment>date the contribution was completed</comment>
+    <title>completed date</title>
+  </field><field>
+    <name>completed_by_user_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>contribution completed by user</comment>
+    <title>completed by user id</title>
+  </field><field>
+    <name>batch_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>batch id</comment>
+    <title>batch id</title>
+  </field><field>
+    <name>batch_entry_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>batch entry id</comment>
+    <title>batch entry id</title>
+  </field><field>
+    <name>contact_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>Contact Id to whom the contribution belongs</comment>
+    <title>contact id</title>
+  </field>
+  
+</table>

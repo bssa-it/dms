@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>Statement</class>
+  <name>civicrm_dms_statement</name>
+  <comment>civicrm_dms_statement schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>deposit_date</name>
+    <type>date</type>
+    
+            
+    <comment>Date of deposit</comment>
+    <title>deposit date</title>
+  </field><field>
+    <name>deposit_reference</name>
+    <type>varchar</type>
+    <length>255</length>
+            
+    <comment>Reference made by depositor</comment>
+    <title>deposit reference</title>
+  </field><field>
+    <name>deposit_amount</name>
+    <type>decimal</type>
+    
+            
+    <comment>Amount deposited</comment>
+    <title>deposit amount</title>
+  </field><field>
+    <name>balance</name>
+    <type>decimal</type>
+    
+            
+    <comment>Balance amount after transaction</comment>
+    <title>balance</title>
+  </field><field>
+    <name>document_name</name>
+    <type>varchar</type>
+    <length>150</length>
+            
+    <comment>path to txt file impoted</comment>
+    <title>document name</title>
+  </field><field>
+    <name>imported_datetime</name>
+    <type>datetime</type>
+    
+            
+    <comment>Date and time the document was imported</comment>
+    <title>imported datetime</title>
+  </field><field>
+    <name>imported_by</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>User id to import the document</comment>
+    <title>imported by</title>
+  </field><field>
+    <name>batch_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>Batch Id from civicrm_dms_batch_header table</comment>
+    <title>batch id</title>
+  </field><field>
+    <name>reconciled</name>
+    <type>varchar</type>
+    <length>50</length>
+            
+    <comment>Status Flag for the transaction</comment>
+    <title>reconciled</title>
+  </field><field>
+    <name>reconciled_datetime</name>
+    <type>datetime</type>
+    
+            
+    <comment>Date and time transaction was reconciled</comment>
+    <title>reconciled datetime</title>
+  </field><field>
+    <name>reconciled_by</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>User id to reconcile the transaction</comment>
+    <title>reconciled by</title>
+  </field>
+  
+</table>

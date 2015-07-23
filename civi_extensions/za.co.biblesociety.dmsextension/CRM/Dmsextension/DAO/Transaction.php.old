@@ -9,7 +9,7 @@
 require_once 'CRM/Core/DAO.php';
 require_once 'CRM/Utils/Type.php';
 
-class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
+class CRM_Dmsextension_DAO_Transaction extends CRM_Core_DAO
 {
   /**
    * static instance to hold the table name
@@ -17,7 +17,7 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
    * @var string
    * @static
    */
-  static $_tableName = 'civicrm_dms_organisation';
+  static $_tableName = 'civicrm_dms_transaction';
   /**
    * static instance to hold the field values
    *
@@ -71,29 +71,45 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
    */
   public $id;
   /**
+   * Contribution Id
+   *
+   * @var int unsigned
+   */
+  public $contribution_id;
+  /**
+   * Motivation Id
+   *
+   * @var string
+   */
+  public $motivation_id;
+  /**
+   * Category Id
+   *
+   * @var string
+   */
+  public $category_id;
+  /**
+   * Region Id
+   *
+   * @var string
+   */
+  public $region_id;
+  /**
    * Organisation Id
    *
-   * @var varchar
+   * @var string
    */
-  public $org_id;	
-/**
-   * Organisation code description
+  public $organisation_id;
+
+  /**
+   * class constructor
    *
-   * @var varchar
+   * @access public
+   * @return civicrm_dms_region
    */
-  public $org_name;	
-/**
-   * region to which the organisation belongs (civicrm_dms_region)
-   *
-   * @var int
-   */
-  public $org_region;	
-  
-  
-  
   function __construct()
   {
-    $this->__table = 'civicrm_dms_organisation';
+    $this->__table = 'civicrm_dms_transaction';
     parent::__construct();
   }
   /**
@@ -112,29 +128,33 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
           'title' => ts('ID') ,
           'required' => true,
         ) ,
-        
-              'org_id' => array(
-              'name' => 'org_id',
-              'title' => ts('org id'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 15,
-            ) ,	
-
-              'org_name' => array(
-              'name' => 'org_name',
-              'title' => ts('org name'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 255,
-            ) ,	
-
-              'org_region' => array(
-              'name' => 'org_region',
-              'title' => ts('org region'),
-              'type' => CRM_Utils_Type::T_INT,
-              
-            ) ,	
-
-        
+        'contribution_id' => array(
+          'name' => 'contribution_id',
+          'title' => ts('Contribution Id'),
+          'type' => CRM_Utils_Type::T_INT,
+        ) ,
+        'motivation_id' => array(
+          'name' => 'motivation_id',
+          'title' => ts('Motivation Id'),
+          'type' => CRM_Utils_Type::T_INT,
+        ) ,
+        'category_id' => array(
+          'name' => 'category_id',
+          'title' => ts('Category Id'),
+          'type' => CRM_Utils_Type::T_STRING,
+          'maxlength' => 4,
+        ) ,
+        'region_id' => array(
+          'name' => 'region_id',
+          'title' => ts('Region Id'),
+          'type' => CRM_Utils_Type::T_INT,
+        ) ,
+        'organisation_id' => array(
+          'name' => 'organisation_id',
+          'title' => ts('Organisation Id'),
+          'type' => CRM_Utils_Type::T_STRING,
+          'maxlength' => 8,
+        ) ,
       );
     }
     return self::$_fields;
@@ -151,10 +171,11 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'org_id' => 'org_id',	
-'org_name' => 'org_name',	
-'org_region' => 'org_region',	
-
+        'contribution_id' => 'contribution_id',
+        'motivation_id' => 'motivation_id',
+        'organisation_id' => 'organisation_id',
+        'region_id' => 'region_id',
+        'category_id' => 'category_id',
       );
     }
     return self::$_fieldKeys;
@@ -195,7 +216,7 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('import', $field)) {
           if ($prefix) {
-            self::$_import['dms_organisation'] = & $fields[$name];
+            self::$_import['dms_transaction'] = & $fields[$name];
           } else {
             self::$_import[$name] = & $fields[$name];
           }
@@ -219,7 +240,7 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('export', $field)) {
           if ($prefix) {
-            self::$_export['dms_organisation'] = & $fields[$name];
+            self::$_export['dms_transaction'] = & $fields[$name];
           } else {
             self::$_export[$name] = & $fields[$name];
           }

@@ -71,37 +71,56 @@ class CRM_Dmsextension_DAO_ContactOtherData extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Contact Id
-   *
-   * @var int unsigned
-   */
-  public $contact_id;
-  /**
-   * Do not thank flag
-   *
-   * @var int 
-   */
-  public $do_not_thank;
-  /**
-   * Reminder Month
+   * Contact Id from the civicrm_contact table
    *
    * @var int
    */
-  public $reminder_month;
-  /**
-   * South African Id number
+  public $contact_id;	
+/**
+   * Temporary Acknowledgement Flag - Does Contact want to be acknowledged for contributions?
    *
-   * @var string
+   * @var tinyint
    */
-  public $id_number;
+  public $do_not_thank;	
+/**
+   * Month contact must reminded of debit order renewal
+   *
+   * @var tinyint
+   */
+  public $reminder_month;	
+/**
+   * South African ID number
+   *
+   * @var varchar
+   */
+  public $id_number;	
+/**
+   * Last time contact made a contribution
+   *
+   * @var datetime
+   */
+  public $last_contribution_date;	
+/**
+   * Last contribution amount
+   *
+   * @var decimal
+   */
+  public $last_contribution_amount;	
+/**
+   * User who created the contact
+   *
+   * @var int
+   */
+  public $inserted_by_contact_id;	
+/**
+   * User who last modified the contact
+   *
+   * @var int
+   */
+  public $modified_by_contact_id;	
   
-  /**
-   * class constructor
-   *
-   * @access public
-   * @return civicrm_dms_region
-   */
-   
+  
+  
   function __construct()
   {
     $this->__table = 'civicrm_dms_contact_other_data';
@@ -123,28 +142,64 @@ class CRM_Dmsextension_DAO_ContactOtherData extends CRM_Core_DAO
           'title' => ts('ID') ,
           'required' => true,
         ) ,
-        'contact_id' => array(
-          'name' => 'contact_id',
-          'title' => ts('Contact Id'),
-          'type' => CRM_Utils_Type::T_INT,
-          'FKClassName' => 'CRM_Contact_DAO_Contact',
-        ) ,
-        'do_not_thank' => array(
-          'name' => 'do_not_thank',
-          'title' => ts('Do Not Thank'),
-          'type' => CRM_Utils_Type::T_INT,
-        ) ,
-        'reminder_month' => array(
-          'name' => 'reminder_month',
-          'title' => ts('Reminder Month'),
-          'type' => CRM_Utils_Type::T_INT,
-        ) ,
-        'id_number' => array(
-          'name' => 'id_number',
-          'title' => ts('Id number'),
-          'type' => CRM_Utils_Type::T_STRING,
-          'maxlength' => 15,
-        ) ,
+        
+              'contact_id' => array(
+              'name' => 'contact_id',
+              'title' => ts('contact id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'do_not_thank' => array(
+              'name' => 'do_not_thank',
+              'title' => ts('do not thank'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'reminder_month' => array(
+              'name' => 'reminder_month',
+              'title' => ts('reminder month'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'id_number' => array(
+              'name' => 'id_number',
+              'title' => ts('id number'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 15,
+            ) ,	
+
+              'last_contribution_date' => array(
+              'name' => 'last_contribution_date',
+              'title' => ts('last contribution date'),
+              'type' => CRM_Utils_Type::T_DATE,
+              
+            ) ,	
+
+              'last_contribution_amount' => array(
+              'name' => 'last_contribution_amount',
+              'title' => ts('last contribution amount'),
+              'type' => CRM_Utils_Type::T_MONEY,
+              
+            ) ,	
+
+              'inserted_by_contact_id' => array(
+              'name' => 'inserted_by_contact_id',
+              'title' => ts('inserted by contact id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'modified_by_contact_id' => array(
+              'name' => 'modified_by_contact_id',
+              'title' => ts('modified by contact id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+        
       );
     }
     return self::$_fields;
@@ -161,10 +216,15 @@ class CRM_Dmsextension_DAO_ContactOtherData extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'contact_id' => 'contact_id',
-        'do_not_thank' => 'do_not_thank',
-        'reminder_month' => 'reminder_month',
-        'id_number' => 'id_number',
+        'contact_id' => 'contact_id',	
+'do_not_thank' => 'do_not_thank',	
+'reminder_month' => 'reminder_month',	
+'id_number' => 'id_number',	
+'last_contribution_date' => 'last_contribution_date',	
+'last_contribution_amount' => 'last_contribution_amount',	
+'inserted_by_contact_id' => 'inserted_by_contact_id',	
+'modified_by_contact_id' => 'modified_by_contact_id',	
+
       );
     }
     return self::$_fieldKeys;

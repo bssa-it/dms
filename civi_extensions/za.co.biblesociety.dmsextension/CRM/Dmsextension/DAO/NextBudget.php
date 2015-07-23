@@ -9,7 +9,7 @@
 require_once 'CRM/Core/DAO.php';
 require_once 'CRM/Utils/Type.php';
 
-class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
+class CRM_Dmsextension_DAO_NextBudget extends CRM_Core_DAO
 {
   /**
    * static instance to hold the table name
@@ -17,7 +17,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
    * @var string
    * @static
    */
-  static $_tableName = 'civicrm_dms_department';
+  static $_tableName = 'civicrm_dms_next_budget';
   /**
    * static instance to hold the field values
    *
@@ -71,65 +71,59 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Department Id code
-   *
-   * @var varchar
-   */
-  public $dep_id;	
-/**
-   * Department name
-   *
-   * @var varchar
-   */
-  public $dep_name;	
-/**
-   * office id where contact resides
+   * region that the budget belongs to
    *
    * @var int
    */
-  public $dep_office_id;	
+  public $bud_region;	
 /**
-   * Is this a national department (for reporting)
+   * Department the budget belongs to
    *
    * @var varchar
    */
-  public $dep_is_national;	
+  public $bud_department;	
 /**
-   * Allocated Budget
+   * Category the budget belongs to
+   *
+   * @var int
+   */
+  public $bud_category;	
+/**
+   * Budget Amount
    *
    * @var decimal
    */
-  public $dep_budget_allocation;	
+  public $bud_amount;	
 /**
-   * Chart Color
+   * User who inserted the budget
    *
    * @var varchar
    */
-  public $dep_chart_color;	
+  public $bud_insert_user;	
 /**
-   * From Email address name
+   * date and time the budget was inserted
+   *
+   * @var datetime
+   */
+  public $bud_dateinserted;	
+/**
+   * date and time the budget was last updated
+   *
+   * @var datetime
+   */
+  public $bud_datelastupdated;	
+/**
+   * User who last updated the budget
    *
    * @var varchar
    */
-  public $dep_fromEmailName;	
-/**
-   * From Email Address
-   *
-   * @var varchar
-   */
-  public $dep_fromEmailAddress;	
-/**
-   * contact id to whom this department belongs
-   *
-   * @var int
-   */
-  public $dep_contact_id;	
+  public $bud_update_user;	
   
   
   
   function __construct()
   {
-    $this->__table = 'civicrm_dms_department';
+    $this->__table = 'civicrm_dms_next_budget';
     parent::__construct();
   }
   /**
@@ -149,67 +143,60 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
           'required' => true,
         ) ,
         
-              'dep_id' => array(
-              'name' => 'dep_id',
-              'title' => ts('dep id'),
+              'bud_region' => array(
+              'name' => 'bud_region',
+              'title' => ts('bud region'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'bud_department' => array(
+              'name' => 'bud_department',
+              'title' => ts('bud department'),
               'type' => CRM_Utils_Type::T_STRING,
               'maxlength' => 2,
             ) ,	
 
-              'dep_name' => array(
-              'name' => 'dep_name',
-              'title' => ts('dep name'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
-            ) ,	
-
-              'dep_office_id' => array(
-              'name' => 'dep_office_id',
-              'title' => ts('dep office id'),
+              'bud_category' => array(
+              'name' => 'bud_category',
+              'title' => ts('bud category'),
               'type' => CRM_Utils_Type::T_INT,
               
             ) ,	
 
-              'dep_is_national' => array(
-              'name' => 'dep_is_national',
-              'title' => ts('dep is national'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 1,
-            ) ,	
-
-              'dep_budget_allocation' => array(
-              'name' => 'dep_budget_allocation',
-              'title' => ts('dep budget allocation'),
+              'bud_amount' => array(
+              'name' => 'bud_amount',
+              'title' => ts('bud amount'),
               'type' => CRM_Utils_Type::T_MONEY,
               
             ) ,	
 
-              'dep_chart_color' => array(
-              'name' => 'dep_chart_color',
-              'title' => ts('dep chart color'),
+              'bud_insert_user' => array(
+              'name' => 'bud_insert_user',
+              'title' => ts('bud insert user'),
               'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 10,
+              'maxlength' => 200,
             ) ,	
 
-              'dep_fromEmailName' => array(
-              'name' => 'dep_fromEmailName',
-              'title' => ts('dep fromEmailName'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
-            ) ,	
-
-              'dep_fromEmailAddress' => array(
-              'name' => 'dep_fromEmailAddress',
-              'title' => ts('dep fromEmailAddress'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
-            ) ,	
-
-              'dep_contact_id' => array(
-              'name' => 'dep_contact_id',
-              'title' => ts('dep contact id'),
-              'type' => CRM_Utils_Type::T_INT,
+              'bud_dateinserted' => array(
+              'name' => 'bud_dateinserted',
+              'title' => ts('bud dateinserted'),
+              'type' => CRM_Utils_Type::T_DATE,
               
+            ) ,	
+
+              'bud_datelastupdated' => array(
+              'name' => 'bud_datelastupdated',
+              'title' => ts('bud datelastupdated'),
+              'type' => CRM_Utils_Type::T_DATE,
+              
+            ) ,	
+
+              'bud_update_user' => array(
+              'name' => 'bud_update_user',
+              'title' => ts('bud update user'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 200,
             ) ,	
 
         
@@ -229,15 +216,14 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'dep_id' => 'dep_id',	
-'dep_name' => 'dep_name',	
-'dep_office_id' => 'dep_office_id',	
-'dep_is_national' => 'dep_is_national',	
-'dep_budget_allocation' => 'dep_budget_allocation',	
-'dep_chart_color' => 'dep_chart_color',	
-'dep_fromEmailName' => 'dep_fromEmailName',	
-'dep_fromEmailAddress' => 'dep_fromEmailAddress',	
-'dep_contact_id' => 'dep_contact_id',	
+        'bud_region' => 'bud_region',	
+'bud_department' => 'bud_department',	
+'bud_category' => 'bud_category',	
+'bud_amount' => 'bud_amount',	
+'bud_insert_user' => 'bud_insert_user',	
+'bud_dateinserted' => 'bud_dateinserted',	
+'bud_datelastupdated' => 'bud_datelastupdated',	
+'bud_update_user' => 'bud_update_user',	
 
       );
     }
@@ -279,7 +265,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('import', $field)) {
           if ($prefix) {
-            self::$_import['dms_department'] = & $fields[$name];
+            self::$_import['dms_next_budget'] = & $fields[$name];
           } else {
             self::$_import[$name] = & $fields[$name];
           }
@@ -303,7 +289,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('export', $field)) {
           if ($prefix) {
-            self::$_export['dms_department'] = & $fields[$name];
+            self::$_export['dms_next_budget'] = & $fields[$name];
           } else {
             self::$_export[$name] = & $fields[$name];
           }

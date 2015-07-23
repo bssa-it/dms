@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>Department</class>
+  <name>civicrm_dms_department</name>
+  <comment>civicrm_dms_department schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>dep_id</name>
+    <type>varchar</type>
+    <length>2</length>
+    <required>true</required>        
+    <comment>Department Id code</comment>
+    <title>dep id</title>
+  </field><field>
+    <name>dep_name</name>
+    <type>varchar</type>
+    <length>250</length>
+            
+    <comment>Department name</comment>
+    <title>dep name</title>
+  </field><field>
+    <name>dep_office_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>office id where contact resides</comment>
+    <title>dep office id</title>
+  </field><field>
+    <name>dep_is_national</name>
+    <type>varchar</type>
+    <length>1</length>
+            
+    <comment>Is this a national department (for reporting)</comment>
+    <title>dep is national</title>
+  </field><field>
+    <name>dep_budget_allocation</name>
+    <type>decimal</type>
+    
+            
+    <comment>Allocated Budget</comment>
+    <title>dep budget allocation</title>
+  </field><field>
+    <name>dep_chart_color</name>
+    <type>varchar</type>
+    <length>10</length>
+            
+    <comment>Chart Color</comment>
+    <title>dep chart color</title>
+  </field><field>
+    <name>dep_fromEmailName</name>
+    <type>varchar</type>
+    <length>250</length>
+            
+    <comment>From Email address name</comment>
+    <title>dep fromEmailName</title>
+  </field><field>
+    <name>dep_fromEmailAddress</name>
+    <type>varchar</type>
+    <length>250</length>
+            
+    <comment>From Email Address</comment>
+    <title>dep fromEmailAddress</title>
+  </field><field>
+    <name>dep_contact_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>contact id to whom this department belongs</comment>
+    <title>dep contact id</title>
+  </field>
+  
+</table>

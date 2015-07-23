@@ -71,29 +71,26 @@ class CRM_Dmsextension_DAO_ContactReportingCode extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Contact Id
+   * Contact Id from the civicrm_contact table
    *
-   * @var int unsigned
+   * @var int
    */
-  public $contact_id;
-  /**
+  public $contact_id;	
+/**
    * Organisation Id
    *
-   * @var string
+   * @var varchar
    */
-  public $organisation_id;
-  /**
-   * Category Id
+  public $organisation_id;	
+/**
+   * 4 numeric character category id
    *
-   * @var string
+   * @var varchar
    */
-  public $category_id;
-  /**
-   * class constructor
-   *
-   * @access public
-   * @return civicrm_dms_region
-   */
+  public $category_id;	
+  
+  
+  
   function __construct()
   {
     $this->__table = 'civicrm_dms_contact_reporting_code';
@@ -115,24 +112,29 @@ class CRM_Dmsextension_DAO_ContactReportingCode extends CRM_Core_DAO
           'title' => ts('ID') ,
           'required' => true,
         ) ,
-        'contact_id' => array(
-          'name' => 'contact_id',
-          'title' => ts('Contact Id'),
-          'type' => CRM_Utils_Type::T_INT,
-          'FKClassName' => 'CRM_Contact_DAO_Contact',
-        ) ,
-        'organisation_id' => array(
-          'name' => 'organisation_id',
-          'title' => ts('Organisation Id'),
-          'type' => CRM_Utils_Type::T_STRING,
-          'maxlength' => 8,
-        ) ,
-        'category_id' => array(
-          'name' => 'category_id',
-          'title' => ts('Category Id'),
-          'type' => CRM_Utils_Type::T_STRING,
-          'maxlength' => 4,
-        ) ,
+        
+              'contact_id' => array(
+              'name' => 'contact_id',
+              'title' => ts('contact id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'organisation_id' => array(
+              'name' => 'organisation_id',
+              'title' => ts('organisation id'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 8,
+            ) ,	
+
+              'category_id' => array(
+              'name' => 'category_id',
+              'title' => ts('category id'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 4,
+            ) ,	
+
+        
       );
     }
     return self::$_fields;
@@ -149,9 +151,10 @@ class CRM_Dmsextension_DAO_ContactReportingCode extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'contact_id' => 'contact_id',
-        'organisation_id' => 'organisation_id',
-        'category_id' => 'category_id',
+        'contact_id' => 'contact_id',	
+'organisation_id' => 'organisation_id',	
+'category_id' => 'category_id',	
+
       );
     }
     return self::$_fieldKeys;

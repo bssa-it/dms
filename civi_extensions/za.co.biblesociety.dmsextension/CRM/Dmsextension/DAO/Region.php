@@ -71,29 +71,38 @@ class CRM_Dmsextension_DAO_Region extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Region Id
+   * region id
    *
-   * @var int unsigned
+   * @var int
    */
-  public $reg_id;
-  /**
-   * Region name
+  public $reg_id;	
+/**
+   * region name
    *
-   * @var int 
+   * @var varchar
    */
-  public $reg_name;
-  /**
-   * Consol file id
+  public $reg_name;	
+/**
+   * id for the consol file for the consol report.
    *
-   * @var string
+   * @var int
    */
-  public $reg_consol_id;
-  /**
-   * class constructor
+  public $reg_consol_id;	
+/**
+   * Group id linked to the region
    *
-   * @access public
-   * @return civicrm_dms_region
+   * @var int
    */
+  public $reg_joomla_group_id;	
+/**
+   * Office Id that this region is linked to
+   *
+   * @var int
+   */
+  public $reg_office_id;	
+  
+  
+  
   function __construct()
   {
     $this->__table = 'civicrm_dms_region';
@@ -115,23 +124,43 @@ class CRM_Dmsextension_DAO_Region extends CRM_Core_DAO
           'title' => ts('ID') ,
           'required' => true,
         ) ,
-        'reg_id' => array(
-          'name' => 'reg_id',
-          'title' => ts('Region Id'),
-          'type' => CRM_Utils_Type::T_INT,
-        ) ,
-        'reg_name' => array(
-          'name' => 'reg_name',
-          'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Region Name'),
-          'maxlength' => 50,
-          'size' => CRM_Utils_Type::HUGE,
-        ) ,
-        'reg_consol_id' => array(
-          'name' => 'reg_consol_id',
-          'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('Console Id'),
-        ) ,
+        
+              'reg_id' => array(
+              'name' => 'reg_id',
+              'title' => ts('reg id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'reg_name' => array(
+              'name' => 'reg_name',
+              'title' => ts('reg name'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 50,
+            ) ,	
+
+              'reg_consol_id' => array(
+              'name' => 'reg_consol_id',
+              'title' => ts('reg consol id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'reg_joomla_group_id' => array(
+              'name' => 'reg_joomla_group_id',
+              'title' => ts('reg joomla group id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'reg_office_id' => array(
+              'name' => 'reg_office_id',
+              'title' => ts('reg office id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+        
       );
     }
     return self::$_fields;
@@ -148,9 +177,12 @@ class CRM_Dmsextension_DAO_Region extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'reg_id' => 'reg_id',
-        'reg_name' => 'reg_name',
-        'reg_consol_id' => 'reg_consol_id',
+        'reg_id' => 'reg_id',	
+'reg_name' => 'reg_name',	
+'reg_consol_id' => 'reg_consol_id',	
+'reg_joomla_group_id' => 'reg_joomla_group_id',	
+'reg_office_id' => 'reg_office_id',	
+
       );
     }
     return self::$_fieldKeys;

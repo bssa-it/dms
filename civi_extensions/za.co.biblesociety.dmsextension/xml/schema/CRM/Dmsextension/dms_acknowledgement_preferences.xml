@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>AcknowledgementPreferences</class>
+  <name>civicrm_dms_acknowledgement_preferences</name>
+  <comment>civicrm_dms_acknowledgement_preferences schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>contact_id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>        
+    <comment>contact id to whom the preference belongs</comment>
+    <title>contact id</title>
+  </field><field>
+    <name>must_acknowledge</name>
+    <type>varchar</type>
+    <length>1</length>
+            
+    <comment>flag to identify if contact would like to be acknowledged</comment>
+    <title>must acknowledge</title>
+  </field><field>
+    <name>frequency</name>
+    <type>smallint</type>
+    <length>6</length>
+            
+    <comment>how often must contact be acknowledged</comment>
+    <title>frequency</title>
+  </field><field>
+    <name>preferred_method</name>
+    <type>varchar</type>
+    <length>50</length>
+            
+    <comment>which communication method must be used for acknowledgements</comment>
+    <title>preferred method</title>
+  </field><field>
+    <name>last_acknowledgement_date</name>
+    <type>datetime</type>
+    
+            
+    <comment>the last time the contact was acknowledged</comment>
+    <title>last acknowledgement date</title>
+  </field><field>
+    <name>last_acknowledgement_contribution_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>the last contribution id acknowledged</comment>
+    <title>last acknowledgement contribution id</title>
+  </field><field>
+    <name>unacknowledged_total</name>
+    <type>decimal</type>
+    
+            
+    <comment>sum of contributions since last acknowledgement</comment>
+    <title>unacknowledged total</title>
+  </field><field>
+    <name>last_contribution_date</name>
+    <type>datetime</type>
+    
+            
+    <comment>Last contribution date of contact</comment>
+    <title>last contribution date</title>
+  </field>
+  
+</table>

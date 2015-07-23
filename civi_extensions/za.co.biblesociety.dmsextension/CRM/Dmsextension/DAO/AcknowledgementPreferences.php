@@ -9,7 +9,7 @@
 require_once 'CRM/Core/DAO.php';
 require_once 'CRM/Utils/Type.php';
 
-class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
+class CRM_Dmsextension_DAO_AcknowledgementPreferences extends CRM_Core_DAO
 {
   /**
    * static instance to hold the table name
@@ -17,7 +17,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
    * @var string
    * @static
    */
-  static $_tableName = 'civicrm_dms_department';
+  static $_tableName = 'civicrm_dms_acknowledgement_preferences';
   /**
    * static instance to hold the field values
    *
@@ -71,65 +71,59 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Department Id code
-   *
-   * @var varchar
-   */
-  public $dep_id;	
-/**
-   * Department name
-   *
-   * @var varchar
-   */
-  public $dep_name;	
-/**
-   * office id where contact resides
+   * contact id to whom the preference belongs
    *
    * @var int
    */
-  public $dep_office_id;	
+  public $contact_id;	
 /**
-   * Is this a national department (for reporting)
+   * flag to identify if contact would like to be acknowledged
    *
    * @var varchar
    */
-  public $dep_is_national;	
+  public $must_acknowledge;	
 /**
-   * Allocated Budget
+   * how often must contact be acknowledged
+   *
+   * @var smallint
+   */
+  public $frequency;	
+/**
+   * which communication method must be used for acknowledgements
+   *
+   * @var varchar
+   */
+  public $preferred_method;	
+/**
+   * the last time the contact was acknowledged
+   *
+   * @var datetime
+   */
+  public $last_acknowledgement_date;	
+/**
+   * the last contribution id acknowledged
+   *
+   * @var int
+   */
+  public $last_acknowledgement_contribution_id;	
+/**
+   * sum of contributions since last acknowledgement
    *
    * @var decimal
    */
-  public $dep_budget_allocation;	
+  public $unacknowledged_total;	
 /**
-   * Chart Color
+   * Last contribution date of contact
    *
-   * @var varchar
+   * @var datetime
    */
-  public $dep_chart_color;	
-/**
-   * From Email address name
-   *
-   * @var varchar
-   */
-  public $dep_fromEmailName;	
-/**
-   * From Email Address
-   *
-   * @var varchar
-   */
-  public $dep_fromEmailAddress;	
-/**
-   * contact id to whom this department belongs
-   *
-   * @var int
-   */
-  public $dep_contact_id;	
+  public $last_contribution_date;	
   
   
   
   function __construct()
   {
-    $this->__table = 'civicrm_dms_department';
+    $this->__table = 'civicrm_dms_acknowledgement_preferences';
     parent::__construct();
   }
   /**
@@ -149,66 +143,59 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
           'required' => true,
         ) ,
         
-              'dep_id' => array(
-              'name' => 'dep_id',
-              'title' => ts('dep id'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 2,
-            ) ,	
-
-              'dep_name' => array(
-              'name' => 'dep_name',
-              'title' => ts('dep name'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
-            ) ,	
-
-              'dep_office_id' => array(
-              'name' => 'dep_office_id',
-              'title' => ts('dep office id'),
+              'contact_id' => array(
+              'name' => 'contact_id',
+              'title' => ts('contact id'),
               'type' => CRM_Utils_Type::T_INT,
               
             ) ,	
 
-              'dep_is_national' => array(
-              'name' => 'dep_is_national',
-              'title' => ts('dep is national'),
+              'must_acknowledge' => array(
+              'name' => 'must_acknowledge',
+              'title' => ts('must acknowledge'),
               'type' => CRM_Utils_Type::T_STRING,
               'maxlength' => 1,
             ) ,	
 
-              'dep_budget_allocation' => array(
-              'name' => 'dep_budget_allocation',
-              'title' => ts('dep budget allocation'),
+              'frequency' => array(
+              'name' => 'frequency',
+              'title' => ts('frequency'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'preferred_method' => array(
+              'name' => 'preferred_method',
+              'title' => ts('preferred method'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 50,
+            ) ,	
+
+              'last_acknowledgement_date' => array(
+              'name' => 'last_acknowledgement_date',
+              'title' => ts('last acknowledgement date'),
+              'type' => CRM_Utils_Type::T_DATE,
+              
+            ) ,	
+
+              'last_acknowledgement_contribution_id' => array(
+              'name' => 'last_acknowledgement_contribution_id',
+              'title' => ts('last acknowledgement contribution id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'unacknowledged_total' => array(
+              'name' => 'unacknowledged_total',
+              'title' => ts('unacknowledged total'),
               'type' => CRM_Utils_Type::T_MONEY,
               
             ) ,	
 
-              'dep_chart_color' => array(
-              'name' => 'dep_chart_color',
-              'title' => ts('dep chart color'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 10,
-            ) ,	
-
-              'dep_fromEmailName' => array(
-              'name' => 'dep_fromEmailName',
-              'title' => ts('dep fromEmailName'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
-            ) ,	
-
-              'dep_fromEmailAddress' => array(
-              'name' => 'dep_fromEmailAddress',
-              'title' => ts('dep fromEmailAddress'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
-            ) ,	
-
-              'dep_contact_id' => array(
-              'name' => 'dep_contact_id',
-              'title' => ts('dep contact id'),
-              'type' => CRM_Utils_Type::T_INT,
+              'last_contribution_date' => array(
+              'name' => 'last_contribution_date',
+              'title' => ts('last contribution date'),
+              'type' => CRM_Utils_Type::T_DATE,
               
             ) ,	
 
@@ -229,15 +216,14 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'dep_id' => 'dep_id',	
-'dep_name' => 'dep_name',	
-'dep_office_id' => 'dep_office_id',	
-'dep_is_national' => 'dep_is_national',	
-'dep_budget_allocation' => 'dep_budget_allocation',	
-'dep_chart_color' => 'dep_chart_color',	
-'dep_fromEmailName' => 'dep_fromEmailName',	
-'dep_fromEmailAddress' => 'dep_fromEmailAddress',	
-'dep_contact_id' => 'dep_contact_id',	
+        'contact_id' => 'contact_id',	
+'must_acknowledge' => 'must_acknowledge',	
+'frequency' => 'frequency',	
+'preferred_method' => 'preferred_method',	
+'last_acknowledgement_date' => 'last_acknowledgement_date',	
+'last_acknowledgement_contribution_id' => 'last_acknowledgement_contribution_id',	
+'unacknowledged_total' => 'unacknowledged_total',	
+'last_contribution_date' => 'last_contribution_date',	
 
       );
     }
@@ -279,7 +265,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('import', $field)) {
           if ($prefix) {
-            self::$_import['dms_department'] = & $fields[$name];
+            self::$_import['dms_acknowledgement_preferences'] = & $fields[$name];
           } else {
             self::$_import[$name] = & $fields[$name];
           }
@@ -303,7 +289,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('export', $field)) {
           if ($prefix) {
-            self::$_export['dms_department'] = & $fields[$name];
+            self::$_export['dms_acknowledgement_preferences'] = & $fields[$name];
           } else {
             self::$_export[$name] = & $fields[$name];
           }

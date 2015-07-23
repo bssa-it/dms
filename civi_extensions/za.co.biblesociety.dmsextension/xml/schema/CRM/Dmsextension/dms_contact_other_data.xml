@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>ContactOtherData</class>
+  <name>civicrm_dms_contact_other_data</name>
+  <comment>civicrm_dms_contact_other_data schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>contact_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>Contact Id from the civicrm_contact table</comment>
+    <title>contact id</title>
+  </field><field>
+    <name>do_not_thank</name>
+    <type>tinyint</type>
+    <length>4</length>
+            
+    <comment>Temporary Acknowledgement Flag - Does Contact want to be acknowledged for contributions?</comment>
+    <title>do not thank</title>
+  </field><field>
+    <name>reminder_month</name>
+    <type>tinyint</type>
+    <length>4</length>
+            
+    <comment>Month contact must reminded of debit order renewal</comment>
+    <title>reminder month</title>
+  </field><field>
+    <name>id_number</name>
+    <type>varchar</type>
+    <length>15</length>
+            
+    <comment>South African ID number</comment>
+    <title>id number</title>
+  </field><field>
+    <name>last_contribution_date</name>
+    <type>datetime</type>
+    
+            
+    <comment>Last time contact made a contribution</comment>
+    <title>last contribution date</title>
+  </field><field>
+    <name>last_contribution_amount</name>
+    <type>decimal</type>
+    
+            
+    <comment>Last contribution amount</comment>
+    <title>last contribution amount</title>
+  </field><field>
+    <name>inserted_by_contact_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>User who created the contact</comment>
+    <title>inserted by contact id</title>
+  </field><field>
+    <name>modified_by_contact_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>User who last modified the contact</comment>
+    <title>modified by contact id</title>
+  </field>
+  
+</table>

@@ -9,7 +9,7 @@
 require_once 'CRM/Core/DAO.php';
 require_once 'CRM/Utils/Type.php';
 
-class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
+class CRM_Dmsextension_DAO_ContactReportingCode extends CRM_Core_DAO
 {
   /**
    * static instance to hold the table name
@@ -17,7 +17,7 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
    * @var string
    * @static
    */
-  static $_tableName = 'civicrm_dms_organisation';
+  static $_tableName = 'civicrm_dms_contact_reporting_code';
   /**
    * static instance to hold the field values
    *
@@ -71,29 +71,32 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
    */
   public $id;
   /**
+   * Contact Id
+   *
+   * @var int unsigned
+   */
+  public $contact_id;
+  /**
    * Organisation Id
    *
-   * @var varchar
+   * @var string
    */
-  public $org_id;	
-/**
-   * Organisation code description
+  public $organisation_id;
+  /**
+   * Category Id
    *
-   * @var varchar
+   * @var string
    */
-  public $org_name;	
-/**
-   * region to which the organisation belongs (civicrm_dms_region)
+  public $category_id;
+  /**
+   * class constructor
    *
-   * @var int
+   * @access public
+   * @return civicrm_dms_region
    */
-  public $org_region;	
-  
-  
-  
   function __construct()
   {
-    $this->__table = 'civicrm_dms_organisation';
+    $this->__table = 'civicrm_dms_contact_reporting_code';
     parent::__construct();
   }
   /**
@@ -112,29 +115,24 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
           'title' => ts('ID') ,
           'required' => true,
         ) ,
-        
-              'org_id' => array(
-              'name' => 'org_id',
-              'title' => ts('org id'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 15,
-            ) ,	
-
-              'org_name' => array(
-              'name' => 'org_name',
-              'title' => ts('org name'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 255,
-            ) ,	
-
-              'org_region' => array(
-              'name' => 'org_region',
-              'title' => ts('org region'),
-              'type' => CRM_Utils_Type::T_INT,
-              
-            ) ,	
-
-        
+        'contact_id' => array(
+          'name' => 'contact_id',
+          'title' => ts('Contact Id'),
+          'type' => CRM_Utils_Type::T_INT,
+          'FKClassName' => 'CRM_Contact_DAO_Contact',
+        ) ,
+        'organisation_id' => array(
+          'name' => 'organisation_id',
+          'title' => ts('Organisation Id'),
+          'type' => CRM_Utils_Type::T_STRING,
+          'maxlength' => 8,
+        ) ,
+        'category_id' => array(
+          'name' => 'category_id',
+          'title' => ts('Category Id'),
+          'type' => CRM_Utils_Type::T_STRING,
+          'maxlength' => 4,
+        ) ,
       );
     }
     return self::$_fields;
@@ -151,10 +149,9 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'org_id' => 'org_id',	
-'org_name' => 'org_name',	
-'org_region' => 'org_region',	
-
+        'contact_id' => 'contact_id',
+        'organisation_id' => 'organisation_id',
+        'category_id' => 'category_id',
       );
     }
     return self::$_fieldKeys;
@@ -195,7 +192,7 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('import', $field)) {
           if ($prefix) {
-            self::$_import['dms_organisation'] = & $fields[$name];
+            self::$_import['dms_contact_reporting_code'] = & $fields[$name];
           } else {
             self::$_import[$name] = & $fields[$name];
           }
@@ -219,7 +216,7 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('export', $field)) {
           if ($prefix) {
-            self::$_export['dms_organisation'] = & $fields[$name];
+            self::$_export['dms_contact_reporting_code'] = & $fields[$name];
           } else {
             self::$_export[$name] = & $fields[$name];
           }

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>Orders</class>
+  <name>civicrm_dms_orders</name>
+  <comment>civicrm_dms_orders schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>beneficiary_contact_id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>        
+    <comment>contact id who is the beneficiary of contributions from this bank account</comment>
+    <title>beneficiary contact id</title>
+  </field><field>
+    <name>owner_contact_id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>        
+    <comment>contact id of the contact who owns the bank account</comment>
+    <title>owner contact id</title>
+  </field><field>
+    <name>type</name>
+    <type>varchar</type>
+    <length>50</length>
+            
+    <comment>Order Type:  Debit Order/Stop Order</comment>
+    <title>type</title>
+  </field><field>
+    <name>order_date</name>
+    <type>date</type>
+    
+            
+    <comment>Date this order will execute</comment>
+    <title>order date</title>
+  </field><field>
+    <name>amount</name>
+    <type>decimal</type>
+    
+            
+    <comment>Contribution amount</comment>
+    <title>amount</title>
+  </field><field>
+    <name>reference</name>
+    <type>varchar</type>
+    <length>50</length>
+            
+    <comment>Reference</comment>
+    <title>reference</title>
+  </field><field>
+    <name>motivation_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>Motivation code</comment>
+    <title>motivation id</title>
+  </field><field>
+    <name>approved</name>
+    <type>varchar</type>
+    <length>10</length>
+            
+    <comment>Approved</comment>
+    <title>approved</title>
+  </field><field>
+    <name>bank_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>Bank account id from civicrm_dms_banks</comment>
+    <title>bank id</title>
+  </field><field>
+    <name>acccount_type</name>
+    <type>varchar</type>
+    <length>50</length>
+            
+    <comment>Type of bank account</comment>
+    <title>acccount type</title>
+  </field><field>
+    <name>account_no</name>
+    <type>varchar</type>
+    <length>50</length>
+            
+    <comment>Bank account number</comment>
+    <title>account no</title>
+  </field><field>
+    <name>account_branch_code</name>
+    <type>varchar</type>
+    <length>20</length>
+            
+    <comment>Bank account branch number</comment>
+    <title>account branch code</title>
+  </field><field>
+    <name>cvv</name>
+    <type>varchar</type>
+    <length>10</length>
+            
+    <comment>CVV number for credit cards</comment>
+    <title>cvv</title>
+  </field><field>
+    <name>expiry_date</name>
+    <type>varchar</type>
+    <length>10</length>
+            
+    <comment>Credit Card expiry date</comment>
+    <title>expiry date</title>
+  </field><field>
+    <name>credit_card_type</name>
+    <type>varchar</type>
+    <length>50</length>
+            
+    <comment>VISA/Mastercard</comment>
+    <title>credit card type</title>
+  </field>
+  
+</table>

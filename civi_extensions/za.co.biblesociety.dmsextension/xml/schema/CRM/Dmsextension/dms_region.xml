@@ -4,33 +4,55 @@
   <base>CRM/Dmsextension</base>
   <class>Region</class>
   <name>civicrm_dms_region</name>
-  <comment>Region code table</comment>
+  <comment>civicrm_dms_region schema</comment>
   <log>true</log>
 
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
   <field>
-    <name>reg_id</name>
+    <name>id</name>
     <type>int</type>
     <length>11</length>
     <required>true</required>
-    <comment>Unique Region ID</comment>
+    <comment>id field</comment>
   </field>
-  <primaryKey>
-    <name>reg_id</name>
-  </primaryKey>
-
   <field>
+    <name>reg_id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>        
+    <comment>region id</comment>
+    <title>reg id</title>
+  </field><field>
     <name>reg_name</name>
     <type>varchar</type>
     <length>50</length>
-    <comment>Region name</comment>
-    <title>Region Name</title>
-  </field>
-
-  <field>
-    <name>org_consol_id</name>
+            
+    <comment>region name</comment>
+    <title>reg name</title>
+  </field><field>
+    <name>reg_consol_id</name>
     <type>int</type>
     <length>11</length>
-    <comment>This is the id of the consol file for the consolidated report.</comment>
-    <title>Consol File Id</title>
+            
+    <comment>id for the consol file for the consol report.</comment>
+    <title>reg consol id</title>
+  </field><field>
+    <name>reg_joomla_group_id</name>
+    <type>int</type>
+    <length>4</length>
+            
+    <comment>Group id linked to the region</comment>
+    <title>reg joomla group id</title>
+  </field><field>
+    <name>reg_office_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>Office Id that this region is linked to</comment>
+    <title>reg office id</title>
   </field>
+  
 </table>

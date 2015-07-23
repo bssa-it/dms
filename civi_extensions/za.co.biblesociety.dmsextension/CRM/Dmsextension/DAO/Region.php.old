@@ -9,7 +9,7 @@
 require_once 'CRM/Core/DAO.php';
 require_once 'CRM/Utils/Type.php';
 
-class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
+class CRM_Dmsextension_DAO_Region extends CRM_Core_DAO
 {
   /**
    * static instance to hold the table name
@@ -17,7 +17,7 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
    * @var string
    * @static
    */
-  static $_tableName = 'civicrm_dms_organisation';
+  static $_tableName = 'civicrm_dms_region';
   /**
    * static instance to hold the field values
    *
@@ -71,29 +71,32 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Organisation Id
+   * Region Id
    *
-   * @var varchar
+   * @var int unsigned
    */
-  public $org_id;	
-/**
-   * Organisation code description
+  public $reg_id;
+  /**
+   * Region name
    *
-   * @var varchar
+   * @var int 
    */
-  public $org_name;	
-/**
-   * region to which the organisation belongs (civicrm_dms_region)
+  public $reg_name;
+  /**
+   * Consol file id
    *
-   * @var int
+   * @var string
    */
-  public $org_region;	
-  
-  
-  
+  public $reg_consol_id;
+  /**
+   * class constructor
+   *
+   * @access public
+   * @return civicrm_dms_region
+   */
   function __construct()
   {
-    $this->__table = 'civicrm_dms_organisation';
+    $this->__table = 'civicrm_dms_region';
     parent::__construct();
   }
   /**
@@ -112,29 +115,23 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
           'title' => ts('ID') ,
           'required' => true,
         ) ,
-        
-              'org_id' => array(
-              'name' => 'org_id',
-              'title' => ts('org id'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 15,
-            ) ,	
-
-              'org_name' => array(
-              'name' => 'org_name',
-              'title' => ts('org name'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 255,
-            ) ,	
-
-              'org_region' => array(
-              'name' => 'org_region',
-              'title' => ts('org region'),
-              'type' => CRM_Utils_Type::T_INT,
-              
-            ) ,	
-
-        
+        'reg_id' => array(
+          'name' => 'reg_id',
+          'title' => ts('Region Id'),
+          'type' => CRM_Utils_Type::T_INT,
+        ) ,
+        'reg_name' => array(
+          'name' => 'reg_name',
+          'type' => CRM_Utils_Type::T_STRING,
+          'title' => ts('Region Name'),
+          'maxlength' => 50,
+          'size' => CRM_Utils_Type::HUGE,
+        ) ,
+        'reg_consol_id' => array(
+          'name' => 'reg_consol_id',
+          'type' => CRM_Utils_Type::T_INT,
+          'title' => ts('Console Id'),
+        ) ,
       );
     }
     return self::$_fields;
@@ -151,10 +148,9 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'org_id' => 'org_id',	
-'org_name' => 'org_name',	
-'org_region' => 'org_region',	
-
+        'reg_id' => 'reg_id',
+        'reg_name' => 'reg_name',
+        'reg_consol_id' => 'reg_consol_id',
       );
     }
     return self::$_fieldKeys;
@@ -195,7 +191,7 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('import', $field)) {
           if ($prefix) {
-            self::$_import['dms_organisation'] = & $fields[$name];
+            self::$_import['dms_region'] = & $fields[$name];
           } else {
             self::$_import[$name] = & $fields[$name];
           }
@@ -219,7 +215,7 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('export', $field)) {
           if ($prefix) {
-            self::$_export['dms_organisation'] = & $fields[$name];
+            self::$_export['dms_region'] = & $fields[$name];
           } else {
             self::$_export[$name] = & $fields[$name];
           }

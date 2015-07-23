@@ -71,26 +71,29 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Organisation Id
+   * Unique key
    *
-   * @var varchar
+   * @var int unsigned
    */
-  public $org_id;	
-/**
-   * Organisation code description
+  public $org_id;
+  /**
+   * Organisation name
    *
-   * @var varchar
+   * @var string
    */
-  public $org_name;	
-/**
-   * region to which the organisation belongs (civicrm_dms_region)
+  public $org_name;
+  /**
+   * Region Id
    *
-   * @var int
+   * @var string
    */
-  public $org_region;	
-  
-  
-  
+  public $org_region;
+  /**
+   * class constructor
+   *
+   * @access public
+   * @return civicrm_dms_organisation
+   */
   function __construct()
   {
     $this->__table = 'civicrm_dms_organisation';
@@ -106,35 +109,30 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
   {
     if (!(self::$_fields)) {
       self::$_fields = array(
-       'id' => array(
+        'id' => array(
           'name' => 'id',
           'type' => CRM_Utils_Type::T_INT,
           'title' => ts('ID') ,
           'required' => true,
         ) ,
-        
-              'org_id' => array(
-              'name' => 'org_id',
-              'title' => ts('org id'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 15,
-            ) ,	
-
-              'org_name' => array(
-              'name' => 'org_name',
-              'title' => ts('org name'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 255,
-            ) ,	
-
-              'org_region' => array(
-              'name' => 'org_region',
-              'title' => ts('org region'),
-              'type' => CRM_Utils_Type::T_INT,
-              
-            ) ,	
-
-        
+        'org_id' => array(
+          'name' => 'org_id',
+          'title' => ts('Organisation Id'),
+          'type' => CRM_Utils_Type::T_STRING,
+          'maxlength' => 15,
+        ) ,
+        'org_name' => array(
+          'name' => 'org_name',
+          'type' => CRM_Utils_Type::T_STRING,
+          'title' => ts('Organisation Name'),
+          'maxlength' => 255,
+          'size' => CRM_Utils_Type::HUGE,
+        ) ,
+        'org_region' => array(
+          'name' => 'org_region',
+          'type' => CRM_Utils_Type::T_INT,
+          'title' => ts('Region Id'),
+        ) ,
       );
     }
     return self::$_fields;
@@ -151,10 +149,9 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'org_id' => 'org_id',	
-'org_name' => 'org_name',	
-'org_region' => 'org_region',	
-
+        'org_id' => 'org_id',
+        'org_name' => 'org_name',
+        'org_region' => 'org_region',
       );
     }
     return self::$_fieldKeys;

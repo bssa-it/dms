@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>Denomination</class>
+  <name>civicrm_dms_denomination</name>
+  <comment>civicrm_dms_denomination schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>den_id</name>
+    <type>varchar</type>
+    <length>2</length>
+    <required>true</required>        
+    <comment>2 character denomination id  (numeric)</comment>
+    <title>den id</title>
+  </field><field>
+    <name>den_name</name>
+    <type>varchar</type>
+    <length>300</length>
+            
+    <comment>Denomination name</comment>
+    <title>den name</title>
+  </field><field>
+    <name>den_consol_category</name>
+    <type>varchar</type>
+    <length>4</length>
+            
+    <comment>This field is the old denomination category xref</comment>
+    <title>den consol category</title>
+  </field>
+  
+</table>

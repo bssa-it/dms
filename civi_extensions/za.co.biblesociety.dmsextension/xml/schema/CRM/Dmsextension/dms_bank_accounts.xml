@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>BankAccounts</class>
+  <name>civicrm_dms_bank_accounts</name>
+  <comment>civicrm_dms_bank_accounts schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>bank_id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>        
+    <comment>Bank Id from the civicrm_dms_banks table</comment>
+    <title>bank id</title>
+  </field><field>
+    <name>name</name>
+    <type>varchar</type>
+    <length>150</length>
+            
+    <comment>Name of Bank</comment>
+    <title>name</title>
+  </field><field>
+    <name>branch_code</name>
+    <type>varchar</type>
+    <length>10</length>
+            
+    <comment>Branch Code</comment>
+    <title>branch code</title>
+  </field><field>
+    <name>account_no</name>
+    <type>varchar</type>
+    <length>50</length>
+            
+    <comment>Bank account number</comment>
+    <title>account no</title>
+  </field>
+  
+</table>

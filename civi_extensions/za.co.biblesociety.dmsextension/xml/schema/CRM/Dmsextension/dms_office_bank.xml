@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>OfficeBank</class>
+  <name>civicrm_dms_office_bank</name>
+  <comment>civicrm_dms_office_bank schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>office_id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>        
+    <comment>Office Id from the civicrm_dms_office table</comment>
+    <title>office id</title>
+  </field><field>
+    <name>bank_account_id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>        
+    <comment>bank_account id from the civicrm_dms_bank_accounts table</comment>
+    <title>bank account id</title>
+  </field>
+  
+</table>

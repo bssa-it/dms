@@ -71,24 +71,20 @@ class CRM_Dmsextension_DAO_Motivation extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Motivation ID
+   * Motivation Code Id
    *
-   * @var string
+   * @var int
    */
-  public $motivation_id;
-  /**
-   * Motivation description
+  public $motivation_id;	
+/**
+   * Motivation Code description
    *
-   * @var string
+   * @var varchar
    */
-  public $description;
+  public $description;	
   
-  /**
-   * class constructor
-   *
-   * @access public
-   * @return civicrm_dms_motivation
-   */
+  
+  
   function __construct()
   {
     $this->__table = 'civicrm_dms_motivation';
@@ -104,24 +100,28 @@ class CRM_Dmsextension_DAO_Motivation extends CRM_Core_DAO
   {
     if (!(self::$_fields)) {
       self::$_fields = array(
-        'id' => array(
+       'id' => array(
           'name' => 'id',
           'type' => CRM_Utils_Type::T_INT,
           'title' => ts('ID') ,
           'required' => true,
         ) ,
-        'motivation_id' => array(
-          'name' => 'motivation_id',
-          'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('Motivation Id'),
-        ) ,
-        'description' => array(
-          'name' => 'description',
-          'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Description'),
-          'maxlength' => 150,
-          'size' => CRM_Utils_Type::HUGE,
-        ) ,
+        
+              'motivation_id' => array(
+              'name' => 'motivation_id',
+              'title' => ts('motivation id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'description' => array(
+              'name' => 'description',
+              'title' => ts('description'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 150,
+            ) ,	
+
+        
       );
     }
     return self::$_fields;
@@ -138,8 +138,9 @@ class CRM_Dmsextension_DAO_Motivation extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'motivation_id' => 'motivation_id',
-        'description' => 'description',
+        'motivation_id' => 'motivation_id',	
+'description' => 'description',	
+
       );
     }
     return self::$_fieldKeys;

@@ -71,42 +71,74 @@ class CRM_Dmsextension_DAO_Transaction extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Contribution Id
+   * contribution id from the civicrm_contribution table
    *
-   * @var int unsigned
+   * @var int
    */
-  public $contribution_id;
-  /**
-   * Motivation Id
+  public $contribution_id;	
+/**
+   * motivation id from the civicrm_dms_motivation table
    *
-   * @var string
+   * @var int
    */
-  public $motivation_id;
-  /**
-   * Category Id
+  public $motivation_id;	
+/**
+   * category id from the civicrm_dms_contact_reporting_code table
    *
-   * @var string
+   * @var varchar
    */
-  public $category_id;
-  /**
-   * Region Id
+  public $category_id;	
+/**
+   * region id from the civicrm_dms_organisation table
    *
-   * @var string
+   * @var int
    */
-  public $region_id;
-  /**
-   * Organisation Id
+  public $region_id;	
+/**
+   * category id from the civicrm_dms_contact_reporting_code table
    *
-   * @var string
+   * @var varchar
    */
-  public $organisation_id;
-
-  /**
-   * class constructor
+  public $organisation_id;	
+/**
+   * must the contact be acknowledged for this contribution
    *
-   * @access public
-   * @return civicrm_dms_region
+   * @var varchar
    */
+  public $must_acknowledge;	
+/**
+   * date the contribution was completed
+   *
+   * @var datetime
+   */
+  public $completed_date;	
+/**
+   * contribution completed by user
+   *
+   * @var int
+   */
+  public $completed_by_user_id;	
+/**
+   * batch id
+   *
+   * @var int
+   */
+  public $batch_id;	
+/**
+   * batch entry id
+   *
+   * @var int
+   */
+  public $batch_entry_id;	
+/**
+   * Contact Id to whom the contribution belongs
+   *
+   * @var int
+   */
+  public $contact_id;	
+  
+  
+  
   function __construct()
   {
     $this->__table = 'civicrm_dms_transaction';
@@ -128,33 +160,85 @@ class CRM_Dmsextension_DAO_Transaction extends CRM_Core_DAO
           'title' => ts('ID') ,
           'required' => true,
         ) ,
-        'contribution_id' => array(
-          'name' => 'contribution_id',
-          'title' => ts('Contribution Id'),
-          'type' => CRM_Utils_Type::T_INT,
-        ) ,
-        'motivation_id' => array(
-          'name' => 'motivation_id',
-          'title' => ts('Motivation Id'),
-          'type' => CRM_Utils_Type::T_INT,
-        ) ,
-        'category_id' => array(
-          'name' => 'category_id',
-          'title' => ts('Category Id'),
-          'type' => CRM_Utils_Type::T_STRING,
-          'maxlength' => 4,
-        ) ,
-        'region_id' => array(
-          'name' => 'region_id',
-          'title' => ts('Region Id'),
-          'type' => CRM_Utils_Type::T_INT,
-        ) ,
-        'organisation_id' => array(
-          'name' => 'organisation_id',
-          'title' => ts('Organisation Id'),
-          'type' => CRM_Utils_Type::T_STRING,
-          'maxlength' => 8,
-        ) ,
+        
+              'contribution_id' => array(
+              'name' => 'contribution_id',
+              'title' => ts('contribution id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'motivation_id' => array(
+              'name' => 'motivation_id',
+              'title' => ts('motivation id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'category_id' => array(
+              'name' => 'category_id',
+              'title' => ts('category id'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 4,
+            ) ,	
+
+              'region_id' => array(
+              'name' => 'region_id',
+              'title' => ts('region id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'organisation_id' => array(
+              'name' => 'organisation_id',
+              'title' => ts('organisation id'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 15,
+            ) ,	
+
+              'must_acknowledge' => array(
+              'name' => 'must_acknowledge',
+              'title' => ts('must acknowledge'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 1,
+            ) ,	
+
+              'completed_date' => array(
+              'name' => 'completed_date',
+              'title' => ts('completed date'),
+              'type' => CRM_Utils_Type::T_DATE,
+              
+            ) ,	
+
+              'completed_by_user_id' => array(
+              'name' => 'completed_by_user_id',
+              'title' => ts('completed by user id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'batch_id' => array(
+              'name' => 'batch_id',
+              'title' => ts('batch id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'batch_entry_id' => array(
+              'name' => 'batch_entry_id',
+              'title' => ts('batch entry id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'contact_id' => array(
+              'name' => 'contact_id',
+              'title' => ts('contact id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+        
       );
     }
     return self::$_fields;
@@ -171,11 +255,18 @@ class CRM_Dmsextension_DAO_Transaction extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'contribution_id' => 'contribution_id',
-        'motivation_id' => 'motivation_id',
-        'organisation_id' => 'organisation_id',
-        'region_id' => 'region_id',
-        'category_id' => 'category_id',
+        'contribution_id' => 'contribution_id',	
+'motivation_id' => 'motivation_id',	
+'category_id' => 'category_id',	
+'region_id' => 'region_id',	
+'organisation_id' => 'organisation_id',	
+'must_acknowledge' => 'must_acknowledge',	
+'completed_date' => 'completed_date',	
+'completed_by_user_id' => 'completed_by_user_id',	
+'batch_id' => 'batch_id',	
+'batch_entry_id' => 'batch_entry_id',	
+'contact_id' => 'contact_id',	
+
       );
     }
     return self::$_fieldKeys;

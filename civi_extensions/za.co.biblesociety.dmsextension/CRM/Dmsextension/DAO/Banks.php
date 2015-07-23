@@ -9,7 +9,7 @@
 require_once 'CRM/Core/DAO.php';
 require_once 'CRM/Utils/Type.php';
 
-class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
+class CRM_Dmsextension_DAO_Banks extends CRM_Core_DAO
 {
   /**
    * static instance to hold the table name
@@ -17,7 +17,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
    * @var string
    * @static
    */
-  static $_tableName = 'civicrm_dms_department';
+  static $_tableName = 'civicrm_dms_banks';
   /**
    * static instance to hold the field values
    *
@@ -71,65 +71,23 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Department Id code
+   * bank name
    *
    * @var varchar
    */
-  public $dep_id;	
+  public $name;	
 /**
-   * Department name
+   * type
    *
    * @var varchar
    */
-  public $dep_name;	
-/**
-   * office id where contact resides
-   *
-   * @var int
-   */
-  public $dep_office_id;	
-/**
-   * Is this a national department (for reporting)
-   *
-   * @var varchar
-   */
-  public $dep_is_national;	
-/**
-   * Allocated Budget
-   *
-   * @var decimal
-   */
-  public $dep_budget_allocation;	
-/**
-   * Chart Color
-   *
-   * @var varchar
-   */
-  public $dep_chart_color;	
-/**
-   * From Email address name
-   *
-   * @var varchar
-   */
-  public $dep_fromEmailName;	
-/**
-   * From Email Address
-   *
-   * @var varchar
-   */
-  public $dep_fromEmailAddress;	
-/**
-   * contact id to whom this department belongs
-   *
-   * @var int
-   */
-  public $dep_contact_id;	
+  public $type;	
   
   
   
   function __construct()
   {
-    $this->__table = 'civicrm_dms_department';
+    $this->__table = 'civicrm_dms_banks';
     parent::__construct();
   }
   /**
@@ -149,67 +107,18 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
           'required' => true,
         ) ,
         
-              'dep_id' => array(
-              'name' => 'dep_id',
-              'title' => ts('dep id'),
+              'name' => array(
+              'name' => 'name',
+              'title' => ts('name'),
               'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 2,
+              'maxlength' => 150,
             ) ,	
 
-              'dep_name' => array(
-              'name' => 'dep_name',
-              'title' => ts('dep name'),
+              'type' => array(
+              'name' => 'type',
+              'title' => ts('type'),
               'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
-            ) ,	
-
-              'dep_office_id' => array(
-              'name' => 'dep_office_id',
-              'title' => ts('dep office id'),
-              'type' => CRM_Utils_Type::T_INT,
-              
-            ) ,	
-
-              'dep_is_national' => array(
-              'name' => 'dep_is_national',
-              'title' => ts('dep is national'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 1,
-            ) ,	
-
-              'dep_budget_allocation' => array(
-              'name' => 'dep_budget_allocation',
-              'title' => ts('dep budget allocation'),
-              'type' => CRM_Utils_Type::T_MONEY,
-              
-            ) ,	
-
-              'dep_chart_color' => array(
-              'name' => 'dep_chart_color',
-              'title' => ts('dep chart color'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 10,
-            ) ,	
-
-              'dep_fromEmailName' => array(
-              'name' => 'dep_fromEmailName',
-              'title' => ts('dep fromEmailName'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
-            ) ,	
-
-              'dep_fromEmailAddress' => array(
-              'name' => 'dep_fromEmailAddress',
-              'title' => ts('dep fromEmailAddress'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
-            ) ,	
-
-              'dep_contact_id' => array(
-              'name' => 'dep_contact_id',
-              'title' => ts('dep contact id'),
-              'type' => CRM_Utils_Type::T_INT,
-              
+              'maxlength' => 50,
             ) ,	
 
         
@@ -229,15 +138,8 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'dep_id' => 'dep_id',	
-'dep_name' => 'dep_name',	
-'dep_office_id' => 'dep_office_id',	
-'dep_is_national' => 'dep_is_national',	
-'dep_budget_allocation' => 'dep_budget_allocation',	
-'dep_chart_color' => 'dep_chart_color',	
-'dep_fromEmailName' => 'dep_fromEmailName',	
-'dep_fromEmailAddress' => 'dep_fromEmailAddress',	
-'dep_contact_id' => 'dep_contact_id',	
+        'name' => 'name',	
+'type' => 'type',	
 
       );
     }
@@ -279,7 +181,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('import', $field)) {
           if ($prefix) {
-            self::$_import['dms_department'] = & $fields[$name];
+            self::$_import['dms_banks'] = & $fields[$name];
           } else {
             self::$_import[$name] = & $fields[$name];
           }
@@ -303,7 +205,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('export', $field)) {
           if ($prefix) {
-            self::$_export['dms_department'] = & $fields[$name];
+            self::$_export['dms_banks'] = & $fields[$name];
           } else {
             self::$_export[$name] = & $fields[$name];
           }

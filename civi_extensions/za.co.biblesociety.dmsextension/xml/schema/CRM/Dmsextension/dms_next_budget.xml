@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>NextBudget</class>
+  <name>civicrm_dms_next_budget</name>
+  <comment>civicrm_dms_next_budget schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>bud_region</name>
+    <type>int</type>
+    <length>2</length>
+            
+    <comment>region that the budget belongs to</comment>
+    <title>bud region</title>
+  </field><field>
+    <name>bud_department</name>
+    <type>varchar</type>
+    <length>2</length>
+            
+    <comment>Department the budget belongs to</comment>
+    <title>bud department</title>
+  </field><field>
+    <name>bud_category</name>
+    <type>int</type>
+    <length>4</length>
+            
+    <comment>Category the budget belongs to</comment>
+    <title>bud category</title>
+  </field><field>
+    <name>bud_amount</name>
+    <type>decimal</type>
+    
+            
+    <comment>Budget Amount</comment>
+    <title>bud amount</title>
+  </field><field>
+    <name>bud_insert_user</name>
+    <type>varchar</type>
+    <length>200</length>
+            
+    <comment>User who inserted the budget</comment>
+    <title>bud insert user</title>
+  </field><field>
+    <name>bud_dateinserted</name>
+    <type>datetime</type>
+    
+            
+    <comment>date and time the budget was inserted</comment>
+    <title>bud dateinserted</title>
+  </field><field>
+    <name>bud_datelastupdated</name>
+    <type>datetime</type>
+    
+            
+    <comment>date and time the budget was last updated</comment>
+    <title>bud datelastupdated</title>
+  </field><field>
+    <name>bud_update_user</name>
+    <type>varchar</type>
+    <length>200</length>
+            
+    <comment>User who last updated the budget</comment>
+    <title>bud update user</title>
+  </field>
+  
+</table>

@@ -71,29 +71,26 @@ class CRM_Dmsextension_DAO_Category extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Category ID
+   * 4 character category id  (numeric)
    *
-   * @var string
+   * @var varchar
    */
-  public $cat_id;
-  /**
-   * Category name
+  public $cat_id;	
+/**
+   * Category Name
    *
-   * @var string
+   * @var varchar
    */
-  public $cat_name;
-  /**
-   * Departments linked to the category
+  public $cat_name;	
+/**
+   * Departments allowed to use this category in their budgets
    *
-   * @var string
+   * @var varchar
    */
-  public $cat_departments;
-  /**
-   * class constructor
-   *
-   * @access public
-   * @return civicrm_dms_category
-   */
+  public $cat_departments;	
+  
+  
+  
   function __construct()
   {
     $this->__table = 'civicrm_dms_category';
@@ -109,32 +106,35 @@ class CRM_Dmsextension_DAO_Category extends CRM_Core_DAO
   {
     if (!(self::$_fields)) {
       self::$_fields = array(
-        'id' => array(
+       'id' => array(
           'name' => 'id',
           'type' => CRM_Utils_Type::T_INT,
           'title' => ts('ID') ,
           'required' => true,
         ) ,
-        'cat_id' => array(
-          'name' => 'cat_id',
-          'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Category Id'),
-          'maxlength' => 4,
-        ) ,
-        'cat_name' => array(
-          'name' => 'cat_name',
-          'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Category Name'),
-          'maxlength' => 100,
-          'size' => CRM_Utils_Type::HUGE,
-        ) ,
-        'cat_departments' => array(
-          'name' => 'cat_departments',
-          'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Departments'),
-          'maxlength' => 50,
-          'size' => CRM_Utils_Type::HUGE,
-        ) ,
+        
+              'cat_id' => array(
+              'name' => 'cat_id',
+              'title' => ts('cat id'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 4,
+            ) ,	
+
+              'cat_name' => array(
+              'name' => 'cat_name',
+              'title' => ts('cat name'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 100,
+            ) ,	
+
+              'cat_departments' => array(
+              'name' => 'cat_departments',
+              'title' => ts('cat departments'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 50,
+            ) ,	
+
+        
       );
     }
     return self::$_fields;
@@ -151,9 +151,10 @@ class CRM_Dmsextension_DAO_Category extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'cat_id' => 'cat_id',
-        'cat_name' => 'cat_name',
-        'cat_departments' => 'cat_departments',
+        'cat_id' => 'cat_id',	
+'cat_name' => 'cat_name',	
+'cat_departments' => 'cat_departments',	
+
       );
     }
     return self::$_fieldKeys;

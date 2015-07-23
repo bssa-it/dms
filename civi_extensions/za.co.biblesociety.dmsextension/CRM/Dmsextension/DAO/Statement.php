@@ -9,7 +9,7 @@
 require_once 'CRM/Core/DAO.php';
 require_once 'CRM/Utils/Type.php';
 
-class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
+class CRM_Dmsextension_DAO_Statement extends CRM_Core_DAO
 {
   /**
    * static instance to hold the table name
@@ -17,7 +17,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
    * @var string
    * @static
    */
-  static $_tableName = 'civicrm_dms_department';
+  static $_tableName = 'civicrm_dms_statement';
   /**
    * static instance to hold the field values
    *
@@ -71,65 +71,77 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Department Id code
+   * Date of deposit
+   *
+   * @var date
+   */
+  public $deposit_date;	
+/**
+   * Reference made by depositor
    *
    * @var varchar
    */
-  public $dep_id;	
+  public $deposit_reference;	
 /**
-   * Department name
-   *
-   * @var varchar
-   */
-  public $dep_name;	
-/**
-   * office id where contact resides
-   *
-   * @var int
-   */
-  public $dep_office_id;	
-/**
-   * Is this a national department (for reporting)
-   *
-   * @var varchar
-   */
-  public $dep_is_national;	
-/**
-   * Allocated Budget
+   * Amount deposited
    *
    * @var decimal
    */
-  public $dep_budget_allocation;	
+  public $deposit_amount;	
 /**
-   * Chart Color
+   * Balance amount after transaction
+   *
+   * @var decimal
+   */
+  public $balance;	
+/**
+   * path to txt file impoted
    *
    * @var varchar
    */
-  public $dep_chart_color;	
+  public $document_name;	
 /**
-   * From Email address name
+   * Date and time the document was imported
    *
-   * @var varchar
+   * @var datetime
    */
-  public $dep_fromEmailName;	
+  public $imported_datetime;	
 /**
-   * From Email Address
-   *
-   * @var varchar
-   */
-  public $dep_fromEmailAddress;	
-/**
-   * contact id to whom this department belongs
+   * User id to import the document
    *
    * @var int
    */
-  public $dep_contact_id;	
+  public $imported_by;	
+/**
+   * Batch Id from civicrm_dms_batch_header table
+   *
+   * @var int
+   */
+  public $batch_id;	
+/**
+   * Status Flag for the transaction
+   *
+   * @var varchar
+   */
+  public $reconciled;	
+/**
+   * Date and time transaction was reconciled
+   *
+   * @var datetime
+   */
+  public $reconciled_datetime;	
+/**
+   * User id to reconcile the transaction
+   *
+   * @var int
+   */
+  public $reconciled_by;	
   
   
   
   function __construct()
   {
-    $this->__table = 'civicrm_dms_department';
+    $this->__table = 'civicrm_dms_statement';
     parent::__construct();
   }
   /**
@@ -149,65 +161,79 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
           'required' => true,
         ) ,
         
-              'dep_id' => array(
-              'name' => 'dep_id',
-              'title' => ts('dep id'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 2,
-            ) ,	
-
-              'dep_name' => array(
-              'name' => 'dep_name',
-              'title' => ts('dep name'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
-            ) ,	
-
-              'dep_office_id' => array(
-              'name' => 'dep_office_id',
-              'title' => ts('dep office id'),
-              'type' => CRM_Utils_Type::T_INT,
+              'deposit_date' => array(
+              'name' => 'deposit_date',
+              'title' => ts('deposit date'),
+              'type' => CRM_Utils_Type::T_DATE,
               
             ) ,	
 
-              'dep_is_national' => array(
-              'name' => 'dep_is_national',
-              'title' => ts('dep is national'),
+              'deposit_reference' => array(
+              'name' => 'deposit_reference',
+              'title' => ts('deposit reference'),
               'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 1,
+              'maxlength' => 255,
             ) ,	
 
-              'dep_budget_allocation' => array(
-              'name' => 'dep_budget_allocation',
-              'title' => ts('dep budget allocation'),
+              'deposit_amount' => array(
+              'name' => 'deposit_amount',
+              'title' => ts('deposit amount'),
               'type' => CRM_Utils_Type::T_MONEY,
               
             ) ,	
 
-              'dep_chart_color' => array(
-              'name' => 'dep_chart_color',
-              'title' => ts('dep chart color'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 10,
+              'balance' => array(
+              'name' => 'balance',
+              'title' => ts('balance'),
+              'type' => CRM_Utils_Type::T_MONEY,
+              
             ) ,	
 
-              'dep_fromEmailName' => array(
-              'name' => 'dep_fromEmailName',
-              'title' => ts('dep fromEmailName'),
+              'document_name' => array(
+              'name' => 'document_name',
+              'title' => ts('document name'),
               'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
+              'maxlength' => 150,
             ) ,	
 
-              'dep_fromEmailAddress' => array(
-              'name' => 'dep_fromEmailAddress',
-              'title' => ts('dep fromEmailAddress'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
+              'imported_datetime' => array(
+              'name' => 'imported_datetime',
+              'title' => ts('imported datetime'),
+              'type' => CRM_Utils_Type::T_DATE,
+              
             ) ,	
 
-              'dep_contact_id' => array(
-              'name' => 'dep_contact_id',
-              'title' => ts('dep contact id'),
+              'imported_by' => array(
+              'name' => 'imported_by',
+              'title' => ts('imported by'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'batch_id' => array(
+              'name' => 'batch_id',
+              'title' => ts('batch id'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'reconciled' => array(
+              'name' => 'reconciled',
+              'title' => ts('reconciled'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 50,
+            ) ,	
+
+              'reconciled_datetime' => array(
+              'name' => 'reconciled_datetime',
+              'title' => ts('reconciled datetime'),
+              'type' => CRM_Utils_Type::T_DATE,
+              
+            ) ,	
+
+              'reconciled_by' => array(
+              'name' => 'reconciled_by',
+              'title' => ts('reconciled by'),
               'type' => CRM_Utils_Type::T_INT,
               
             ) ,	
@@ -229,15 +255,17 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'dep_id' => 'dep_id',	
-'dep_name' => 'dep_name',	
-'dep_office_id' => 'dep_office_id',	
-'dep_is_national' => 'dep_is_national',	
-'dep_budget_allocation' => 'dep_budget_allocation',	
-'dep_chart_color' => 'dep_chart_color',	
-'dep_fromEmailName' => 'dep_fromEmailName',	
-'dep_fromEmailAddress' => 'dep_fromEmailAddress',	
-'dep_contact_id' => 'dep_contact_id',	
+        'deposit_date' => 'deposit_date',	
+'deposit_reference' => 'deposit_reference',	
+'deposit_amount' => 'deposit_amount',	
+'balance' => 'balance',	
+'document_name' => 'document_name',	
+'imported_datetime' => 'imported_datetime',	
+'imported_by' => 'imported_by',	
+'batch_id' => 'batch_id',	
+'reconciled' => 'reconciled',	
+'reconciled_datetime' => 'reconciled_datetime',	
+'reconciled_by' => 'reconciled_by',	
 
       );
     }
@@ -279,7 +307,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('import', $field)) {
           if ($prefix) {
-            self::$_import['dms_department'] = & $fields[$name];
+            self::$_import['dms_statement'] = & $fields[$name];
           } else {
             self::$_import[$name] = & $fields[$name];
           }
@@ -303,7 +331,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('export', $field)) {
           if ($prefix) {
-            self::$_export['dms_department'] = & $fields[$name];
+            self::$_export['dms_statement'] = & $fields[$name];
           } else {
             self::$_export[$name] = & $fields[$name];
           }

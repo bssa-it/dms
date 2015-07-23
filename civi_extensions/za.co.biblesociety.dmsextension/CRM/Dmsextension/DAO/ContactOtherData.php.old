@@ -9,7 +9,7 @@
 require_once 'CRM/Core/DAO.php';
 require_once 'CRM/Utils/Type.php';
 
-class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
+class CRM_Dmsextension_DAO_ContactOtherData extends CRM_Core_DAO
 {
   /**
    * static instance to hold the table name
@@ -17,7 +17,7 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
    * @var string
    * @static
    */
-  static $_tableName = 'civicrm_dms_organisation';
+  static $_tableName = 'civicrm_dms_contact_other_data';
   /**
    * static instance to hold the field values
    *
@@ -71,29 +71,40 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Organisation Id
+   * Contact Id
    *
-   * @var varchar
+   * @var int unsigned
    */
-  public $org_id;	
-/**
-   * Organisation code description
+  public $contact_id;
+  /**
+   * Do not thank flag
    *
-   * @var varchar
+   * @var int 
    */
-  public $org_name;	
-/**
-   * region to which the organisation belongs (civicrm_dms_region)
+  public $do_not_thank;
+  /**
+   * Reminder Month
    *
    * @var int
    */
-  public $org_region;	
+  public $reminder_month;
+  /**
+   * South African Id number
+   *
+   * @var string
+   */
+  public $id_number;
   
-  
-  
+  /**
+   * class constructor
+   *
+   * @access public
+   * @return civicrm_dms_region
+   */
+   
   function __construct()
   {
-    $this->__table = 'civicrm_dms_organisation';
+    $this->__table = 'civicrm_dms_contact_other_data';
     parent::__construct();
   }
   /**
@@ -112,29 +123,28 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
           'title' => ts('ID') ,
           'required' => true,
         ) ,
-        
-              'org_id' => array(
-              'name' => 'org_id',
-              'title' => ts('org id'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 15,
-            ) ,	
-
-              'org_name' => array(
-              'name' => 'org_name',
-              'title' => ts('org name'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 255,
-            ) ,	
-
-              'org_region' => array(
-              'name' => 'org_region',
-              'title' => ts('org region'),
-              'type' => CRM_Utils_Type::T_INT,
-              
-            ) ,	
-
-        
+        'contact_id' => array(
+          'name' => 'contact_id',
+          'title' => ts('Contact Id'),
+          'type' => CRM_Utils_Type::T_INT,
+          'FKClassName' => 'CRM_Contact_DAO_Contact',
+        ) ,
+        'do_not_thank' => array(
+          'name' => 'do_not_thank',
+          'title' => ts('Do Not Thank'),
+          'type' => CRM_Utils_Type::T_INT,
+        ) ,
+        'reminder_month' => array(
+          'name' => 'reminder_month',
+          'title' => ts('Reminder Month'),
+          'type' => CRM_Utils_Type::T_INT,
+        ) ,
+        'id_number' => array(
+          'name' => 'id_number',
+          'title' => ts('Id number'),
+          'type' => CRM_Utils_Type::T_STRING,
+          'maxlength' => 15,
+        ) ,
       );
     }
     return self::$_fields;
@@ -151,10 +161,10 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'org_id' => 'org_id',	
-'org_name' => 'org_name',	
-'org_region' => 'org_region',	
-
+        'contact_id' => 'contact_id',
+        'do_not_thank' => 'do_not_thank',
+        'reminder_month' => 'reminder_month',
+        'id_number' => 'id_number',
       );
     }
     return self::$_fieldKeys;
@@ -195,7 +205,7 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('import', $field)) {
           if ($prefix) {
-            self::$_import['dms_organisation'] = & $fields[$name];
+            self::$_import['dms_contact_other_data'] = & $fields[$name];
           } else {
             self::$_import[$name] = & $fields[$name];
           }
@@ -219,7 +229,7 @@ class CRM_Dmsextension_DAO_Organisation extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('export', $field)) {
           if ($prefix) {
-            self::$_export['dms_organisation'] = & $fields[$name];
+            self::$_export['dms_contact_other_data'] = & $fields[$name];
           } else {
             self::$_export[$name] = & $fields[$name];
           }

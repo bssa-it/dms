@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>ContactReportingCode</class>
+  <name>civicrm_dms_contact_reporting_code</name>
+  <comment>civicrm_dms_contact_reporting_code schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>contact_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>Contact Id from the civicrm_contact table</comment>
+    <title>contact id</title>
+  </field><field>
+    <name>organisation_id</name>
+    <type>varchar</type>
+    <length>8</length>
+            
+    <comment>Organisation Id</comment>
+    <title>organisation id</title>
+  </field><field>
+    <name>category_id</name>
+    <type>varchar</type>
+    <length>4</length>
+            
+    <comment>4 numeric character category id</comment>
+    <title>category id</title>
+  </field>
+  
+</table>

@@ -9,7 +9,7 @@
 require_once 'CRM/Core/DAO.php';
 require_once 'CRM/Utils/Type.php';
 
-class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
+class CRM_Dmsextension_DAO_BatchEntry extends CRM_Core_DAO
 {
   /**
    * static instance to hold the table name
@@ -17,7 +17,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
    * @var string
    * @static
    */
-  static $_tableName = 'civicrm_dms_department';
+  static $_tableName = 'civicrm_dms_batch_entry';
   /**
    * static instance to hold the field values
    *
@@ -71,65 +71,47 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Department Id code
-   *
-   * @var varchar
-   */
-  public $dep_id;	
-/**
-   * Department name
-   *
-   * @var varchar
-   */
-  public $dep_name;	
-/**
-   * office id where contact resides
+   * id in the civicrm_dms_batch_header table
    *
    * @var int
    */
-  public $dep_office_id;	
+  public $batch_id;	
 /**
-   * Is this a national department (for reporting)
+   * date and time the batch entry was created
    *
-   * @var varchar
+   * @var datetime
    */
-  public $dep_is_national;	
+  public $received_datetime;	
 /**
-   * Allocated Budget
+   * User Id that created the batch entry
+   *
+   * @var int
+   */
+  public $received_by;	
+/**
+   * Receipt no for the entry
+   *
+   * @var int
+   */
+  public $receipt_no;	
+/**
+   * Amount Received
    *
    * @var decimal
    */
-  public $dep_budget_allocation;	
+  public $receipt_amount;	
 /**
-   * Chart Color
+   * Receipt/Document type
    *
    * @var varchar
    */
-  public $dep_chart_color;	
-/**
-   * From Email address name
-   *
-   * @var varchar
-   */
-  public $dep_fromEmailName;	
-/**
-   * From Email Address
-   *
-   * @var varchar
-   */
-  public $dep_fromEmailAddress;	
-/**
-   * contact id to whom this department belongs
-   *
-   * @var int
-   */
-  public $dep_contact_id;	
+  public $receipt_type;	
   
   
   
   function __construct()
   {
-    $this->__table = 'civicrm_dms_department';
+    $this->__table = 'civicrm_dms_batch_entry';
     parent::__construct();
   }
   /**
@@ -149,67 +131,46 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
           'required' => true,
         ) ,
         
-              'dep_id' => array(
-              'name' => 'dep_id',
-              'title' => ts('dep id'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 2,
-            ) ,	
-
-              'dep_name' => array(
-              'name' => 'dep_name',
-              'title' => ts('dep name'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
-            ) ,	
-
-              'dep_office_id' => array(
-              'name' => 'dep_office_id',
-              'title' => ts('dep office id'),
+              'batch_id' => array(
+              'name' => 'batch_id',
+              'title' => ts('batch id'),
               'type' => CRM_Utils_Type::T_INT,
               
             ) ,	
 
-              'dep_is_national' => array(
-              'name' => 'dep_is_national',
-              'title' => ts('dep is national'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 1,
+              'received_datetime' => array(
+              'name' => 'received_datetime',
+              'title' => ts('received datetime'),
+              'type' => CRM_Utils_Type::T_DATE,
+              
             ) ,	
 
-              'dep_budget_allocation' => array(
-              'name' => 'dep_budget_allocation',
-              'title' => ts('dep budget allocation'),
+              'received_by' => array(
+              'name' => 'received_by',
+              'title' => ts('received by'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'receipt_no' => array(
+              'name' => 'receipt_no',
+              'title' => ts('receipt no'),
+              'type' => CRM_Utils_Type::T_INT,
+              
+            ) ,	
+
+              'receipt_amount' => array(
+              'name' => 'receipt_amount',
+              'title' => ts('receipt amount'),
               'type' => CRM_Utils_Type::T_MONEY,
               
             ) ,	
 
-              'dep_chart_color' => array(
-              'name' => 'dep_chart_color',
-              'title' => ts('dep chart color'),
+              'receipt_type' => array(
+              'name' => 'receipt_type',
+              'title' => ts('receipt type'),
               'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 10,
-            ) ,	
-
-              'dep_fromEmailName' => array(
-              'name' => 'dep_fromEmailName',
-              'title' => ts('dep fromEmailName'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
-            ) ,	
-
-              'dep_fromEmailAddress' => array(
-              'name' => 'dep_fromEmailAddress',
-              'title' => ts('dep fromEmailAddress'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
-            ) ,	
-
-              'dep_contact_id' => array(
-              'name' => 'dep_contact_id',
-              'title' => ts('dep contact id'),
-              'type' => CRM_Utils_Type::T_INT,
-              
+              'maxlength' => 50,
             ) ,	
 
         
@@ -229,15 +190,12 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'dep_id' => 'dep_id',	
-'dep_name' => 'dep_name',	
-'dep_office_id' => 'dep_office_id',	
-'dep_is_national' => 'dep_is_national',	
-'dep_budget_allocation' => 'dep_budget_allocation',	
-'dep_chart_color' => 'dep_chart_color',	
-'dep_fromEmailName' => 'dep_fromEmailName',	
-'dep_fromEmailAddress' => 'dep_fromEmailAddress',	
-'dep_contact_id' => 'dep_contact_id',	
+        'batch_id' => 'batch_id',	
+'received_datetime' => 'received_datetime',	
+'received_by' => 'received_by',	
+'receipt_no' => 'receipt_no',	
+'receipt_amount' => 'receipt_amount',	
+'receipt_type' => 'receipt_type',	
 
       );
     }
@@ -279,7 +237,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('import', $field)) {
           if ($prefix) {
-            self::$_import['dms_department'] = & $fields[$name];
+            self::$_import['dms_batch_entry'] = & $fields[$name];
           } else {
             self::$_import[$name] = & $fields[$name];
           }
@@ -303,7 +261,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('export', $field)) {
           if ($prefix) {
-            self::$_export['dms_department'] = & $fields[$name];
+            self::$_export['dms_batch_entry'] = & $fields[$name];
           } else {
             self::$_export[$name] = & $fields[$name];
           }

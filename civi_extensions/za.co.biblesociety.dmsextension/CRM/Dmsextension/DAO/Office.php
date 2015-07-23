@@ -9,7 +9,7 @@
 require_once 'CRM/Core/DAO.php';
 require_once 'CRM/Utils/Type.php';
 
-class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
+class CRM_Dmsextension_DAO_Office extends CRM_Core_DAO
 {
   /**
    * static instance to hold the table name
@@ -17,7 +17,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
    * @var string
    * @static
    */
-  static $_tableName = 'civicrm_dms_department';
+  static $_tableName = 'civicrm_dms_office';
   /**
    * static instance to hold the field values
    *
@@ -71,65 +71,47 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
    */
   public $id;
   /**
-   * Department Id code
-   *
-   * @var varchar
-   */
-  public $dep_id;	
-/**
-   * Department name
-   *
-   * @var varchar
-   */
-  public $dep_name;	
-/**
-   * office id where contact resides
+   * Contact Id for the business manager
    *
    * @var int
    */
-  public $dep_office_id;	
+  public $business_manager_contact_id;	
 /**
-   * Is this a national department (for reporting)
+   * Name of office
    *
    * @var varchar
    */
-  public $dep_is_national;	
+  public $name;	
 /**
-   * Allocated Budget
-   *
-   * @var decimal
-   */
-  public $dep_budget_allocation;	
-/**
-   * Chart Color
+   * Address in English
    *
    * @var varchar
    */
-  public $dep_chart_color;	
+  public $address_eng;	
 /**
-   * From Email address name
+   * Address in Afrikaans
    *
    * @var varchar
    */
-  public $dep_fromEmailName;	
+  public $address_afr;	
 /**
-   * From Email Address
+   * Telephone number for signatures
    *
    * @var varchar
    */
-  public $dep_fromEmailAddress;	
+  public $telephone;	
 /**
-   * contact id to whom this department belongs
+   * Fax
    *
-   * @var int
+   * @var varchar
    */
-  public $dep_contact_id;	
+  public $fax;	
   
   
   
   function __construct()
   {
-    $this->__table = 'civicrm_dms_department';
+    $this->__table = 'civicrm_dms_office';
     parent::__construct();
   }
   /**
@@ -149,67 +131,46 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
           'required' => true,
         ) ,
         
-              'dep_id' => array(
-              'name' => 'dep_id',
-              'title' => ts('dep id'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 2,
-            ) ,	
-
-              'dep_name' => array(
-              'name' => 'dep_name',
-              'title' => ts('dep name'),
-              'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
-            ) ,	
-
-              'dep_office_id' => array(
-              'name' => 'dep_office_id',
-              'title' => ts('dep office id'),
+              'business_manager_contact_id' => array(
+              'name' => 'business_manager_contact_id',
+              'title' => ts('business manager contact id'),
               'type' => CRM_Utils_Type::T_INT,
               
             ) ,	
 
-              'dep_is_national' => array(
-              'name' => 'dep_is_national',
-              'title' => ts('dep is national'),
+              'name' => array(
+              'name' => 'name',
+              'title' => ts('name'),
               'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 1,
+              'maxlength' => 150,
             ) ,	
 
-              'dep_budget_allocation' => array(
-              'name' => 'dep_budget_allocation',
-              'title' => ts('dep budget allocation'),
-              'type' => CRM_Utils_Type::T_MONEY,
-              
-            ) ,	
-
-              'dep_chart_color' => array(
-              'name' => 'dep_chart_color',
-              'title' => ts('dep chart color'),
+              'address_eng' => array(
+              'name' => 'address_eng',
+              'title' => ts('address eng'),
               'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 10,
+              'maxlength' => 255,
             ) ,	
 
-              'dep_fromEmailName' => array(
-              'name' => 'dep_fromEmailName',
-              'title' => ts('dep fromEmailName'),
+              'address_afr' => array(
+              'name' => 'address_afr',
+              'title' => ts('address afr'),
               'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
+              'maxlength' => 255,
             ) ,	
 
-              'dep_fromEmailAddress' => array(
-              'name' => 'dep_fromEmailAddress',
-              'title' => ts('dep fromEmailAddress'),
+              'telephone' => array(
+              'name' => 'telephone',
+              'title' => ts('telephone'),
               'type' => CRM_Utils_Type::T_STRING,
-              'maxlength' => 250,
+              'maxlength' => 20,
             ) ,	
 
-              'dep_contact_id' => array(
-              'name' => 'dep_contact_id',
-              'title' => ts('dep contact id'),
-              'type' => CRM_Utils_Type::T_INT,
-              
+              'fax' => array(
+              'name' => 'fax',
+              'title' => ts('fax'),
+              'type' => CRM_Utils_Type::T_STRING,
+              'maxlength' => 20,
             ) ,	
 
         
@@ -229,15 +190,12 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
         'id' => 'id',
-        'dep_id' => 'dep_id',	
-'dep_name' => 'dep_name',	
-'dep_office_id' => 'dep_office_id',	
-'dep_is_national' => 'dep_is_national',	
-'dep_budget_allocation' => 'dep_budget_allocation',	
-'dep_chart_color' => 'dep_chart_color',	
-'dep_fromEmailName' => 'dep_fromEmailName',	
-'dep_fromEmailAddress' => 'dep_fromEmailAddress',	
-'dep_contact_id' => 'dep_contact_id',	
+        'business_manager_contact_id' => 'business_manager_contact_id',	
+'name' => 'name',	
+'address_eng' => 'address_eng',	
+'address_afr' => 'address_afr',	
+'telephone' => 'telephone',	
+'fax' => 'fax',	
 
       );
     }
@@ -279,7 +237,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('import', $field)) {
           if ($prefix) {
-            self::$_import['dms_department'] = & $fields[$name];
+            self::$_import['dms_office'] = & $fields[$name];
           } else {
             self::$_import[$name] = & $fields[$name];
           }
@@ -303,7 +261,7 @@ class CRM_Dmsextension_DAO_Department extends CRM_Core_DAO
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('export', $field)) {
           if ($prefix) {
-            self::$_export['dms_department'] = & $fields[$name];
+            self::$_export['dms_office'] = & $fields[$name];
           } else {
             self::$_export[$name] = & $fields[$name];
           }
