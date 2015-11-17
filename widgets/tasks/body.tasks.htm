@@ -1,0 +1,38 @@
+<!-- Specific Style for Widget -->
+<style type="text/css">
+    .widgetLoadingDiv {
+        display: none;
+    }
+</style>
+<!-- Scripts for widget -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".widgetCtrl img").click(function(){
+            var fn = baseName($(this).attr('src'));
+            if (fn=='settings') showAppSettings($(this).closest(".widgetQtr").attr('wid'));
+        });
+    });
+    function refreshTasks() {
+        
+    }
+</script>
+<!-- Widget infrastructure -->
+<div id="tasksDiv">
+    <div class="widgetHeader">
+        <span>Tasks</span>
+        <div class="widgetCtrl">
+            <img src="img/refresh.png" height="16" width="16" title="refresh" />
+            <img src="img/settings.png" height="16" width="16" title="edit settings" />
+        </div>
+    </div>
+    <div class="widgetLoadingDiv"><img src="img/loading-4.gif" align="center" /> &nbsp;loading...</div>
+    <div id="taskNav">
+        
+        <ul id="taskNavList">
+            <li>Today</li>
+            <li>This Week</li>
+            <li>This Month</li>
+        </ul>
+    </div>
+    <div id="tasks"></div>
+</div>

@@ -1,0 +1,157 @@
+<!-- Specific Style for Widget -->
+<style type="text/css">
+    #accpacDiv .fn, #accpacDiv .dt {
+        float: left;
+        margin-right: 10px;
+        width: 100px;
+    }
+    #accpacDiv .dt {
+        width: 200px;
+    }
+    #lastCheck,#fileList,.tileMiddleBand {
+        font-size: 9pt;
+        text-align: center;
+        background-color: #7E05F7;
+        padding-bottom: 2px;
+        padding-top: 2px;
+    }
+    #fileList {
+        width: 340px;
+        height: auto;
+        float: left;
+    }
+    #processedDiv,#monthEndDiv,#OTDDiv {
+        float:left;
+        margin-right: 15px;
+    }
+    #OTDDiv,#monthEndDiv {
+        cursor: pointer;
+    }
+    .tileHeader {
+        padding: 5px;
+        background-color: #254B7C;
+        width: 140px;
+    }
+    .tileMainDisplay {
+        width: 130px;
+        height: 70px;
+        padding: 10px 10px 0px 10px;
+        font-size: 50px;
+        text-align: center;
+    }
+    .fileTmpl {
+        clear: both;
+    }
+    #accpacResult {
+        width: 495px;
+        height: auto;
+        overflow: hidden;
+        clear: both;
+        margin: auto;
+        margin-top: 20px;
+    }
+</style>
+<!-- Scripts for widget -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        refreshAccpac();
+        refreshMonthEnd();
+        refreshOTD();
+        $(".widgetCtrl img").click(function(){
+            var fn = baseName($(this).attr('src'));
+            if (fn=='settings') showAppSettings($(this).closest(".widgetQtr").attr('wid'));
+            
+            if (fn=='refresh') {
+                refreshAccpac();
+                refreshMonthEnd();
+                refreshOTD();
+            }
+        });
+        $("#OTDDiv").click(function(){
+           location="http://129.47.16.105/dev/otd"; 
+        });
+        $("#monthEndDiv").click(function(){
+           location="/monthEnd"; 
+        });
+    });
+    function refreshAccpac() {
+        $("#accpacResult").hide();
+        $("#accpacDiv .widgetLoadingDiv").show();
+        $.get("widgets/accpac/get.accpac.php").done(function(data){
+            var json = $.parseJSON(data);
+            $("#lastCheck").html(json.timestamp);
+            var html = '';
+            var curDate = '';
+            var today = new Date().getDate();
+            var hasProc = false;
+            for (var i = 0; i<5; i++) {
+                curDate = json.ProcessFiles.row[i]["@attributes"].Date;
+                var fn = json.ProcessFiles.row[i]["@attributes"].FileType;
+                html += '<div class="fileTmpl"><div class="fn">'+fn;
+                html += '</div><div class="dt">'+curDate + '</div></div>';
+                var cd = new Date(curDate).getDate();
+                if (!hasProc) hasProc = (fn=='sales'&&cd==today);
+            }
+            $("#fileList").html(html);
+            var col = (hasProc) ? '#A7B526':'#CD3333';
+            var a = (hasProc) ? 'Y':'N';
+            $("#answerDiv").css('background-color',col).html(a);
+            
+            $("#accpacResult").show();
+            $("#accpacDiv .widgetLoadingDiv").hide();
+        });
+    }
+    function refreshMonthEnd() {
+        $("#accpacResult").hide();
+        $("#accpacDiv .widgetLoadingDiv").show();
+        $.get("widgets/accpac/get.monthEnd.php").done(function(data){
+            var json = $.parseJSON(data);
+            var col = (json.isComplete) ? '#A7B526':'#CD3333';
+            var a = (json.isComplete) ? 'Y':'N';
+            $("#monthEndCheckDiv").css('background-color',col).html(a);
+            $("#monthEndFile").empty().append(json.requiredFile);
+        });
+    }
+    function refreshOTD() {
+        $("#accpacResult").hide();
+        $("#accpacDiv .widgetLoadingDiv").show();
+        $.get("widgets/accpac/get.OTD.php").done(function(data){
+            var json = $.parseJSON(data);
+            var col = (json.dataLoaded) ? '#A7B526':'#CD3333';
+            var a = (json.dataLoaded) ? 'Y':'N';
+            $("#OTDResultDiv").css('background-color',col).html(a);
+            $("#OTDdateDiv").empty().append('&nbsp;');
+        }).fail(function(){
+            $("#OTDResultDiv").css('background-color','#CD3333').html('N');
+            $("#OTDdateDiv").empty().append('Error!');
+        });
+    }
+</script>
+<!-- Widget infrastructure -->
+<div id="accpacDiv">
+    <div class="widgetHeader">
+        <span>IT Monitor</span>
+        <div class="widgetCtrl">
+            <img src="img/refresh.png" height="16" width="16" title="refresh" />
+            <img src="img/settings.png" height="16" width="16" title="edit settings" />
+        </div>
+    </div>
+    <div class="widgetLoadingDiv"><img src="img/loading-4.gif" align="center" /> &nbsp;loading...</div>
+    <div id="accpacResult">
+        <div id="processedDiv">
+            <div id="processedDivHdr" class="tileHeader" >Middleware</div>
+            <div id="lastCheck" class="tileMiddleBand" title="last check"></div>
+            <div id="answerDiv" class="tileMainDisplay"></div>
+        </div>
+        <div id="monthEndDiv">
+            <div class="tileHeader">Month End</div>
+            <div class="tileMiddleBand" id="monthEndFile">&nbsp;</div>
+            <div id="monthEndCheckDiv" class="tileMainDisplay"></div>
+        </div>
+        <div id="OTDDiv">
+            <div class="tileHeader">OTD</div>
+            <div class="tileMiddleBand" id="OTDdateDiv">&nbsp;</div>
+            <div id="OTDResultDiv" class="tileMainDisplay"></div>
+        </div>
+    </div>
+</div>

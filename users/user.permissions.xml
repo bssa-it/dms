@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<permissions>
+    <contacts>
+        <save>Y</save>
+        <view>Y</view>
+    </contacts>
+    <contributions>
+        <save>N</save>
+        <view>Y</view>
+    </contributions>
+    <acknowledgements>
+        <save>Y</save>
+        <view>Y</view>
+    </acknowledgements>
+    <budgets>
+        <save>Y</save>
+        <view>Y</view>
+    </budgets>
+    <logs>
+        <save>N</save>
+        <view>N</view>
+    </logs>
+    <reports>
+        <save>N</save>
+        <view>Y</view>
+    </reports>
+    <masterRecords>
+        <save>N</save>
+        <view>N</view>
+    </masterRecords>
+</permissions>

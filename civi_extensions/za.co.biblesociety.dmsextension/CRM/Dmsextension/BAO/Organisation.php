@@ -4,11 +4,9 @@ class CRM_Dmsextension_BAO_Organisation extends CRM_Dmsextension_DAO_Organisatio
 
   public static function create($params) {
     $instance = new CRM_Dmsextension_DAO_Organisation();
-    $instance->name = $params['org_id'];
-    $instance->find(TRUE);
-
     $instance->copyValues($params);
     $instance->save();
+    $params['id'] = $instance->id;
   }
 
   public static function getValues($params) {

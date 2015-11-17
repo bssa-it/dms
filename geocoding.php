@@ -12,7 +12,7 @@
  #   BOOTSTRAP
 include("inc/globals.php");
 $curScript = basename(__FILE__, '.php');
-$menu = $GLOBALS['functions']->createMenu();
+$menu = new menu;
 $pageHeading = 'Geocoding';
 $title = $pageHeading;
 $notificationsValue = ($GLOBALS['functions']->hasUserGotNotifications()) ? 'Y':'N';

@@ -30,22 +30,19 @@
                     </tr>
                 </thead>
                 <tbody id="tbdUserAuthority">
+                    <?php 
+                        $exclude = array('accessOk','isHo','isSuperUser','userGroups','userId');
+                        foreach ($_SESSION['dms_user']['authorisation'] as $a=>$v) {
+                            if (in_array($a,$exclude)) continue;
+                    ?>
                     <tr>
-                        <td>View</td>
-                        <td><?php echo (!$_SESSION['dms_user']['authorisation']->canSelect) ? 'No':'Yes'; ?></td>
+                        <td><?php echo $a; ?></td>
+                        <td>
+                            view <input type="checkbox" disabled <?php echo ($v['view']) ? ' CHECKED':''; ?> /> 
+                            save <input type="checkbox" disabled <?php echo ($v['save']) ? ' CHECKED':''; ?> />
+                        </td>
                     </tr>
-                    <tr>
-                        <td>Edit</td>
-                        <td><?php echo (!$_SESSION['dms_user']['authorisation']->canUpdate) ? 'No':'Yes'; ?></td>
-                    </tr>
-                    <tr>
-                        <td>Insert</td>
-                        <td><?php echo (!$_SESSION['dms_user']['authorisation']->canInsert) ? 'No':'Yes'; ?></td>
-                    </tr>
-                    <tr>
-                        <td>Delete</td>
-                        <td><?php echo (!$_SESSION['dms_user']['authorisation']->canDelete) ? 'No':'Yes'; ?></td>
-                    </tr>
+                    <?php } ?>
                 </tbody>
             </table>
             <div style="cursor:pointer;margin-top:5px;font-size:10pt" onclick="window.location='clear.impersonation.php'">Cancel Impersonation</div>

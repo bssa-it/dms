@@ -22,6 +22,7 @@ function _civicrm_api3_organisation_Get_spec(&$params) {
  * @throws API_Exception
  */
 function civicrm_api3_organisation_Get($params) {
-  return _civicrm_api3_basic_get('CRM_Dmsextension_BAO_Organisation', $params);
+  $result = CRM_Dmsextension_BAO_Organisation::getValues($params);
+  return civicrm_api3_create_success($result, $params, 'Organisation', 'get');
 }
 

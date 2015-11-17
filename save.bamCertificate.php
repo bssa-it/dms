@@ -12,7 +12,7 @@
 
 #   BOOTSTRAP
 include("inc/globals.php");
-if (!$_SESSION['dms_user']['authorisation']->isAdmin) {
+if (!$_SESSION['dms_user']['authorisation']->isHo) {
     header('location: index.php');
     exit();
 }

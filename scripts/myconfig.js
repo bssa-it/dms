@@ -1,32 +1,3 @@
-var http = false;
-
-if(navigator.appName == "Microsoft Internet Explorer") {
-  http = new ActiveXObject("Microsoft.XMLHTTP");
-} else {
-  http = new XMLHttpRequest();
-}
-
-function initializeMe() {
-    
-    setAllColorsToDefault();
-    var d = new Date();
-	var tim = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
-    var r = document.getElementById('rightBox');
-	
-    var strvar = '?datetim=' + tim;
-	http.open("GET", "load.user.settings.php" + strvar);
-	http.onreadystatechange=function() {
-	  if(http.readyState == 4) {
-		r.innerHTML = http.responseText;
-        
-        var s=r.getElementsByTagName('script');
-        for(var i=0;i<s.length;++i)window.eval(s[i].innerHTML);
-	  }
-	}
-	http.send(null);
-
-}
-
 function getSettings(x) {
     $.get("load.widget.settings.php",{i:x}).done(function(data){
         $("#rightBox").empty().append(data);
@@ -94,4 +65,8 @@ function clickWidgetQtr(){
 }
 $(document).ready(function(){
     $(".qtr").bind('click',clickWidgetQtr);
+    setAllColorsToDefault();
+    $.get("load.user.settings.php").done(function(data){
+       $("#rightBox").empty().append(data); 
+    });
 });

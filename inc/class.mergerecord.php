@@ -161,8 +161,7 @@ Class mergerecord {
     
     function setRegion() {
         if (empty($this->contactId)) return false;
-        $r = new civicrm_dms_organisation;
-        $r->LoadByOrgId($this->contact['organisation_id']);
+        $r = new civicrm_dms_organisation_extension($this->contact['organisation_id']);
         $this->region = $r->org_region;
         return true;
     }

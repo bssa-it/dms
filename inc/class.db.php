@@ -31,7 +31,7 @@ Class database {
             {
                 $rows = mysql_query($sql,$this->connection);
                 if (!$rows) {
-                    return mysql_error();
+                    return mysql_error($this->connection);
                 }
                 if (mysql_num_rows($rows)==0) return null;
                 $result = array();

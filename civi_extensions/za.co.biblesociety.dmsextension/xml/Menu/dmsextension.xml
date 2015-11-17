@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <menu>
   <item>
-    <path>civicrm/reporting-codes</path>
-    <page_callback>CRM_Dmsextension_Form_FrmReportingCodes</page_callback>
-    <title>FrmReportingCodes</title>
+    <path>civicrm/category</path>
+    <page_callback>CRM_Dmsextension_Page_Category</page_callback>
+    <title>Category</title>
     <access_arguments>access CiviCRM</access_arguments>
   </item>
 </menu>

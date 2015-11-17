@@ -1,0 +1,151 @@
+<style type="text/css">
+    .headingRw {
+        font-size: 18pt;
+        font-weight: bold;
+        min-width: 150px;
+        text-align: center;
+        padding-left: 10px;
+        padding-right: 5px;
+    }
+    .entryNo {
+        font-size: 18pt;
+        padding-right: 10px;
+    }
+    #batchEnryDiv {
+        padding: 10px;
+        float: left;
+        background-color: rgba(37, 75, 124, 0.09);
+        width: 1000px;
+        height: 500px;
+    }
+    .frmLabel, .frmInput {
+        padding: 5px;
+    }
+    .frmInput input,.frmInput select {
+        padding: 3px;
+        font-size: 14pt;
+        border: 2px solid #254B7C;
+        background-color: #FFF;
+    }
+    #btnAddEntry {
+        margin-top: 10px;
+    }
+    .entryNavigation div {
+        float: left;
+    }
+    .entryNavigation {
+        clear: both;
+        width: auto;
+        height: auto;
+        overflow: hidden;
+    }
+    .nextEntry img,.prevEntry img {
+        width: 16px;
+        margin-left: 1px;
+    }
+    .prevEntry img {
+        margin-left: -2px;
+    }
+    .nextEntry,.prevEntry {
+        width: 14px;
+        height: 14px;
+        background-color: rgba(37, 75, 124, 0.4);
+        border-radius: 19px;
+        padding: 8px;
+        padding-top: 6px;
+        text-align: center;
+        
+    }
+    .hasPrev,.hasNext {
+        background-color: #254B7C;
+        cursor: pointer;
+    }
+    #batchEnryFrmDiv {
+        width: 980px;
+        height: 410px;
+        padding-top: 10px;
+        overflow: auto;
+    }
+    .col {
+        float: left;
+        width: 325px;
+    }
+</style>
+<script type="text/javascript" lang="javascript">
+    var contactId;
+    $(document).ready(function(){
+       $("#btnAddEntry").click(function(){
+           if ($("#batch_title").val().length==0) {
+               alert("Please enter the title of the batch");
+               $("#batch_title").focus();
+               return;
+           }
+           $.post("save.batch.entry.php",$("#frmNewBatchEntry").serialize()).done(function(data){
+              var json = $.parseJSON(data);
+              if (json.batch_id>0) {
+                  window.location='load.batch.php?batch_id='+json.batch_id;
+              } else {
+                  alert('Failed to save batch entry');
+              }
+           }).fail(function(data){
+               alert('Failed to save batch entry\n'+data);
+           });
+       });
+       $("#imgSearch").click(function(){
+           $("#satelite_contact_identifier").val($("#contact_identifier").val());
+           window.open('','sateliteWindow','height=600,width=1200,titlebar=no,location=no');
+           document.frmSatelite.submit();
+       });
+       
+    });
+    function getContact() {
+        if (!contactId) return;
+        //$.get("../contacts/find.contact.php",)
+        alert(contactId);
+    }
+</script>
+
+<div id="batchEnryDiv">
+    <div class="entryNavigation">
+        <div class="prevEntry"><img src="../img/prev.png" /></div>
+        <div class="headingRw">New Entry</div>
+        <div class="entryNo"># 001</div>
+        <div class="nextEntry"><img src="../img/next.png" /></div>
+    </div>
+    <div id="batchEnryFrmDiv">
+        <form action="save.batch.entry.php" method="POST" name="frmNewBatchEntry" id="frmNewBatchEntry">
+            <div class="col">
+                <div class="frmLabel"><label for="payment_instrument_id">Payment Type</label></div>
+                <div class="frmInput">
+                    <select name="payment_instrument_id" id="payment_instrument_id">
+                        <?php echo $pOpts; ?>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="frmLabel"><label for="total_amount">Receipt Amount</label></div>
+                <div class="frmInput">
+                    <input type="text" name="total_amount" id="total_amount" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="frmLabel"><label for="receive_date">Date Received</label></div>
+                <div class="frmInput">
+                    <input type="date" name="receive_date" id="receive_date" value="<?php echo date('Y-m-d'); ?>" />
+                </div>
+            </div>
+            <div id="contactDiv">
+                <div class="headingRw">Contact Info</div>
+                <div class="frmLabel"><label for="contact_identifier">Contact No/Archive Donor No</label></div>
+                <div class="frmInput">
+                    <input type="text" name="contact_identifier" id="contact_identifier" />
+                    <img src="../img/search-black-32.png" style="cursor:pointer;margin-left: 5px;" id="imgSearch" align="top">
+                </div>
+            </div>
+        </form>
+        <form action="../contacts/satelite.search.php" method="POST" target="sateliteWindow" style="display:none" name="frmSatelite" id="frmSatelite">
+            <input type="text" name="contact_identifier" id="satelite_contact_identifier" />
+        </form>
+    </div>
+    <div class="btn" id="btnAddEntry">Add</div>
+</div>

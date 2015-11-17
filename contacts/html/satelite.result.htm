@@ -1,0 +1,38 @@
+<script type="text/javascript" language="javascript">
+    $("#tblSearchResults tr").click(function(){
+       var attr = $(this).attr('contactid');
+        if (typeof attr !== typeof undefined && attr !== false) {
+            window.opener.document.getElementById('contact_identifier').value = attr;
+        }
+        window.close();
+    });
+</script>
+<div id="searchHeadingRow"><?php echo $pageHeading; ?></div>
+<div id="displayControlDiv">
+    <input type="checkbox" name="showAll" id="showAll" style="width: 20px"  />
+    <label for="showAll">Show All</label>
+</div>
+<div id="searchResultContainter">
+    <table align="center" width="100%" cellpadding="3" cellspacing="0" id="tblSearchResults">
+        <thead>
+            <tr>
+                <th style="width:20px">Reg</th>
+                <th style="width:65px">Civi Id</th>
+                <th style="width:65px">Dnr No</th>
+                <th>Full Name</th>
+                <th>Contact No</th>
+                <th>Email</th>
+                <th width="40">Del</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php echo $searchResultRows; ?>
+        </tbody>
+    </table>
+    <?php if (!empty($donors)&&count($donors)>18) { ?>
+    <script type="text/javascript" language="javascript">
+        $('#tblSearchResults').oneSimpleTablePagination({rowsPerPage: 18,brdrColor: "#254B7C"});
+    </script>
+    <?php } ?>
+</div>

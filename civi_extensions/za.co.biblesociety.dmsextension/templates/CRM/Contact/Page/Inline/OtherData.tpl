@@ -12,15 +12,12 @@
 {* Other Contact Data Block *}
 <div id="crm-otherdata-content" {if $permission EQ 'edit'} class="crm-inline-edit" data-edit-params='{ldelim}"cid": "{$contactId}", "class_name": "CRM_Contact_Form_Inline_OtherData"{rdelim}'{/if}>
   <div class="crm-clear crm-inline-block-content" {if $permission EQ 'edit'}title="{ts}Edit Other Data{/ts}"{/if}>
+      <h4>Other Data</h4>
     {if $permission EQ 'edit'}
       <div class="crm-edit-help">
         <span class="batch-edit"></span>{ts}Edit Other Data{/ts}
       </div>
     {/if}
-    <div class="crm-summary-row">
-        <div class="crm-label">{ts}Do Not Thank{/ts}</div>
-        <div class="crm-content">{if $do_not_thank>0} Yes {else} No {/if}</div>
-    </div>
     <div class="crm-summary-row">
         <div class="crm-label">{ts}Reminder Month{/ts}</div>
         <div class="crm-content">{if $reminder_month EQ 0}No Reminder{else}{$strMonth|date_format:"%B"}{/if}</div>

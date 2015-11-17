@@ -14,12 +14,12 @@
 include("inc/globals.php");
 
 #   IS AUTHORISED
-$authorised = $_SESSION['dms_user']['authorisation']->isAdmin;
+$authorised = $_SESSION['dms_user']['authorisation']->isHo;
 if (!$authorised) $GLOBALS['functions']->goToIndexPage();
 
 $p = $_POST;
-$d = new department;
-foreach ($p as $k=>$v) $d->$k = $v;
+$d = new civicrm_dms_department($p['id']);
+foreach ($p as $k=>$v) if ($k!='id') $d->$k = $v;
 
 $d->Save();
 header("location:department.php");

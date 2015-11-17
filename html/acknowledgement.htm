@@ -72,7 +72,7 @@
                 <div class="whatNowDiv">
                     <div class="detailContainerHeading">Choose Template for PDF/Email</div>
                     <img src="img/pdf.png" height="110" width="110" title="pdf" style="float:left" />
-                    <div class="btn" <?php if ($_SESSION['dms_user']['authorisation']->canSelect) { ?>onclick="openTemplateManager();"<?php } else { ?> onclick="alert('option unavailable');" <?php } ?>>Select Template</div>
+                    <div class="btn" <?php if ($_SESSION['dms_user']['authorisation']->acknowledgements['save']) { ?>onclick="openTemplateManager();"<?php } else { ?> onclick="alert('option unavailable');" <?php } ?>>Select Template</div>
                 </div>
             </div>
             <div style="display: none" id="progressDivBackground">
@@ -93,7 +93,7 @@
             <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
         </div>
         <div id="menuRow">
-            <?php echo $menu; ?>
+            <?php echo $menu->html; ?>
         </div>
         <div id="mainDiv">
             <div id="posDiv"></div>

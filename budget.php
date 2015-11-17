@@ -16,7 +16,7 @@ $curScript = basename(__FILE__, '.php');
 $notificationsValue = ($GLOBALS['functions']->hasUserGotNotifications()) ? 'Y':'N';
 
 #   CAN DELETE PERMISSION
-$deleteAuthorization = $_SESSION['dms_user']['authorisation']->canDelete;
+$deleteAuthorization = $_SESSION['dms_user']['authorisation']->isHo;
 
 #   CHECK IF EDIT IS ALLOWED
 $xmlConfig = simplexml_load_file("inc/config.xml");
@@ -24,7 +24,7 @@ $editable = ((string)$xmlConfig->budget['allowEdit']=='true');
 $editAllowed = ($editable) ? 'validateFilter()':'editDisabled()';
 
 #   CREATE MENU
-$menu = $GLOBALS['functions']->createMenu();
+$menu = new menu;
 $finYear = $GLOBALS['functions']->getFinancialYear();
 $pageHeading = 'DMS Budget Manager <span style="font-size: 14pt;">FY '.$finYear.'</span>';
 $title = 'Budget Manager';
@@ -52,14 +52,14 @@ $departmentJavascriptArray  = 'var departments = [';
 $isFirstDepartment          = true;
 foreach ($departmentList as $v) {
     $selected = ($_SESSION['dmsBudget']['bud_department']==$v['dep_id']) ? ' SELECTED':''; 
-    $departmentOptions .= ($v['dep_budgetAllocation']>0) ? '<option value="'.$v['dep_id'].'"'.$selected.'>'.$v['dep_id'].' - '.$v['dep_name'].'</option>':'';
+    $departmentOptions .= ($v['dep_budget_allocation']>0) ? '<option value="'.$v['dep_id'].'"'.$selected.'>'.$v['dep_id'].' - '.$v['dep_name'].'</option>':'';
     $departmentJavascriptArray .= ($isFirstDepartment) ? '':',';
     $isFirstDepartment = false;
     $departmentJavascriptArray .= '{
             depId: "'.$v['dep_id'].'",
             desc: "'.$v['dep_id'].' - '.$v['dep_name'].'",
-            isNational: "'.$v['dep_isNational'].'",
-            value: '.$v['dep_budgetAllocation'].'
+            isNational: "'.$v['dep_is_national'].'",
+            value: '.$v['dep_budget_allocation'].'
         }';
 }
 $departmentJavascriptArray .= "\n]";

@@ -1,0 +1,117 @@
+@media screen {
+    #tblSearchResults tr {
+        background-color: #60BAE3;
+        color:#FFF;
+    }
+    #tblSearchResults tr:hover {
+        background-color: #254B7C;
+        cursor: pointer;
+    }
+
+    .searchCriteriaLink {
+        cursor: pointer;
+        font-size: 10pt;
+    }
+    .searchCriteriaLink:hover{
+        font-weight: bold;
+    }
+    .detailContainerDiv {
+        position: absolute;
+        width: 320px;
+        margin-bottom: 10px;
+        margin-top:  30px;
+        float: right;
+        color: #FFF;
+        padding:10px;
+        background-color: #ED8029;
+        z-index: 1;
+        border-radius: 15px;
+        -moz-border-radius: 15px;
+    }
+    .detailContainerHeading {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        font-weight: bold;
+        border-bottom: 2px solid #FF9F00;
+        font-size: 12pt;
+    }
+    .detailContainerTable {
+        font-size: 9pt;
+        color: #FFF;
+        margin-bottom: 15px;
+    }
+    .detailContainerTable td {
+        border-bottom: 2px solid #FF9F00;
+        vertical-align: top;
+    }
+
+    #tblSearchResults {
+        font-size: 9pt;
+        border: 3px solid #254B7C;
+        margin-top: 10px;
+    }
+
+    #tblSearchResults td,#tblSearchResults th {
+        padding-top:5px;
+        padding-bottom:5px;
+        padding-left: 10px;
+    }
+    #tblSearchResults th {
+        text-align: left;    
+    }
+
+    #bodyDiv {
+        width:95%;
+        height: 580px;
+        overflow:auto;
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+    #searchCriteriaLinkDiv {
+        float: left;
+    }
+    #displayControlDiv {
+        float:right;
+        margin-right:5px;
+    }
+    #tblSearchResults thead tr {
+        background-color: #254B7C;
+        font-weight: bold;
+        color: #FFF
+    }
+}
+@media print {
+    @page {size: landscape}
+    /*#tblSearchResults tr:nth-child(odd) {
+        background-color: #F0F0F0;
+    }*/
+    #searchCriteriaLinkDiv,#displayControlDiv {
+        display:none;
+    }
+    #bodyDiv {
+        height: auto;  
+    }
+    #tblSearchResults {
+        font-size: 9pt;
+        border: none;
+        margin-top: 10px;
+    }
+
+    #tblSearchResults td,#tblSearchResults th {
+        padding-top:5px;
+        padding-bottom:5px;
+        padding-left: 10px;
+    }
+    #tblSearchResults th {
+        text-align: left;    
+    }
+    #tblSearchResults tr {
+        background-color: #FFF;
+        color:#000;
+    }
+    #tblSearchResults thead tr {
+        background-color: #000;
+        color:#FFF;
+        font-weight: bold;
+    }
+}

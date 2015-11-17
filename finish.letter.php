@@ -137,7 +137,7 @@ if (!empty($fileList)) {
 
 #   SAVE THE RESULT TO SEE AT A LATER TIME
 ob_start();
-$menu = $menu = $GLOBALS['functions']->createMenu();
+$menu = new menu;
 $pageHeading = $title = "Merge Results";
 require('html/'.$curScript.'.htm');
 file_put_contents('acklists/'.$u.'.result.htm', ob_get_contents());

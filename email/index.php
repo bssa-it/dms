@@ -13,7 +13,7 @@
 #   BOOTSTRAP
 include("../inc/globals.php");
 
-if (!empty($_SESSION['dms_user']['authorisation'])&&$_SESSION['dms_user']['authorisation']->isAdmin) {
+if (!empty($_SESSION['dms_user']['authorisation'])&&$_SESSION['dms_user']['authorisation']->isSuperUser) {
     $files = glob('*');
     $fileList = '';
     foreach ($files as $f) {

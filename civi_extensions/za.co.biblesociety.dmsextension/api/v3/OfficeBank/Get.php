@@ -23,5 +23,6 @@ function _civicrm_api3_office_bank_Get_spec(&$params) {
  * {@getfields category_Get}
  */
 function civicrm_api3_office_bank_Get($params) {
-    return _civicrm_api3_basic_get('CRM_Dmsextension_BAO_OfficeBank', $params);
+    $result = CRM_Dmsextension_BAO_OfficeBank::getValues($params);
+  return civicrm_api3_create_success($result, $params, 'OfficeBank', 'get');
 }

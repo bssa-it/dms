@@ -20,6 +20,20 @@
     z-index: 1;
     background-color: #FF00FF;
 }
+.widgetLoadingDiv {
+    width: 520px;
+    margin: auto;
+    text-align: center;
+    padding-top: 75px;
+}
+.widgetCtrl {
+    float:right;
+    display: inline-block;
+    margin-right: 30px;
+}
+.widgetCtrl img {
+    cursor:pointer;
+}
 #q1 {
     background-color: #42AEC2;
     clear: both;

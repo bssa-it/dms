@@ -14,7 +14,7 @@
 include("inc/globals.php");
 $curScript = basename(__FILE__, '.php');
 
-$menu = $GLOBALS['functions']->createMenu();
+$menu = new menu;
 $pageHeading = $title = 'Alternate Salutation Rules';
 
 $notificationsValue = ($GLOBALS['functions']->hasUserGotNotifications()) ? 'Y':'N';

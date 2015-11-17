@@ -41,52 +41,6 @@ Class functions {
     	}
     }
     
-    function createMenu() {
-        
-        /**
-         * This function creates a menu based on the logged in user's permissions 
-         *
-         * @param  none
-         * @throws none
-         * @return false on error;  an HTML menu for the logged in user. 
-         */
-        $sql = "SELECT * FROM `dms_menu` WHERE `men_active` = 'Y' ORDER BY `men_level`,`men_parent`,`men_order`;";
-    	$this->showSql($sql);
-        $result = $GLOBALS['db']->select($sql);
-    	if (!$result) {
-    	   return false; 
-    	} else {
-   		   $return = '<div id="navigationDiv">';
-           $return .= "\n\t" . '<ul id="navigator">';
-           foreach ($result as $m) {
-                if ($_SESSION['dms_user']['authorisation']->$m['men_requiredAuthorisation']&&$m['men_level']==0) {
-                    $menuName = strtolower(substr($m['men_name'],0,1)).preg_replace('/ /','',substr($m['men_name'],1)).'Menu';
-                    $subMenuName = strtolower(substr($m['men_name'],0,1)).preg_replace('/ /','',substr($m['men_name'],1)).'SubMenu';
-                    $return .= "\n\t\t" . '<li';
-                    $subMenu = null;
-                    foreach ($result as $s) {
-                        $authOk = $_SESSION['dms_user']['authorisation']->$s['men_requiredAuthorisation'];
-                        if ($authOk&&$s['men_level']==1&&$s['men_parent']==$m['men_id']) {
-                            if (is_null($subMenu)) {
-                                $subMenu = ' onmouseover="' . "showSubMenu('$menuName','$subMenuName');";
-                                $subMenu .= '" onmouseout="' . "hideSubMenu('$subMenuName');" . '" id="'.$menuName.'">';
-                                $subMenu .= $m['men_name']."\n\t\t".'<div class="submenu" id="'.$subMenuName.'"><ul>';   
-                            }
-                            $subMenu .= "\n\t\t\t".'<li style="padding-right: 0px;"><a href="'.$s['men_destination'].'">'.$s['men_name'].'</a></li>'; 
-                        }
-                    }
-                    $return .= (is_null($subMenu)) ? '><a href="'.$m['men_destination'].'">'.$m['men_name']."</a>\n\t\t</li>" : "$subMenu\n\t\t</ul></div>\n\t\t</li>";
-                } 
-           }
-           $return .= "\n\t</ul>\n</div>";
-           
-           /*  PERSONAL SETTINGS LINK */
-           $return .= "\n\t" . '<img src="/dms/img/logout.png" title="log out" align="middle" id="imgLogout" /><div id="myConfigurationDiv"><img src="/dms/img/settings.png" width="16" height="16" alt="my configuration" /> '.$_SESSION['dms_user']['fullname'].'</div><div id="notificationLinkDiv"><img src="/dms/img/notification.png" width="16" height="16" /></div>';
-           
-           return $return;
-    	}
-    }
-    
     function createFooter($dnrNo=null) {
         $sql = (!empty($_SESSION['dms_user']['sql'])) ? $_SESSION['dms_user']['sql'] : '';
         $_SESSION['dms_user']['sql'] = '';
@@ -1615,6 +1569,7 @@ FROM dms_orgunit order by SUBSTR(org_id,4)";
                     <input type="hidden" name="srch_donorDeleted" value="A" />
                     <input type="hidden" name="srch_birthday" value="'.date("-m-d").'" />
                     <input type="hidden" name="srch_orgId" value="'.$primaryDepartment.'" />
+                    <input type="hidden" name="srch_donorDeleted" value="N" />
                 </form>';
         }
         if (!empty($activities)) {
@@ -1626,7 +1581,8 @@ FROM dms_orgunit order by SUBSTR(org_id,4)";
                     $cid = $GLOBALS['functions']->getActivityWithContact($n['id']);
                     if (empty($cid)) $cid = $_SESSION['dms_user']['civ_contact_id'];
                     $sourceContact = $GLOBALS['functions']->getCiviContact($cid);
-                    $notificationsDivs = '<input type="checkbox" name="status_id" value="'.$n['id'].'" id="status_id-'.$n['id'].'" class="notificationStatusChkBox" /><div class="nextDateDiv" onclick="window.location=\'load.activity.php?d='.$sourceContact['external_identifier'].'&s=civicrm&a='.$n['id'].'\'">
+                    $notificationsDivs = '<input type="checkbox" name="status_id" value="'.$n['id'].'" id="status_id-'.$n['id'].'" class="notificationStatusChkBox" />
+                        <div class="nextDateDiv" a="'.$n['id'].'" d="'.$sourceContact['external_identifier'].'">
                 <div class="dt">
                     <div class="d">'.date("d",strtotime($n['activity_date_time'])).'</div>
                     <div class="m">'.date("M",strtotime($n['activity_date_time'])).'</div>
@@ -1729,8 +1685,7 @@ FROM dms_orgunit order by SUBSTR(org_id,4)";
         $sql = "select * from civicrm_activity_contact where activity_id = $activityId and contact_id = $contactId";
         $contacts = $this->GetCiviDataFromSQL($sql);
         if (!empty($contacts)) {
-            if (count($contacts)!=1) return false;
-            if ($contacts[0]['record_type_id']==$assignedTypeId||$contacts[0]['record_type_id']==$sourceTypeId) return true;
+            foreach ($contacts as $k=>$v) if ($contacts[$k]['record_type_id']==$assignedTypeId||$contacts[$k]['record_type_id']==$sourceTypeId) return true;
         }
         return false;
     }
@@ -1755,7 +1710,7 @@ FROM dms_orgunit order by SUBSTR(org_id,4)";
     
     public static function showSql($sql) {
         $showFlag = (string)$GLOBALS['xmlConfig']->showSql['value'];
-        $authorised = (empty($_SESSION['dms_user']['authorisation'])) ? false : $_SESSION['dms_user']['authorisation']->isAdmin;
+        $authorised = (empty($_SESSION['dms_user']['authorisation'])) ? false : $_SESSION['dms_user']['authorisation']->isSuperUser;
         
         if (empty($_SESSION['dms_user']['sql'])) $_SESSION['dms_user']['sql'] = '';
         if ($showFlag=='Y'&&$authorised) $_SESSION['dms_user']['sql'] .= '<div class="sql"><pre />'.$sql.'</div>';
@@ -1960,7 +1915,7 @@ LIMIT $limit,$returnLimit) `A`";
         $sql = "SELECT count(*) `total` FROM civicrm_contact C "
                 . "INNER JOIN civicrm_dms_contact_reporting_code R ON contact_id = C.id "
                 . "WHERE substr(organisation_id,1,1) = '$primaryDepartment' "
-                . "AND birth_date LIKE '%$birthday%'";
+                . "AND birth_date LIKE '%$birthday%' AND C.is_deleted = 0";
         $GLOBALS['functions']->showSql($sql);
         $result = $GLOBALS['civiDb']->select($sql);
         if (!$result) {
@@ -2302,5 +2257,37 @@ where `email` = '$emailAddress'";
             }
         }
         return $result;
+    }
+    
+    function logContactChange($contactId) {
+        if (empty($contactId)) return false;
+        $o = new civicrm_dms_contact_other_data_extension($contactId);
+        $o->modified_by_contact_id = $_SESSION['dms_user']['civ_contact_id'];
+        $o->Save();
+        
+        $parms['version'] = 3;
+        $parms['id'] = $contactId;
+        $parms['modified_date'] = date("Y-m-d H:i:s");
+        $update = civicrm_api('Contact','Create',$parms);
+        return $update;
+    }
+    
+    function GetOfficeList() {
+        
+        /**
+         * This function retrieves all the regions in the dms_region table.
+         *
+         * @param  none
+         * @throws none
+         * @return false on error;  An array of the resulting dataset.
+         */
+        $sql = "SELECT * FROM `civicrm_dms_office` ORDER BY `name`";
+    	$this->showSql($sql);
+        $result = $GLOBALS['civiDb']->select($sql);
+    	if (!$result) {
+    		return false;
+    	} else {
+    		return $result;
+    	}
     }
 }

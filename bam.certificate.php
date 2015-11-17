@@ -13,13 +13,13 @@
 
 #   BOOTSTRAP
 include("inc/globals.php");
-if (!$_SESSION['dms_user']['authorisation']->isAdmin) {
+if (!$_SESSION['dms_user']['authorisation']->isHo) {
     header('location: index.php');
     exit();
 } 
 $curScript = basename(__FILE__, '.php');
 
-$menu = $GLOBALS['functions']->createMenu();
+$menu = new menu;
 $pageHeading = $title = 'BAM Certicate printing';
 
 ini_set('display_errors',1);

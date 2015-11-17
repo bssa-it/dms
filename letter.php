@@ -19,7 +19,7 @@ ini_set('display_startup_errors',1);
 error_reporting(-1);
 
 #   CREATE MENU
-$menu = $GLOBALS['functions']->createMenu();
+$menu = new menu;
 $pageHeading = $title = 'Template Manager';
 $notificationsValue = ($GLOBALS['functions']->hasUserGotNotifications()) ? 'Y':'N';
 

@@ -45,6 +45,29 @@
     .organisationRow {
         cursor:pointer;
     }
+    .dmsContainer {
+    background-color: #254B7C;
+      padding: 3px;
+      width: 98%;
+      display: block;
+      clear: both;
+      margin-top: 5px;
+      height: auto;
+      overflow: hidden;
+    }
+    .dmsContainer h3 {
+        background-color: #254B7C;
+        color: #FFF;
+    }
+    .dms-block {
+        float: left;
+        width: 33%;
+    }
+    .dmsContainer h4 {
+        margin: 0;
+        background-color: #254B7C;
+        color: #FFF;
+    }
 </style>
 {/literal}
 
@@ -344,21 +367,9 @@
                   </div>
                 </div> <!-- contactCardLeft -->
               {/if}
-              
-               <!-- DMS SECTION -->
-              <div class="contactCardRight">
-                <h3>DMS</h3>
-                <div class="crm-summary-block">
-                    {include file="CRM/Contact/Page/Inline/ReportingCode.tpl"}
-                </div>
-                <div class="crm-summary-block">
-                    {include file="CRM/Contact/Page/Inline/OtherData.tpl"}
-                </div>
-              </div>
-              <!-- END DMS SECTION -->
-              
+                            
               {if $contact_type eq 'Individual' AND $showDemographics}
-                <div class="contactCardLeft">
+                <div class="contactCardRight">
                   <div class="crm-summary-demographic-block">
                     <div class="crm-summary-block" id="demographic-block">
                       {include file="CRM/Contact/Page/Inline/Demographics.tpl"}
@@ -366,6 +377,24 @@
                   </div>
                 </div> <!-- contactCardRight -->
               {/if}
+              
+               <!-- DMS SECTION -->
+              
+               <div class="clear"></div>
+              <div class="dmsContainer">
+                <h3>DMS</h3>
+                <div class="crm-summary-block dms-block">
+                    {include file="CRM/Contact/Page/Inline/ReportingCode.tpl"}
+                </div>
+                <div class="crm-summary-block dms-block">
+                    {include file="CRM/Contact/Page/Inline/AcknowledgementPreferences.tpl"}
+                </div>
+                <div class="crm-summary-block dms-block">
+                    {include file="CRM/Contact/Page/Inline/OtherData.tpl"}
+                </div>
+                
+              </div>
+              <!-- END DMS SECTION -->
               
               <div class="clear"></div>
                 <div class="separator"></div>

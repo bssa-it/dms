@@ -7,62 +7,40 @@
 
 class authorisation {
     
-    public $canSelect = false;
-    public $canUpdate = false;
-    public $canInsert = false;
-    public $canDelete = false;
-    public $isAdmin = false;
-    public $isSuperUser = false;
-    public $userGroups = null;
+    public $accessOk;
+    public $isHo;
+    public $isSuperUser;
+    public $userGroups;
+    public $userId;
     
-    function getPermissions(){
-       
-        if (!isset($GLOBALS['authorisationGroups'])||empty($this->userGroups)||is_null($this->userGroups)) {
-            $this->canSelect = false;
-            $this->canUpdate = false;
-            $this->canInsert = false;
-            $this->canDelete = false;
-            $this->isAdmin = false;
-            $this->isSuperUser = false;
-            return;   
+    function __construct($user=null){
+        
+        $this->userGroups = $user->groups;
+        $this->userId = $user->id;
+        $this->isSuperUser = $this->accessOk = $this->isHo = false;
+        
+        $userConfigFile = '/var/www/joomla/dms/users/'.$this->userId.'.user.xml';
+        if (!file_exists($userConfigFile)) return;
+        
+        $this->isSuperUser = (in_array($GLOBALS['xmlConfig']->joomlaGroups->superUser, $this->userGroups));
+        if (!$this->isSuperUser) {
+            $this->accessOk = (in_array($GLOBALS['xmlConfig']->joomlaGroups->dms, $this->userGroups));
+            $this->isHo = (in_array($GLOBALS['xmlConfig']->joomlaGroups->ho, $this->userGroups));
+        } else {
+            $this->accessOk = $this->isHo = true;
         }
         
-        foreach ($this->userGroups as $g) {
-            if (!$this->canSelect) $this->canSelect = ($GLOBALS['authorisationGroups']['select']==$g);
-            if (!$this->canUpdate) $this->canUpdate = ($GLOBALS['authorisationGroups']['update']==$g);      
-            if (!$this->canInsert) $this->canInsert = ($GLOBALS['authorisationGroups']['insert']==$g);
-            if (!$this->canDelete) $this->canDelete = ($GLOBALS['authorisationGroups']['delete']==$g);
-            if (!$this->isAdmin) $this->isAdmin = ($GLOBALS['authorisationGroups']['admin']==$g);
-            if (!$this->isSuperUser) $this->isSuperUser = ($GLOBALS['authorisationGroups']['superUser']==$g);
-            if ($this->isSuperUser) {
-                $this->canSelect = true;
-                $this->canUpdate = true;
-                $this->canInsert = true;
-                $this->canDelete = true;
-                $this->isAdmin = true;
-                return;
-            }
-        }
-         
+        $userConfig = simplexml_load_file($userConfigFile);
+        foreach ($userConfig->permissions->children() as $e) {
+            foreach ($e->children() as $p) $permission[$p->getName()] = ((string)$p=='Y');
+            $this->{$e->getName()} = $permission;
+        } 
     }
     
     function printPermissions(){
-        echo 'Permissions for: ' . $_SESSION['dms_user']['fullname'] . ' (Joomla User Id: ' . $_SESSION['dms_user']['userid'] . ') <br />';
-        echo '<br/>Can Select? -> ';
-        echo (!$this->canSelect) ? 'No':'Yes';
-        echo '<br/>Can Update? -> ';
-        echo (!$this->canUpdate) ? 'No':'Yes';
-        echo '<br/>Can Insert? -> ';
-        echo (!$this->canInsert) ? 'No':'Yes';
-        echo '<br/>Can Delete? -> ';
-        echo (!$this->canDelete) ? 'No':'Yes';
-        echo '<br/>Is Admin? -> ';
-        echo (!$this->isAdmin) ? 'No':'Yes';
-        echo '<br/>Is Super User? -> ';
-        echo (!$this->isSuperUser) ? 'No':'Yes';
-        echo '<br /><br />Groups';
-        if (!is_null($this->userGroups)) foreach ($this->userGroups as $v) echo '<br />'.$v;
+        echo 'Permissions for: ' . $_SESSION['dms_user']['fullname'] . ' (Joomla User Id: ' . $_SESSION['dms_user']['userid'] . ') <pre />';
+        print_r($this);
+        /*echo '<br /><br />Groups';
+        if (!is_null($this->userGroups)) foreach ($this->userGroups as $v) echo '<br />'.$v;*/
     }
 }
-
-?>

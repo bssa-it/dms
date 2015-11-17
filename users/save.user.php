@@ -12,7 +12,7 @@
 
 #   BOOTSTRAP
 include("../inc/globals.php");
-include("../inc/class.user.extension.php");
+
 $sysUserConfigFile = 'user.config.xml';
 $sysConfig = simplexml_load_file($sysUserConfigFile);
 
@@ -21,13 +21,17 @@ $jmlUserId = $_POST['usr_id'];
 $userConfigFilename = $jmlUserId.".user.xml";
 $userConfig = simplexml_load_file($userConfigFilename);
 $userConfig->userType = $_POST['userType'];
+$userConfig->officeId = $_POST['officeId'];
+foreach ($userConfig->permissions->children() as $p) {
+    foreach ($p->children() as $perm) $userConfig->permissions->{$p->getName()}->{$perm->getName()} = (!empty($_POST[$p->getName() . '_' . $perm->getName()])) ? 'Y':'N';
+}
 $configSaveResult = file_put_contents($userConfigFilename,$userConfig->asXML());
 
 $u = new createUser();
 $u->Load($jmlUserId);
-$isAdmin = ($_POST['userType']=='Head Office');
-$isSuperUser = ($_POST['userType']=='Super User');
-$u->addJoomlaUserGroups($jmlUserId,$isAdmin,$isSuperUser);
+$u->isHo = ($_POST['userType']=='Head Office');
+$u->isSuperUser = ($_POST['userType']=='Super User');
+$u->addJoomlaUserGroups($jmlUserId);
 
 $widgets = array();
 if (!empty($_POST['widgets'])) {

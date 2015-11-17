@@ -18,7 +18,7 @@ error_reporting(-1);
 include("../inc/globals.php");
 $curScript = basename(__FILE__, '.php');
 
-$menu = $GLOBALS['functions']->createMenu();
+$menu = new menu;
 $pageHeading = $title = 'Reports';
 
 $directories = glob('reports/*',GLOB_ONLYDIR);

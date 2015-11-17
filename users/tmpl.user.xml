@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <mySettings>
+    <officeId>1</officeId>
     <userType>Secretary</userType>
     <acknowledgement>
         <departments>
@@ -13,4 +14,42 @@
         <defaultBamOnly>N</defaultBamOnly>
         <defaultDonorDeleted>N</defaultDonorDeleted>
     </donorSearch>
+    <permissions>
+        <contacts>
+            <save>Y</save>
+            <view>Y</view>
+        </contacts>
+        <contributions>
+            <save>N</save>
+            <view>Y</view>
+        </contributions>
+        <acknowledgements>
+            <save>Y</save>
+            <view>Y</view>
+        </acknowledgements>
+        <budgets>
+            <save>Y</save>
+            <view>Y</view>
+        </budgets>
+        <logs>
+            <save>N</save>
+            <view>N</view>
+        </logs>
+        <reports>
+            <save>N</save>
+            <view>Y</view>
+        </reports>
+        <masterRecords>
+            <save>N</save>
+            <view>N</view>
+        </masterRecords>
+        <bankStatements>
+            <save>N</save>
+            <view>N</view>
+        </bankStatements>
+        <debitOrders>
+            <save>N</save>
+            <view>N</view>
+        </debitOrders>
+    </permissions>
 </mySettings>

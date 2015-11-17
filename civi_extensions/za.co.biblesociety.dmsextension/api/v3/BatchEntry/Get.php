@@ -23,5 +23,6 @@ function _civicrm_api3_batch_entry_Get_spec(&$params) {
  * {@getfields category_Get}
  */
 function civicrm_api3_batch_entry_Get($params) {
-    return _civicrm_api3_basic_get('CRM_Dmsextension_BAO_BatchEntry', $params);
+    $result = CRM_Dmsextension_BAO_BatchEntry::getValues($params);
+    return civicrm_api3_create_success($result, $params, 'BatchEntry', 'get');
 }

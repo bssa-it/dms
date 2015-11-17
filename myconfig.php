@@ -15,7 +15,7 @@
 #   BOOTSTRAP
 include("inc/globals.php");
 $curScript = basename(__FILE__, '.php');
-$menu = $GLOBALS['functions']->createMenu();
+$menu = new menu;
 $pageHeading = $title = 'My Configuration';
 $notificationsValue = ($GLOBALS['functions']->hasUserGotNotifications()) ? 'Y':'N';
 
@@ -33,10 +33,7 @@ $civiContact = $GLOBALS['functions']->getCiviContact($civiId);
 $dnrId = $civiContact['external_identifier'];
 $ipaddress = $_SESSION['dms_user']['ipaddress'];
 $loginTime = $_SESSION['dms_user']['logintime'];
-$canView = ($_SESSION['dms_user']['authorisation']->canSelect) ? 'Yes':'No';
-$canEdit = ($_SESSION['dms_user']['authorisation']->canUpdate) ? 'Yes':'No';
-$canInsert = ($_SESSION['dms_user']['authorisation']->canInsert) ? 'Yes':'No';
-$canDelete = ($_SESSION['dms_user']['authorisation']->canDelete) ? 'Yes':'No';
+
 
 #   LOAD WIDGET ID'S THAT BELONG TO THIS USER 
 $q1WidgetId = (!empty($_SESSION['dms_user']['dashboard']->usr_q1_wid_id)) ? $_SESSION['dms_user']['dashboard']->usr_q1_wid_id:-1;

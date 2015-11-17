@@ -1,3 +1,11 @@
+/*   This is the Global JS file that loads on every page in the DMS */
+/*   
+ *  Notification related funcions are for loading the icon in the menu.  Actual notification functionality can be
+ *  found in the notification.js   file.
+ *  
+ */
+
+var dmsUser;
 var http = false;
 
 if(navigator.appName == "Microsoft Internet Explorer") {
@@ -17,12 +25,7 @@ function showSubMenu(strMenu,strSubMenu) {
     x.style.display = 'block';    
 }
 
-function positionNotificationsDiv() {
-    var x = document.getElementById('notificationsDiv');
-    var y = document.getElementById('notificationLinkDiv');
-    var t = y.offsetTop+40;
-    x.style.top = t+'px';
-}
+
 
 
 function hideSubMenu(strSubMenu) {
@@ -78,11 +81,6 @@ $(document).ready(function() {
         $("#queries").toggle();
     });
     
-    $("#notificationLinkDiv").click(function(){
-        getNotifications();
-        positionNotificationsDiv();
-        $("#notificationsDiv").toggle();
-    });
     
     $("#imgLogout").click(function(){
         window.location.href = '/dms/joomla.logout.php';
@@ -100,7 +98,14 @@ $(document).ready(function() {
     
     $("#closeContactSearchDiv").bind('click',hideContactSearchDiv);
     
+    /*  Notifications */
+    $("#notificationLinkDiv").click(function(){
+        getNotifications();
+        positionNotificationsDiv();
+        $("#notificationsDiv").toggle();
+    });
     $("#notificationLinkDiv").css({'background-color': notificationDivColor(),'border-color':notificationDivColor()});
+    /* /Notifications */
     
     // config div
     $("#myConfigurationDiv").click(function(){
@@ -110,22 +115,6 @@ $(document).ready(function() {
     //suburb helper
     addSuburbSearcher();
 });
-
-
-function notificationDivColor(){
-    var uNotifications = $("#hasUserGotNotifications").val();
-    return (uNotifications=='Y') ? '#CD3333':'#254B7C';
-}
-
-function getNotifications(){
-    $("#notificationsDiv").empty().append('<img src="/dms/img/loading-white.gif" /> loading...');
-    $.get("/dms/get.user.notifications.php",function(data){
-        $("#notificationsDiv").empty().append(data);
-        $("#xCloseNotifications").click(function(){
-            $("#notificationsDiv").toggle();
-        });
-    });
-}
 
 function validateQuickSearch() {
     var q = $("#qck_search").val();
@@ -249,3 +238,26 @@ function addSuburbSearcher() {
         getPostalCodes(null);
     });
 }
+
+/*   NOTIFICATIONS FNS */
+function positionNotificationsDiv() {
+    var x = document.getElementById('notificationsDiv');
+    var y = document.getElementById('notificationLinkDiv');
+    var t = y.offsetTop+40;
+    x.style.top = t+'px';
+}
+function notificationDivColor(){
+    var uNotifications = $("#hasUserGotNotifications").val();
+    return (uNotifications=='Y') ? '#CD3333':'#254B7C';
+}
+
+function getNotifications(){
+    $("#notificationsDiv").empty().append('<img src="/dms/img/loading-white.gif" /> loading...');
+    $.get("/dms/get.user.notifications.php",function(data){
+        $("#notificationsDiv").empty().append(data);
+        $("#xCloseNotifications").click(function(){
+            $("#notificationsDiv").toggle();
+        });
+    });
+}
+/* /NOTIFICATIONS */

@@ -86,3 +86,6 @@
     padding: 2px;
     border: solid 3px #254B7C;
 }
+#tbdUserAuthority input[type="checkbox"] {
+    width: 15px;
+}

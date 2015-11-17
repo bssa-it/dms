@@ -1,15 +1,12 @@
 <?php
 
-Class civicrm_dms_statement { 
+Class civicrm_dms_statement_entry { 
 
         var $id;
 	var $deposit_date;
 	var $deposit_reference;
 	var $deposit_amount;
 	var $balance;
-	var $document_name;
-	var $imported_datetime;
-	var $imported_by;
 	var $batch_id;
 	var $reconciled;
 	var $reconciled_datetime;
@@ -21,7 +18,7 @@ Class civicrm_dms_statement {
         }
 
         function Load($id) {
-            $sql = "SELECT * FROM `civicrm_dms_statement` where `id` = $id";
+            $sql = "SELECT * FROM `civicrm_dms_statement_entry` where `id` = $id";
             $GLOBALS['functions']->showSql($sql);
             $result = $GLOBALS['civiDb']->select($sql);
             if (!$result) {
@@ -42,14 +39,11 @@ Class civicrm_dms_statement {
             $this->MySqlEscape();
             if (isset($this->id) && !empty($this->id)) {
                 $sql = "
-                    UPDATE `civicrm_dms_statement` SET
+                    UPDATE `civicrm_dms_statement_entry` SET
                         `deposit_date` = '$this->deposit_date',
 			`deposit_reference` = '$this->deposit_reference',
 			`deposit_amount` = '$this->deposit_amount',
 			`balance` = '$this->balance',
-			`document_name` = '$this->document_name',
-			`imported_datetime` = '$this->imported_datetime',
-			`imported_by` = '$this->imported_by',
 			`batch_id` = '$this->batch_id',
 			`reconciled` = '$this->reconciled',
 			`reconciled_datetime` = '$this->reconciled_datetime',
@@ -58,14 +52,11 @@ Class civicrm_dms_statement {
                       `id` = '$this->id';";
             } ELSE {
                 $sql = "
-                    INSERT INTO `civicrm_dms_statement` (
+                    INSERT INTO `civicrm_dms_statement_entry` (
                         `deposit_date`,
 			`deposit_reference`,
 			`deposit_amount`,
 			`balance`,
-			`document_name`,
-			`imported_datetime`,
-			`imported_by`,
 			`batch_id`,
 			`reconciled`,
 			`reconciled_datetime`,
@@ -75,9 +66,6 @@ Class civicrm_dms_statement {
 			'$this->deposit_reference',
 			'$this->deposit_amount',
 			'$this->balance',
-			'$this->document_name',
-			'$this->imported_datetime',
-			'$this->imported_by',
 			'$this->batch_id',
 			'$this->reconciled',
 			'$this->reconciled_datetime',

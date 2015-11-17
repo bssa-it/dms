@@ -23,12 +23,12 @@ $sysConfig = simplexml_load_file($sysUserConfigFile);
 # Get/Create Joomla detail
 $u = new createUser();
 $jmlUserId = $u->doesJoomlaUserExist($_POST['email']);
-$isAdmin = ($_POST['userType']=='Head Office');
-$isSuperUser = ($_POST['userType']=='Super User');
+$u->isHo = ($_POST['userType']=='Head Office');
+$u->isSuperUser = ($_POST['userType']=='Super User');
 if (!$jmlUserId) {
-    $jmlUserId = $u->createJoomlaUser($_POST['email'],$_POST['first_name'].' '.$_POST['last_name'],$isAdmin,$isSuperUser);
+    $jmlUserId = $u->createJoomlaUser($_POST['email'],$_POST['first_name'].' '.$_POST['last_name']);
 } else {
-    $u->addJoomlaUserGroups($jmlUserId,$isAdmin,$isSuperUser);
+    $u->addJoomlaUserGroups($jmlUserId);
 }
 $dmsUserExists = $u->Load($jmlUserId);
 
@@ -38,6 +38,7 @@ if (!file_exists($userConfigFilename)) {
     $copyFile = copy('tmpl.user.xml',$userConfigFilename);
     $userConfig = simplexml_load_file($userConfigFilename);
     $userConfig->userType = $_POST['userType'];
+    $userConfig->officeId = $_POST['officeId'];
     unset($userConfig->acknowledgement->departments);
     $newDepartments = $userConfig->acknowledgement->addChild('departments');
     foreach ($_POST['departments'] as $k=>$v) {

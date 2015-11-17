@@ -13,7 +13,7 @@
 include("inc/globals.php");
 $curScript = basename(__FILE__, '.php');
 $notificationsValue = ($GLOBALS['functions']->hasUserGotNotifications()) ? 'Y':'N';
-$menu = $GLOBALS['functions']->createMenu();
+$menu = new menu;
 $pageHeading = 'Donor Positioning System';
 $title = $pageHeading;
 $config = simplexml_load_file("inc/config.xml");

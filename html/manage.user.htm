@@ -19,7 +19,7 @@
         <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
     </div>
     <div id="menuRow">
-        <?php echo $menu; ?>
+        <?php echo $menu->html; ?>
     </div>
     <div id="mainDiv">
         <div id="posDiv"></div>
@@ -36,6 +36,7 @@
                             <td>Full name</td>
                             <td>Joomla Id</td>
                             <td>Civi Id</td>
+                            <td>office id</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,6 +64,64 @@
                             <div class="btn" id="btnSave">Save</div>
                         </div>
                     </div>
+                    <div id="userPerms">
+                        <div class="permissionBox headingRw">
+                            <div class="labl">Permissions</div>
+                            <div class="permCheckbox">view</div>
+                            <div class="permCheckbox">save</div>
+                        </div>
+                        <div class="permissionBox">
+                            <div class="labl">Contacts</div>
+                            <div class="permCheckbox"><input type="checkbox" name="contacts_view" value="Y"></div>
+                            <div class="permCheckbox"><input type="checkbox" name="contacts_save" value="Y"></div>
+                        </div>
+                        <div class="permissionBox">
+                            <div class="labl">Contributions</div>
+                            <div class="permCheckbox"><input type="checkbox" name="contributions_view" value="Y"></div>
+                            <div class="permCheckbox"><input type="checkbox" name="contributions_save" value="Y"></div>
+                        </div>
+                        <div class="permissionBox">
+                            <div class="labl">Acknowledgements</div>
+                            <div class="permCheckbox"><input type="checkbox" name="acknowledgements_view" value="Y"></div>
+                            <div class="permCheckbox"><input type="checkbox" name="acknowledgements_save" value="Y"></div>
+                        </div>
+                        <div class="permissionBox">
+                            <div class="labl">Budgets</div>
+                            <div class="permCheckbox"><input type="checkbox" name="budgets_view" value="Y"></div>
+                            <div class="permCheckbox"><input type="checkbox" name="budgets_save" value="Y"></div>
+                        </div>
+                        <div class="permissionBox">
+                            <div class="labl">Logs</div>
+                            <div class="permCheckbox"><input type="checkbox" name="logs_view" value="Y"></div>
+                            <div class="permCheckbox"><input type="checkbox" name="logs_save" value="Y"></div>
+                        </div>
+                        <div class="permissionBox">
+                            <div class="labl">Reports</div>
+                            <div class="permCheckbox"><input type="checkbox" name="reports_view" value="Y"></div>
+                            <div class="permCheckbox"><input type="checkbox" name="reports_save" value="Y"></div>
+                        </div>
+                        <div class="permissionBox">
+                            <div class="labl">Master Records</div>
+                            <div class="permCheckbox"><input type="checkbox" name="masterRecords_view" value="Y"></div>
+                            <div class="permCheckbox"><input type="checkbox" name="masterRecords_save" value="Y"></div>
+                        </div>
+                        <div class="permissionBox">
+                            <div class="labl">Bank Statements</div>
+                            <div class="permCheckbox"><input type="checkbox" name="bankStatements_view" value="Y"></div>
+                            <div class="permCheckbox"><input type="checkbox" name="bankStatements_save" value="Y"></div>
+                        </div>
+                        <div class="permissionBox">
+                            <div class="labl">Debit Orders</div>
+                            <div class="permCheckbox"><input type="checkbox" name="debitOrders_view" value="Y"></div>
+                            <div class="permCheckbox"><input type="checkbox" name="debitOrders_save" value="Y"></div>
+                        </div>
+                        <div id="officeDiv">
+                            <select name="officeId" id="officeId">
+                                <?php echo $officeOpts; ?>
+                            </select>
+                        </div>
+                    </div>
+                    
                 </form>
             </div>
             <!-- end content -->

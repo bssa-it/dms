@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="/dms/css/global.css" />
+	<link rel="stylesheet" type="text/css" href="css/<?php echo $curScript; ?>.css" />
+        
+        <script type="text/javascript" language="javascript" src="/dms/scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="/dms/scripts/jquery-ui-1.10.4.custom.js"></script>
+        
+        <script type="text/javascript" language="javascript" src="/dms/scripts/global.js"></script>
+        <script type="text/javascript" language="javascript" src="/dms/scripts/tablePaging.js"></script>
+        <script type="text/javascript" language="JavaScript" src="scripts/<?php echo $curScript; ?>.js"></script>
+    </head>
+    <body>
+        <input type="hidden" id="batch_id" name="id" value="<?php echo $bid; ?>" />
+        <div id="screenProtectorDiv" style="display:none"></div>
+        <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+        <div id="headingRow">
+                <div id="pageHeadingDiv" ><?php echo $pageHeading; ?></div>
+                <div id="batchSummaryDiv"><!-- Summary of open batches here (Total not processed) --></div>
+        </div>
+        <div id="menuRow">
+            <?php echo $menu->html; ?>
+        </div>
+        <div id="mainDiv">
+            <div id="posDiv"></div>
+            <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+            <div id="notificationsDiv" style="display: none"></div>
+            <div class="leftNav-Body-Div">
+                <div class="leftNavigationDiv">
+                    <ul id="leftNavMenu">
+                        <li id="entryList" class="navItem selectedNav" fn="loadEntryList">Receipt List</li>
+                        <li id="newEntry" class="navItem" fn="loadNewEntry">New Entry</li>
+                    </ul>
+                </div>
+                <div id="bodyDiv">
+                    <div class="waitingDiv"><img src="/dms/img/loading.gif" title="loading..." align="center" style="margin-right: 15px;margin-left: 15px;" /> loading...</div>
+               </div>
+           </div>
+        </div>
+        <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+	</body>
+</html>

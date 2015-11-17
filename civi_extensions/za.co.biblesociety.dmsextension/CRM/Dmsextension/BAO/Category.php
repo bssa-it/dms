@@ -4,11 +4,9 @@ class CRM_Dmsextension_BAO_Category extends CRM_Dmsextension_DAO_Category {
 
   public static function create($params) {
     $instance = new CRM_Dmsextension_DAO_Category();
-    $instance->name = $params['cat_id'];
-    $instance->find(TRUE);
-
     $instance->copyValues($params);
     $instance->save();
+    $params['id'] = $instance->id;
   }
 
   public static function getValues(&$params) {

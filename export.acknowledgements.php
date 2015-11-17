@@ -15,7 +15,7 @@ include("inc/globals.php");
 $curScript = basename(__FILE__, '.php');
 
 #   CREATE MENU
-$menu = $GLOBALS['functions']->createMenu();
+$menu = new menu;
 $pageHeading = 'My Downloads';
 $notificationsValue = ($GLOBALS['functions']->hasUserGotNotifications()) ? 'Y':'N';
 

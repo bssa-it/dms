@@ -47,9 +47,25 @@
     padding: 10px;
     height: auto;
     overflow: auto;
+    float: left;
 }
-#userType {
+#userPerms {
+    float: left;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+#userPerms input {
+    width: 15px;
+}
+#userType,#officeId {
     padding: 2px;
     border: 2px solid #254B7C;
     margin-left: 15px;
 }
+#officeDiv {margin-top:5px;
+    clear: both;
+    float: left;}
+.permissionBox {clear: both;padding:5px;}
+.headingRw {background-color: #254B7C;color: #FFF;overflow:hidden}
+.labl {float:left;width: 180px}
+.permCheckbox {float: left;width: 35px;text-align: center;margin-right: 5px;}

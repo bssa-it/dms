@@ -9,7 +9,7 @@ Class civicrm_dms_batch_entry {
 	var $receipt_no;
 	var $receipt_amount;
 	var $receipt_type;
-	
+	var $entry_no;
 
         function __construct($id=null) {
             if (!empty($id)) $this->Load($id);
@@ -43,7 +43,8 @@ Class civicrm_dms_batch_entry {
 			`received_by` = '$this->received_by',
 			`receipt_no` = '$this->receipt_no',
 			`receipt_amount` = '$this->receipt_amount',
-			`receipt_type` = '$this->receipt_type'
+			`receipt_type` = '$this->receipt_type',
+                        `entry_no` = '$this->entry_no'
                     WHERE
                       `id` = '$this->id';";
             } ELSE {
@@ -54,14 +55,16 @@ Class civicrm_dms_batch_entry {
 			`received_by`,
 			`receipt_no`,
 			`receipt_amount`,
-			`receipt_type`
+			`receipt_type`,
+                        `entry_no`
                     ) VALUES (
                         '$this->batch_id',
 			'$this->received_datetime',
 			'$this->received_by',
 			'$this->receipt_no',
 			'$this->receipt_amount',
-			'$this->receipt_type'
+			'$this->receipt_type',
+                        '$this->entry_no'
                     );";
             }
             $GLOBALS['functions']->showSql($sql);

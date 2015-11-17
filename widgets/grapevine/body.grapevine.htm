@@ -80,7 +80,7 @@
         });
         $("#message").keyup(function(){
            var msg = $(this).val().trim();
-           var rm = 140 - parseInt(msg.length);
+           var rm = 160 - parseInt(msg.length);
            if (rm<0) {
                $("#charCnt").addClass('neg');
            } else {
@@ -88,6 +88,7 @@
            }
            $("#charCnt").empty().append(rm);
         });
+        $("#smsMainWrapper").parent().css('background-color','#3F86E0');
     });
 </script>
 <div class="widgetHeader">
@@ -103,7 +104,7 @@
             <div><input type="text" id="cellphone_nos" name="cellphone_nos[]" placeholder="0831234567" /></div>
         </div>
         <div id="messageRow">
-            <div class="lbl"><div><label for="message">message</label></div><div><span id="charCnt">140</span> left</div></div>
+            <div class="lbl"><div><label for="message">message</label></div><div><span id="charCnt">160</span> left</div></div>
             <div><textarea name="message" id="message" placeholder="type message here" cols="40" rows="5"></textarea></div>
         </div>
         <div class="btn" id="btnSendSms">Send</div>

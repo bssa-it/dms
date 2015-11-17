@@ -112,6 +112,49 @@ function dmsextension_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
  */
 include("api/api.functions.php");
 
+function dmsextension_civicrm_navigationMenu(&$params) {
+ 
+  // Check that our item doesn't already exist
+  $menu_item_search = array('url' => 'civicrm/reporting-codes');
+  $menu_items = array();
+  CRM_Core_BAO_Navigation::retrieve($menu_item_search, $menu_items);
+ 
+  if ( ! empty($menu_items) ) { 
+    return;
+  }
+ 
+  $navId = CRM_Core_DAO::singleValueQuery("SELECT max(id) FROM civicrm_navigation");
+  if (is_integer($navId)) {
+    $navId++;
+  }
+  // Find the Report menu
+  $administerID = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_Navigation', 'Administer', 'id', 'name');
+    
+  
+  
+    $params[$administerID]['child'][$navId] = array (
+        'attributes' => array (
+          'label' => ts('DMS Settings',array('domain' => 'donation.biblesociety.co.za')),
+          'name' => 'DMS Settings',
+          'url' => null,
+          'permission' => 'access CiviCRM',
+          'operator' => null,
+          'separator' => 1,
+          'parentID' => $administerID,
+          'navID' => $navId,
+          'active' => 1
+    ),
+        'child' => dms::addChildrenItems($navId)
+  );
+
+}
+/*function dmsextension_civicrm_summary( $contactID, &$content, &$contentPlacement = CRM_Utils_Hook::SUMMARY_BELOW ) {
+    $options = dms::getFrequencyValues();
+    echo "<pre>";
+    print_r($options);
+    echo "</pre>";
+}*/
+
 /**
  * This hook extension adds the DMS fields to the donor summary screen
  * 

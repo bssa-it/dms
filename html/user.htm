@@ -18,7 +18,7 @@
         <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
     </div>
     <div id="menuRow">
-        <?php echo $menu; ?>
+        <?php echo $menu->html; ?>
     </div>
     <div id="mainDiv">
         <div id="posDiv"></div>
@@ -35,6 +35,7 @@
                             <tr><td><label for="first_name">User&#39;s First Name</label></td><td><input type="text" name="first_name" id="first_name" /></td></tr>
                             <tr><td><label for="last_name">User&#39;s Last Name</label></td><td><input type="text" name="last_name" id="last_name" /></td></tr>
                             <tr><td><label for="userType">User Type</label></td><td><select name="userType" id="userType"><?php echo $userTypeOpts; ?></select></td></tr>
+                            <tr><td><label for="officeId">Office</label></td><td><select name="officeId" id="officeId"><?php echo $officeOpts; ?></select></td></tr>
                         </table>
                         <div class="btn" id="btnNext1">Next</div>
                     </div>

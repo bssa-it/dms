@@ -32,12 +32,18 @@ $(document).ready(function() {
             $("#usr_id").val(uid);
             $("#userNameDiv").empty().append($(this).find('td:nth-child(3)').text());
             $("#userType").val($(this).find('td:nth-child(1)').text());
+            $("#officeId").val($(this).find('td:nth-child(6)').text());
             var u = [];
             for (var i in users) if (users[i].u==uid) u = users[i];
             if (u.q1.toString().length>1) $("#q1").val(u.q1).trigger('change');
             if (u.q2.toString().length>1) $("#q2").val(u.q2).trigger('change');
             if (u.q3.toString().length>1) $("#q3").val(u.q3).trigger('change');
             if (u.q4.toString().length>1) $("#q4").val(u.q4).trigger('change');
+            
+            var bxs = ["view","save"];
+            for (var key in u.permissions) {
+                if (u.permissions.hasOwnProperty(key)) for (var b in bxs) $("input[name='"+key+"_"+bxs[b]+"']").prop('checked',u.permissions[key][bxs[b]]);
+            }
         }
     });
 });

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Dmsextension</base>
+  <class>StatementHeader</class>
+  <name>civicrm_dms_statement_header</name>
+  <comment>civicrm_dms_statement_header schema</comment>
+  <log>true</log>
+
+  <primaryKey>
+    <name>id</name>
+  </primaryKey>
+  
+  <field>
+    <name>id</name>
+    <type>int</type>
+    <length>11</length>
+    <required>true</required>
+    <comment>id field</comment>
+  </field>
+  <field>
+    <name>imported_date</name>
+    <type>datetime</type>
+    
+            
+    <comment>Date and time the statement was imported</comment>
+    <title>imported date</title>
+  </field><field>
+    <name>imported_usr_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>The user that imported the statement</comment>
+    <title>imported usr id</title>
+  </field><field>
+    <name>import_filename</name>
+    <type>varchar</type>
+    <length>255</length>
+            
+    <comment>The filename including path of the statement</comment>
+    <title>import filename</title>
+  </field><field>
+    <name>bank_account_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>Bank Account to which the deposit was made</comment>
+    <title>bank account id</title>
+  </field><field>
+    <name>office_id</name>
+    <type>int</type>
+    <length>11</length>
+            
+    <comment>Office where batch was processed</comment>
+    <title>office id</title>
+  </field><field>
+    <name>statement_date</name>
+    <type>date</type>
+    
+            
+    <comment>Statement Date</comment>
+    <title>statement date</title>
+  </field>
+  
+</table>

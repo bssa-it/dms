@@ -14,7 +14,7 @@
 #   BOOTSTRAP
 include("inc/globals.php");
 $curScript = basename(__FILE__, '.php');
-$menu = $GLOBALS['functions']->createMenu();
+$menu = new menu;
 $pageHeading = $title = 'Choose Contributions';
 $notificationsValue = ($GLOBALS['functions']->hasUserGotNotifications()) ? 'Y':'N';
 

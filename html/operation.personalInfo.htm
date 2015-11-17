@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="/dms/css/global.css" />
+        <link rel="stylesheet" type="text/css" href="css/<?php echo $curScript; ?>.css" />
+
+        <script type="text/javascript" language="javascript" src="/dms/scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="/dms/scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="/dms/scripts/global.js"></script>
+        <script type="text/javascript" language="javascript" src="scripts/<?php echo $curScript; ?>.js"></script>
+    </head>
+    <body>
+    <div id="screenProtectorDiv" style="display:none"></div>
+    <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
+    <div id="headingRow">
+        <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
+    </div>
+    <div id="menuRow">
+        <?php echo $menu->html; ?>
+    </div>
+    <div id="mainDiv">
+        <div id="posDiv"></div>
+        <input type="hidden" id="hasUserGotNotifications" value="<?php echo $notificationsValue; ?>" />
+        <div id="notificationsDiv" style="display: none"></div>
+        <div id="contentDiv">
+            <h3>Please note the following:</h3>
+            <ol>
+                <li>The Mailing lists you download here are only for your primary department. (<span id="depLink">Click Here</span> to change your Primary department)</li>
+                <li>The letter template is ready for print on our letter head.</li>
+                <li>The letter is 2 pages long.  Please print it back to back to save paper.</li>
+            </ol>
+            <h3>Instructions:</h3>
+            <ol>
+                <li>Download the Mailing List by clicking the buttons Below.  There is an English and Afrikaans button to specify and English and Afrikaans list.</li>
+                <li>Once you have downloaded a list merge it with the provided word document. (<span id="vidLink">Click here</span> for a video tutorial)</li>
+                <li>Please date the letter correctly by replacing the word "date" at the top of the letter with the date you are sending the letter.<br /><img src="img/date.png" /></li>
+                <li>Please sign the letter correctly by replacing the word "name" and "designation" with your Organising Secretaries name and job title.<br /><img src="img/name.png" /></li>
+                <li>Mail it to the donors.</li>
+            </ol>
+            <div class="btn" id="btnAfrikaans">Afrikaans</div>
+            <div class="btn" id="btnEnglish">English</div>
+        </div>
+        <div id="videoDiv" style="display:none">
+            <embed src="img/mailmerge.swf" width="850" height="550" wmode="transparent" />
+            <div class="btn" id="backLink">Back</div>
+        </div>
+    </div>
+    <div id="footerRow"><?php echo $GLOBALS['functions']->createFooter(); ?></div>
+    </body>
+</html>

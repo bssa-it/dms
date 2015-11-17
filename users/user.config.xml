@@ -6,6 +6,7 @@
         <uType value="Organising Secretary" />
         <uType value="Head Office" />
         <uType value="Super User" />
+        <uType value="Back Office" />
     </userTypes>
     <dmsUserGroupId>3</dmsUserGroupId>
 </systemSettings>

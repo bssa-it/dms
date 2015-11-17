@@ -4,22 +4,26 @@ class CRM_Dmsextension_BAO_Region extends CRM_Dmsextension_DAO_Region {
 
   public static function create($params) {
     $instance = new CRM_Dmsextension_DAO_Region();
-    $instance->name = $params['reg_id'];
-    $instance->find(TRUE);
-
     $instance->copyValues($params);
     $instance->save();
+    $params['id'] = $instance->id;
   }
 
   public static function getValues($params) {
-    $values   = array();
-
     $instance = new CRM_Dmsextension_DAO_Region();
     $instance->copyvalues($params);
-
-    if ($instance->find()) {
+    $instance->find();
+    
+    $instances = array();
+    $count = 0;
+    while ($instance->fetch()) {
+      $values = array();
       CRM_Core_DAO::storeValues($instance, $values);
+      
+      $instances[$count] = $values;
+      $count++;
     }
-    return $values;
+
+    return $instances;
   }
 }

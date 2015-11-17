@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <communicationMethodsGroupId>1</communicationMethodsGroupId>
+    <preferences>
+        <frequencies>
+            <frequency value="0" desc="Every Contribution" default="Y"/>
+            <frequency value="1" desc="Monthly" default="N"/>
+            <frequency value="3" desc="Quarterly" default="N"/>
+            <frequency value="6" desc="Biannually" default="N"/>
+            <frequency value="12" desc="Annually" default="N"/>
+        </frequencies>	
+    </preferences>
+</root>

@@ -20,36 +20,37 @@
                     <div id="departmentForm">
                         <table id="tblDepartmentFrm" width="100%" cellpadding="5" cellspacing="0" align="center">
                         <form action="save.department.php" method="POST" id="frmSave" name="frmSave">
+                            <input type='hidden' id="did" name="id" />
                             <input name="dep_id" id="dep_id" type="hidden"/>
                             <tr>
                                 <td><label for="dep_name">Full Name</label></td>
                                 <td><input type="text" id="dep_name" name="dep_name" /></td>
                             </tr>
                             <tr>
-                                <td><label for="dep_defaultRegion">Default Region</label></td>
+                                <td><label for="dep_office_id">Office</label></td>
                                 <td>
-                                    <select name="dep_defaultRegion" id="dep_defaultRegion">
-                                        <option value="">-- Region --</option>
-                                        <?php echo $rg_options; ?>
+                                    <select name="dep_office_id" id="dep_office_id">
+                                        <option value="">-- Office --</option>
+                                        <?php echo $of_options; ?>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
-                                <td><label for="dep_isNational">Multi Region?</label></td>
+                                <td><label for="dep_is_national">Multi Region?</label></td>
                                 <td>
-                                    <select name="dep_isNational" id="dep_isNational">
+                                    <select name="dep_is_national" id="dep_is_national">
                                         <option value="N">N</option>
                                         <option value="Y">Y</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
-                                <td><label for="dep_budgetAllocation">Allocated Budget</label></td>
-                                <td><input type="text" id="dep_budgetAllocation" name="dep_budgetAllocation" /></td>
+                                <td><label for="dep_budget_allocation">Allocated Budget</label></td>
+                                <td><input type="text" id="dep_budget_allocation" name="dep_budget_allocation" /></td>
                             </tr>
                             <tr>
-                                <td><label for="dep_chartColor">Chart Color</label></td>
-                                <td><input type="color" id="dep_chartColor" name="dep_chartColor" /></td>
+                                <td><label for="dep_chart_color">Chart Color</label></td>
+                                <td><input type="color" id="dep_chart_color" name="dep_chart_color" /></td>
                             </tr>
                             <tr>
                                 <td><label for="dep_fromEmailName">Email Name</label></td>
@@ -81,7 +82,7 @@
             <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
         </div>
         <div id="menuRow">
-            <?php echo $menu; ?>
+            <?php echo $menu->html; ?>
         </div>
         <div id="mainDiv">
             <div id="posDiv"></div>

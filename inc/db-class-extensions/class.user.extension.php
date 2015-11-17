@@ -7,6 +7,9 @@ error_reporting(-1);
 include_once("/var/www/joomla/dms/inc/db-classes/class.user.php");
 class createUser extends user {
     var $nextStaffNo;
+    var $isSuperUser;
+    var $isHo;
+    
     function __construct() {
         $this->getNextStaffNo();
     }
@@ -39,7 +42,7 @@ class createUser extends user {
             return $result[0]['id'];
         }
     }
-    function createJoomlaUser($email,$name,$isAdmin=false,$isSuperUser=false){
+    function createJoomlaUser($email,$name){
         $emailParts = explode('@', $email);
         $username = $emailParts[0];
         $regDate = date("Y-m-d H:i:s");
@@ -54,7 +57,7 @@ class createUser extends user {
             $db->close();
             return false;
         } else {
-            $groups = $this->getJoomlaUserGroups($isAdmin,$isSuperUser);
+            $groups = $this->getJoomlaUserGroups();
             foreach ($groups as $g) {
                 $sql = "INSERT INTO r25_user_usergroup_map (`user_id`,`group_id`) VALUES ($userId,$g);";
                 $db->execute($sql);
@@ -64,11 +67,11 @@ class createUser extends user {
         }
     }
     
-    function addJoomlaUserGroups($userId,$isAdmin=false,$isSuperUser=false,$groups=null) {
+    function addJoomlaUserGroups($userId,$groups=null) {
         
         $dbConnection = $GLOBALS['functions']->xml2array($GLOBALS['joomlaDBConnectionDetails']);
         $db = new database($dbConnection);
-        if (empty($groups)) $groups = $this->getJoomlaUserGroups($isAdmin,$isSuperUser);
+        if (empty($groups)) $groups = $this->getJoomlaUserGroups();
         foreach ($groups as $g) {
             $sql = "INSERT INTO r25_user_usergroup_map (`user_id`,`group_id`) VALUES ($userId,$g);";
             $db->execute($sql);
@@ -77,13 +80,15 @@ class createUser extends user {
         return true;
     }
     
-    function getJoomlaUserGroups($isAdmin=false,$isSuperUser=false) {
-        $groups[] = (int)$GLOBALS['xmlConfig']->authorisation->registeredGroup;
-        $groups[] = (int)$GLOBALS['xmlConfig']->authorisation->select;
-        if ($isAdmin) $groups[] = (int)$GLOBALS['xmlConfig']->authorisation->admin;
-        if ($isSuperUser) {
-            $groups[] = (int)$GLOBALS['xmlConfig']->authorisation->admin;
-            $groups[] = (int)$GLOBALS['xmlConfig']->authorisation->superUser;
+    function getJoomlaUserGroups() {
+        $groups[] = (int)$GLOBALS['xmlConfig']->joomlaGroups->registeredGroup;
+        $groups[] = (int)$GLOBALS['xmlConfig']->joomlaGroups->dms;
+        
+        if ($this->isSuperUser) {
+            $groups[] = (int)$GLOBALS['xmlConfig']->joomlaGroups->ho;
+            $groups[] = (int)$GLOBALS['xmlConfig']->joomlaGroups->superUser;
+        } else {
+            if ($this->isHo) $groups[] = (int)$GLOBALS['xmlConfig']->joomlaGroups->ho;
         }
         return $groups;
     }

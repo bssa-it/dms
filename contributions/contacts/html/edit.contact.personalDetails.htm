@@ -1,0 +1,236 @@
+<script type="text/javascript" language="javascript">
+    $( "#contact_sub_type" )
+  .change(function () {
+    var str = "";
+    $( "#contact_sub_type option:selected" ).each(function() {
+        var newImg = '/dms/img/'+$( this ).text()+'.png';
+      $( "#ctypImg" ).attr("src", newImg.toLowerCase());
+      var st = $( this ).text();
+      for (var i=0;i<ct.length;i++) {
+        if (ct[i][0].name==st) {
+            var newType = ct[i][0].superType;
+            break;    
+        }
+      }
+      switch (newType) {
+        case 'Individual':
+            $( "#leftEdit").show(500);
+            $( "#rightEdit").show(500);
+            $( "#organizationNameDiv").hide(500);
+            break;
+        case 'Household':
+            $( "#leftEdit").hide(500);
+            $( "#rightEdit").hide(500);
+            $( "#spanContactType" ).text( st );
+            $("#organization_name").hide();
+            $("#household_name").show();
+            $( "#organizationNameDiv").show(500);
+            break;
+        case 'Organization':
+            $( "#leftEdit").hide(500);
+            $( "#rightEdit").hide(500);
+            $( "#spanContactType" ).text( st );
+            $("#organization_name").show();
+            $("#household_name").hide();
+            $( "#organizationNameDiv").show(500);
+            break;    
+      }
+      $("#contact_type").val(newType);
+    });
+  });
+  $( "#birth_date" ).change(function () {
+    var dy = '12';
+    var mn = 'Never';
+    var showAge = false;
+    var newAge = '??';
+    if ($(this).val().length>0) {
+        var dt = new Date($(this).val());
+        var today = ($("#deceased_date").val().length>0) ? new Date($("#deceased_date").val()):new Date();
+        dy = dt.getDate();
+        mn = getMonthFromDate(dt);
+        showAge = true;
+        newAge = getYearsBetweenDates(dt,today);
+    }
+    $( "#day" ).text(dy);
+    $( "#mnt" ).text(mn);
+    $( "#ageBadgeDiv" ).text(newAge);
+    $("#ageBreakDown").hide(500);
+    
+    if (showAge) { $( "#ageDisplayDiv" ).show(500); } else { $( "#ageDisplayDiv" ).hide(500); }
+    
+  });
+  $("#deceased_date").change(function () {
+    if ($(this).val().length>0&&$("#birth_date").val().length>0) {
+        var endDate = new Date($(this).val());
+        var startDate = new Date($("#birth_date").val());
+        newAge = getYearsBetweenDates(startDate,endDate);
+        $( "#ageBadgeDiv" ).text(newAge);
+    }
+    if ($(this).val().length==0&&$("#birth_date").val().length>0) {
+        var endDate = new Date();
+        var startDate = new Date($("#birth_date").val());
+        newAge = getYearsBetweenDates(startDate,endDate);
+        $( "#ageBadgeDiv" ).text(newAge);
+    }
+  });
+  $("#is_deceased").change(function () {
+    if ($(this).val()==='1') {
+        $("#isDeceasedDiv").hide();
+        $("#tombstoneDiv").show();
+    } else {
+        $("#isDeceasedDiv").show();
+        $("#tombstoneDiv").hide();
+    }
+  });
+  $("#deleteDonorDiv").click(function () {
+    var cnfm = confirm('Are you sure you want to delete this record?');
+    
+    if (cnfm) {
+        $("#deletedDonorDiv").show(500);
+        $("#deleteDonorDiv").hide(500);
+    } else {
+        $("#deletedDonorDiv").hide(500);
+        $("#deleteDonorDiv").show(500);
+    }
+    
+    strDeleted = (cnfm) ? '1':'0';
+    $("#contact_is_deleted").val(strDeleted);
+  });
+  $("#deletedDonorDiv").click(function () {
+    var cnfm = confirm('Are you sure you want to reinstate this record?');
+    
+    if (cnfm) {
+        $("#deletedDonorDiv").hide(500);
+        $("#deleteDonorDiv").show(500);
+    } else {
+        $("#deleteDonorDiv").hide(500);
+        $("#deletedDonorDiv").show(500);
+    }
+    
+    strReinstated = (cnfm) ? '0':'1';
+    $("#contact_is_deleted").val(strReinstated);
+  });
+  
+  $("#btnSave").click(function () {
+    var cfm = confirm("Are you sure you want to Save the changes you made.");
+    if (cfm) {
+        var $form = $( '#frmPersonalDetails' );
+        var dName = '';
+        var contactType = $("#contact_type").val();
+        switch (contactType) {
+            case 'Individual':
+                var dTitle = ($("#prefix_id option:selected").val().length>0) ? $("#prefix_id option:selected").text() + ' ':'';
+                dName = dTitle + $( "#first_name" ).val() + ' ' + $("#last_name").val();
+                break;
+            case 'Household':
+                dName = $("#household_name").val();
+                break;
+            case 'Organization':
+                dName = $("#organization_name").val();
+                break;
+        }
+        var src = '/dms/img/' + $("#contact_sub_type").val() + '.png';
+        $( "#frmDiv" ).empty().append('<img src="/dms/img/loading.gif" style="vertical-align: middle" /> saving...');
+        var strUrl = $form.attr( "action" );
+        $.post( 
+            strUrl,
+            $form.serialize(),
+           function (data) {
+                resultContent = $.parseJSON(data);
+                reloadSummary();
+                $("#imgPageHeading").attr("src" , src.toLocaleLowerCase());
+                $("#spanDonorName").empty().append(dName);
+                $("#personalDetails").click();
+           });
+    }
+   });
+   
+    function popInits() {
+        var fnameInput = $("#first_name").val().split(' ');
+        var mnameInput = $("#middle_name").val().split(' ');
+        var strInits = '';
+        for (var i=0;i<fnameInput.length;i++) {
+            strInits += fnameInput[i].substring(0,1).toUpperCase();
+        }
+        for (var i=0;i<mnameInput.length;i++) {
+            strInits += mnameInput[i].substring(0,1).toUpperCase();
+        }
+        $( "#custom_18" ).val(strInits);
+    }
+    $(document).ready(function(){
+        $( "#first_name" ).bind("change",popInits);
+        $( "#middle_name" ).bind("change",popInits);    
+    });
+    
+  <?php echo $javaContactTypeArray; ?>
+</script>
+<div id="frmContentDiv">
+    <form method="POST" action="save.contact.personalDetails.php" id="frmPersonalDetails" name="frmPersonalDetails">
+    <input type="hidden" name="id" id="id" value="<?php echo $dnr['id']; ?>" />
+    <input type="hidden" name="contact_type" id="contact_type" value="<?php echo $dnr['contact_type']; ?>" />
+    <div id="contactTypeDiv">
+        <div class="circle64"><img id="ctypImg" src="/dms/img/<?php echo $contactType; ?>.png" width="38" height="38" /></div>
+        <div id="contactTypeEditDiv">Contact Type<select name="contact_sub_type" id="contact_sub_type" style="width: 300px;"><?php echo $contactTypeOpts; ?></select></div>
+        <div id="deletedDonorDiv" style="<?php echo $showIsDeleted; ?>;cursor:pointer"><img src="/dms/img/undelete.png" width="24" height="24" align="middle" style="vertical-align: middle;" /> reinstate?</div>
+        <div id="deleteDonorDiv" style="<?php echo $showNotDeleted; ?>"><img src="/dms/img/delete.png" width="24" height="24" align="middle" style="vertical-align: middle;" /> delete?</div>
+        <input type="hidden" name="contact_is_deleted" id="contact_is_deleted" value="<?php echo $dnr['contact_is_deleted']; ?>" />
+    </div>
+    <div style="width: 880px;height: auto;overflow: hidden;">
+        <div id="leftEdit" style="<?php echo $showIndDetails; ?>">
+            <table width="100%" align="center" cellpadding="5" cellspacing="0">
+                <tr>
+                    <td><label for="prefix_id">Title</label></td>
+                    <td><select id="prefix_id" name="prefix_id"><option value="">--</option><?php echo $titleOpts; ?></select><?php if (!empty($contactTitle)&&$showTitleHelp) { ?><input type="text" name="custom_12" id="custom_12" style="width: 80px;margin-left:5px" value="<?php echo $contactTitle; ?>" disabled /><?php } ?></td>
+                </tr>
+                <tr>
+                    <td><label for="gender_id">Gender</label></td>
+                    <td><select id="gender_id" name="gender_id"><option value="">--</option><?php echo $genderOpts; ?></select></td>
+                </tr>
+                <tr>
+                    <td><label for="first_name">First Name</label></td>
+                    <td><input type="text" id="first_name" name="first_name" value="<?php echo $firstName; ?>" /></td>
+                </tr>
+                <tr>
+                    <td><label for="middle_name">Middle Names</label></td>
+                    <td><input type="text" id="middle_name" name="middle_name" value="<?php echo $middleName; ?>" /></td>
+                </tr>
+                <tr>
+                    <td><label for="last_name">Last Name</label></td>
+                    <td><input type="text" id="last_name" name="last_name" value="<?php echo $lastName; ?>" /></td>
+                </tr>
+                <tr>
+                    <td><label for="nick_name">Nick Name</label></td>
+                    <td><input type="text" id="nick_name" name="nick_name" value="<?php echo $nickName; ?>" /></td>
+                </tr>
+            </table>
+        </div>
+        <div id="rightEdit" style="<?php echo $showIndDetails; ?>">
+            <div style="height:90px;width: 400px;"><div id="dobDiv">
+                <div id="mnt"><?php echo (!empty($dnr['birth_date'])) ? date('F',strtotime($dnr['birth_date'])):'Never'; ?></div>
+                <div id="day"><?php echo (!empty($dnr['birth_date'])) ? date('d',strtotime($dnr['birth_date'])):'12'; ?></div>
+            </div>
+            <div id="ageDiv">
+                <img src="/dms/img/born.png" width="24" height="24" style="vertical-align: middle;" /> <input type="date" id="birth_date" name="birth_date" value="<?php if (!empty($dnr['birth_date'])) echo date("Y-m-d",strtotime($dnr['birth_date'])); ?>" style="margin-top:0px;" />
+                <div id="isDeceasedDiv" align="right" <?php echo $showDeceasedIndicate; ?>>Is Deceased <select name="is_deceased" id="is_deceased"><option value="1">Yes</option><option value="0" selected>No</option></select></div>
+                <div <?php echo $showDeceasedDate; ?> id="tombstoneDiv"><img src="/dms/img/tombstone.png" width="24" height="24" style="vertical-align: middle;" /> <input type="date" id="deceased_date" name="deceased_date" value="<?php if (!empty($dnr['deceased_date'])) echo date("Y-m-d",strtotime($dnr['deceased_date'])); ?>" /></div>
+            </div>
+            </div>
+            <div id="ageDisplayDiv" <?php echo $showAgeDisplay; ?>>
+                <div style="float: left;font-size: 28pt;font-weight: bold;padding: 15px;margin-left:30px"><?php if ($dnr['is_deceased']==='1') { ?> died at<?php } else { ?>age<?php } ?></div>
+                <div class="circle80" id="ageBadgeDiv"><?php echo $yearBadge; ?></div>
+                <div style="float: left;padding: 10px;margin-left: 5px;" id="ageBreakDown"><?php if (!empty($dnr['birth_date'])) { echo $yearBadge; ?> years<br /><?php echo $age->m; ?> months<br /><?php echo $age->d; ?> days<?php } else { echo '&nbsp;'; } ?></div>
+            </div>
+            <div id="idDiv">ID &#35; <input type="text" name="id_number" id="id_number" value="<?php echo $donorOtherDetail['id_number']; ?>" /></div>
+        </div>
+        <div id="organizationNameDiv" style="<?php echo $showOrgName; ?>"><span id="spanContactType"><?php echo $contactSuperType; ?></span> name
+        <br />
+        <input type="text" name="organization_name" id="organization_name" value="<?php echo $dnr['organization_name']; ?>" style="width: 700px;<?php echo ($dnr['contact_type']=='Organization') ? '':'display:none'; ?>" />
+        <input type="text" name="household_name" id="household_name" value="<?php echo $dnr['household_name']; ?>" style="width: 700px;<?php echo ($dnr['contact_type']=='Household') ? '':'display:none'; ?>" /></div>
+        <div style="clear:left" class="btn" id="btnSave">Save</div>
+        
+    </div>
+    </form>
+</div>
+<div id="divSaveResults" style="display:none">
+    <div id="divResult"></div>
+</div>

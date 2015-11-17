@@ -16,7 +16,7 @@ error_reporting(-1);
 
 #   BOOTSTRAP
 include("../inc/globals.php");
-$menu = $GLOBALS['functions']->createMenu();
+$menu = new menu;
 $pageHeading = $title = 'Create New User';
 $notificationsValue = ($GLOBALS['functions']->hasUserGotNotifications()) ? 'Y':'N';
 $settings = simplexml_load_file('user.config.xml');
@@ -42,6 +42,12 @@ $allWidgets = $GLOBALS['functions']->getAllWidgetTemplates();
 foreach ($allWidgets as $k=>$v) {
     $widOpts .= '<option value="'.$v['wid_directory'].'">'.$v['wid_directory'].'</option>';
     $widJavaObj .= "\n". 'widgetList.push("'.$v['wid_directory'].'");';
+}
+
+$officeOpts = '';
+$allOffices = civicrm_dms_office_extension::getAll();
+foreach ($allOffices as $o) {
+    $officeOpts .= '<option value="'.$o['id'].'">'.$o['name'].'</option>';
 }
 
 require('../html/user.htm'); 

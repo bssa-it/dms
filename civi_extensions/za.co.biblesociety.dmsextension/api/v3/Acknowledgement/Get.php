@@ -23,5 +23,6 @@ function _civicrm_api3_acknowledgement_Get_spec(&$params) {
  * {@getfields category_Get}
  */
 function civicrm_api3_acknowledgement_Get($params) {
-    return _civicrm_api3_basic_get('CRM_Dmsextension_BAO_Acknowledgement', $params);
+    $result = CRM_Dmsextension_BAO_Acknowledgement::getValues($params);
+    return civicrm_api3_create_success($result, $params, 'Acknowledgement', 'get');
 }

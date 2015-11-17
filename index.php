@@ -16,7 +16,7 @@ error_reporting(-1);
 
 #   BOOTSTRAP
 include("inc/globals.php");
-$menu = $GLOBALS['functions']->createMenu();
+$menu = new menu;
 $pageHeading = $title = 'Dashboard';
 $notificationsValue = ($GLOBALS['functions']->hasUserGotNotifications()) ? 'Y':'N';
 
@@ -25,9 +25,9 @@ include("html/index-part1.htm");
 
 #   FILL WIDGETS
 foreach (range(1,4) as $qtrNo) {
-    echo '<div class="widgetQtr" id="q'.$qtrNo.'">';
     $widgetId = "usr_q".$qtrNo."_wid_id";
     $wid = $_SESSION['dms_user']['dashboard']->$widgetId;
+    echo '<div class="widgetQtr" id="q'.$qtrNo.'" wid="'.$wid.'">';
     if (empty($wid)) {
         echo '&nbsp;';
     } else {

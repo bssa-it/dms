@@ -16,7 +16,7 @@ $xmlConfig = simplexml_load_file("inc/config.xml");
 $curScript = basename(__FILE__, '.php');
 
 #   MENU AND HEADING
-$menu = $GLOBALS['functions']->createMenu();
+$menu = new menu;
 $pageHeading = $title = 'Evaluate Letters';
 $notificationsValue = ($GLOBALS['functions']->hasUserGotNotifications()) ? 'Y':'N';
 

@@ -45,8 +45,12 @@ if (!empty($_SESSION['dms_user']['impersonateUserId'])) {
     $user = JFactory::getUser();
 }
 
-$authorisationConfig    = $GLOBALS['xmlConfig']->authorisation->children();
-foreach ($authorisationConfig as $auth) $GLOBALS['authorisationGroups'][$auth->getName()] = (string)$auth;
+if (empty($user->id)) {
+    # SO SORRY!!!! PLEASE LOG IN!!!
+    session_destroy();
+    header("location: /dms/login.php");
+    exit();
+}
 
 #   START BUILDING THE SESSION ARRAY
 $_SESSION['dms_user']['userid'] = $user->id;
@@ -55,13 +59,10 @@ $_SESSION['dms_user']['fullname'] = $user->name;
 if (empty($_SESSION['dms_user']['impersonateUserId'])) $_SESSION['dms_user']['impersonateUserId'] = null;
 
 #   LOAD USER'S PERMISSIONS
-$userAuth = new authorisation();
-$userAuth->userGroups = $user->groups;
-$userAuth->getPermissions();
-$_SESSION['dms_user']['authorisation'] = $userAuth;
+$_SESSION['dms_user']['authorisation'] = new authorisation($user);
 
 #   CHECK IF USER HAS SELECT PERMISSION, OTHERWISE KICK HIM OUT    
-if (!$_SESSION['dms_user']['authorisation']->canSelect) {
+if (!$_SESSION['dms_user']['authorisation']->accessOk) {
     
     # SO SORRY!!!! PLEASE LOG IN!!!
     session_destroy();
@@ -71,7 +72,6 @@ if (!$_SESSION['dms_user']['authorisation']->canSelect) {
 }
 
 #   NOW THE USER HAS OFFICIALLY LOGGED ONTO THE DMS, THE LOGIN TIME CAN BE ESTABLISHED
-
 if (empty($_SESSION['dms_user']['ipaddress'])) $_SESSION['dms_user']['ipaddress'] =  $GLOBALS['functions']->getRealIpAddr();
 if (empty($_SESSION['dms_user']['logintime'])) $_SESSION['dms_user']['logintime'] =  date("Y-m-d H:i:s");
 if (!empty($_SESSION['dms_user']['lasttouch'])) {
@@ -103,6 +103,7 @@ $_SESSION['dms_user']['civ_contact_id'] = $u->usr_contact_id;
 
 #   LOAD USER CONFIG
 $userConfig = simplexml_load_file($GLOBALS['dms_base_path'] . "users/" . $user->id .".user.xml");
+$_SESSION['dms_user']['office_id'] = (string)$userConfig->officeId;
 $_SESSION['dms_user']['config']['userType'] = (string)$userConfig->userType;
 $_SESSION['dms_user']['config']['donorSearch']['defaultDatabase'] = (string)$userConfig->donorSearch->defaultDatabase;
 $_SESSION['dms_user']['config']['donorSearch']['defaultBamOnly'] = (string)$userConfig->donorSearch->defaultBamOnly;

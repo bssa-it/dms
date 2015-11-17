@@ -1,0 +1,128 @@
+body{
+    background-color: #F8f8f8;    
+}
+#btnSearch {
+    margin: 0px;
+    float: right;
+}
+#defaultsDiv {
+    float: left;
+    width: 160px;
+    margin-right: 5px;
+}
+#frmSearch input,#frmSearch select {
+    width: 200px;
+    padding: 3px;
+    font-size: 9pt;
+    border: 3px solid #254B7C;
+}
+#contentDiv {
+    height: auto;
+    overflow: hidden;
+    width: auto;
+    margin-left: 12px;
+    background-color: rgba(37, 75, 124, 0.1);
+    padding: 20px;
+    margin-top: 10px;
+    padding-top: 10px;
+    float: left;
+}
+#searchResultsDiv {
+    float: left;
+    padding: 10px;
+    width: 800px;
+    height: 500px;
+    overflow: auto;
+    margin-top: 10px;
+    background-color: rgba(37, 75, 124, 0.1);
+    border:2px solid #254B7C;
+    margin-left: 5px;
+}
+#searchDiv {
+    background-color: rgba(66,174,194,0.3);
+    clear:left;
+    margin-top: 15px;
+    padding-bottom: 10px !important; 
+}
+#searchDiv input {
+    width: 20px;
+    float: none;
+}
+.searchGroupingDiv {
+    padding: 10px;
+    padding-bottom: 0px;
+    width: 255px;
+    height: auto !important;
+    overflow: hidden;
+}
+.searchGroupingHeadingDiv {
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #254B7C;
+    margin-bottom: 5px;
+    font-size: 13pt;
+    cursor: pointer;
+}
+.tblFields {
+    display:none;
+    font-size: 9pt;
+}
+.tblFields td {
+    padding-bottom: 5px;
+}
+#frmSearch input[type="checkbox"] {
+    width: 15px;
+    float: none;
+    margin: 0;
+}
+.dateDiv {
+    height: auto;
+    overflow: hidden;
+    text-align: right;
+}
+.dateDiv div {
+    margin-top: 5px;
+      margin-right: 5px;
+      float: left;
+      text-align: right;
+      width: 80px;
+}
+#displayControlDiv {
+    float: right;
+    margin-top: 26px;
+    margin-bottom: 10px;
+}
+#searchHeadingRow {
+    font-size: 18pt;
+    font-weight: bold;
+    float: left;
+    height: 50px;
+    width: 400px;
+    margin-bottom: 10px;
+}
+#tblSearchResults {
+    font-size: 9pt;
+    background-color: #60BAE3;
+    color: #FFF;
+}
+#tblSearchResults thead {
+    background-color: #254B7C;
+}
+#tblSearchResults th {
+    text-align: left;
+}
+#searchResultContainter {
+    clear: both;
+}
+#tblSearchResults > tbody > tr:hover {
+    background-color: #254B7C;
+    cursor: pointer;
+}
+
+.expandIndicator {
+    cursor: pointer;
+    width: 16px;
+    float: right;
+    height: 16px;
+    margin-top: 4px;
+}

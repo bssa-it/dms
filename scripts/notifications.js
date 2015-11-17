@@ -15,3 +15,6 @@ $('.divNotification').click(function(){
         $("#frmBirthday").submit();
     }
 });
+$(".nextDateDiv").click(function(){
+    window.location='/dms/contacts/load.contact.php?d='+$(this).attr('d')+'&s=civicrm&a=' + $(this).attr('a');
+});

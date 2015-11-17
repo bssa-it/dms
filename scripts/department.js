@@ -1,12 +1,13 @@
 $(document).ready(function() {
     $("#tblData tr").click(function(){
+        $("#did").val($(this).attr('did'));
         $('#dep_id').val($(this).find("td:nth-child(1)").text());
         $("#departmentId").empty().append($(this).find("td:nth-child(1)").text());
         $('#dep_name').val($(this).find("td:nth-child(2)").text());
-        $('#dep_defaultRegion').val($(this).find("td:nth-child(3)").text());
-        $('#dep_isNational').val($(this).find("td:nth-child(4)").text());
-        $('#dep_budgetAllocation').val($(this).find("td:nth-child(5)").text());
-        $('#dep_chartColor').val($(this).find("td:nth-child(6)").text());
+        $('#dep_office_id').val($(this).find("td:nth-child(3)").text());
+        $('#dep_is_national').val($(this).find("td:nth-child(4)").text());
+        $('#dep_budget_allocation').val($(this).find("td:nth-child(5)").text());
+        $('#dep_chart_color').val($(this).find("td:nth-child(6)").text());
         $("#departmentId").css("background-color",$(this).find("td:nth-child(6)").text());
         $('#dep_fromEmailName').val($(this).find("td:nth-child(7)").text());
         $('#dep_fromEmailAddress').val($(this).find("td:nth-child(8)").text());
@@ -19,9 +20,9 @@ $(document).ready(function() {
     $("#btnEdit").click(function(){
         var a = document.getElementById('dep_id');
         var b = document.getElementById('dep_name');
-        var c = document.getElementById('dep_defaultRegion');
-        var d = document.getElementById('dep_isNational');
-        var e = document.getElementById('dep_budgetAllocation');
+        var c = document.getElementById('dep_office_id');
+        var d = document.getElementById('dep_is_national');
+        var e = document.getElementById('dep_budget_allocation');
 
         if (a.value.length==0) {
             alert('Please select a department');

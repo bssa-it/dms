@@ -1,0 +1,246 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 17 Jun 2015, 11:09:31 AM
+    Author     : Chezre
+*/
+
+#contentDiv {
+    width: 800px;
+    margin-left: 200px;
+    padding: 30px;
+    background-color: #EFEFEF;
+    height: auto;
+    max-height: 450px;
+    overflow: auto;
+    margin-bottom: 10px;
+    float: left;
+}
+
+.hdg {
+    background-color: #254B7C;
+    color: #FFF;
+    padding: 5px;
+}
+.frmWrapperDiv {
+    width: auto;
+    height: auto;
+    max-height: 450px;
+    overflow: auto;
+    padding-bottom: 5px;
+}
+.hdg {
+    font-size: 13pt;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+.imgDiv {
+    float: left;
+    margin-right: 10px;
+}
+.frmDiv {
+    
+}
+.inputWrapperDiv {
+    padding: 5px;
+    padding-top: 0px;
+    width: 620px;
+    height: auto;
+    overflow: hidden;
+}
+.inputDiv {
+    float: left;
+    width: 350px;
+    
+}
+.labelDiv {
+    float: left;
+    width: 250px;
+}
+.inputDiv select,.inputDiv input,#cn {
+    border: 3px solid #254B7C;
+    padding: 2px;
+}
+#btnSaveContact {
+    margin-top: 10px;
+    clear: left;
+}
+
+
+#departmentDiv {
+    overflow:hidden;
+    width: 540px;
+    float: left;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+#depSelectDiv {
+    min-height: 100px;
+    height: auto !important;
+    overflow: hidden;
+    width: 475px;
+    float: left;
+}
+
+#newDep,#currDep {
+    margin-right: 10px;
+    padding-top: 5px;
+    font-size: 35px;
+}
+#orgIdPrefix {
+    font-size: 16pt;
+    font-weight: bold;
+    padding:  3px;
+}
+
+#cn {
+    width:75px;
+}
+#cnInputDiv {
+    float: left;
+    clear: left;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    
+}
+#lblCn {
+    float:left;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 2px solid rgba(37,75,124,.2);
+    background-color: rgba(37,75,124,.2);
+}
+
+
+.aInsert {
+    font-weight: bold;
+    color: #254B7C;
+    cursor:pointer;
+}
+.insertLink {
+    overflow: hidden;
+    width: 190px;
+    padding: 5px;
+}
+.insertLink:hover {
+    background-color: rgba(37,75,124,0.3);
+}
+#regionList {
+    float:right;
+    width: 200px;
+    height: auto;
+    max-height: 145px;
+    padding: 5px;
+    background-color: #F0F0F0;
+    font-size: 10pt;
+    border: 3px solid #254B7C;
+    overflow: auto;
+}
+
+#regionDiv {float: right;}
+
+#duplicatesDiv{
+    background-color: #FFF;
+    margin: auto;
+    margin-top: 125px;
+    width: 500px;
+    height: auto;
+    overflow: hidden;
+    padding: 10px;
+}
+#duplicatesDetail {
+    height: 200px;
+    overflow: auto;
+}
+#duplicatesHdr {
+    background-color: #254B7C;
+    color: #FFF;
+    padding: 5px;
+}
+.spanEdit {
+    cursor: pointer;
+    float: right;
+    font-style: italic;
+}
+.duplicateRow:hover {
+    background-color: rgba(37,75,124,0.25);
+}
+.duplicateRow {
+    padding: 5px;
+}
+#btnContinueAnyway {
+    clear:left;
+}
+
+#categoryDiv {
+    width: 540px;
+}
+#extraInfoDiv {
+    float: right;
+    width: 100px;
+    height: auto;
+    overflow: hidden;
+}
+.addDetail {
+    background-color: #254B7C;
+    color: #FFF;
+    cursor:pointer;
+    padding:5px;
+    margin-bottom: 5px;
+    text-align: center;
+    width: 60px;
+}
+
+#frmElementsTemplateDiv {
+    display: none;
+}
+.addressDiv input {
+    margin-bottom: 3px;
+}
+
+
+#suburbDiv {
+    float: left;
+    margin-left: 5px;
+    overflow: hidden;
+    min-width: 195px;
+    width: auto !important;
+    height: auto;
+    border: 3px solid #254B7C;
+    background-color: #F0F0F0;
+    padding-bottom: 5px;
+}
+#suburbsDiv {
+    min-width: 190px;
+    width: auto !important;
+    height: auto;
+    overflow: hidden;
+    font-size: 9pt;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.sub,.pcd,.pctype {
+    float: left;
+}
+.subHelp {
+    cursor: pointer;
+    padding: 2px;
+    overflow: hidden;
+    min-width: 180px;
+    width: auto !important;
+    height: 15px;
+}
+.subHelp:hover {
+    background-color: #254B7C;
+    color: #FFF;
+}

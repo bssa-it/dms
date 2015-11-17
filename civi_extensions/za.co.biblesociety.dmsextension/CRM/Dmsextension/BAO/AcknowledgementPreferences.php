@@ -20,6 +20,8 @@ class CRM_Dmsextension_BAO_AcknowledgementPreferences extends CRM_Dmsextension_D
       $values = array();
       CRM_Core_DAO::storeValues($instance, $values);
       
+      $values['frequency_description'] = dms::getFrequencyDescription($values['frequency']);
+      
       $instances[$count] = $values;
       $count++;
     }

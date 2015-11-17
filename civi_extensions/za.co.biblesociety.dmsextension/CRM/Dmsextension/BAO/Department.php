@@ -4,24 +4,23 @@ class CRM_Dmsextension_BAO_Department extends CRM_Dmsextension_DAO_Department {
 
   public static function create($params) {
     $instance = new CRM_Dmsextension_DAO_Department();
-    $instance->name = $params['dep_id'];
-    $instance->find(TRUE);
-
     $instance->copyValues($params);
     $instance->save();
+    $params['id'] = $instance->id;
   }
 
   public static function getValues(&$params, &$values) {
-    $instances           = array();
-    $instance            = new CRM_Dmsextension_DAO_Department();
+    $instance = new CRM_Dmsextension_DAO_Department();
+    $instance->copyvalues($params);
     $instance->find();
     
-    $count = 1;
+    $instances = array();
+    $count = 0;
     while ($instance->fetch()) {
-      $values['department'][$count] = array();
-      CRM_Core_DAO::storeValues($instance, $values['department'][$count]);
-
-      $instances[$count] = $values['department'][$count];
+      $values = array();
+      CRM_Core_DAO::storeValues($instance, $values);
+      
+      $instances[$count] = $values;
       $count++;
     }
 

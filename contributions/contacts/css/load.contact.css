@@ -1,0 +1,469 @@
+img {
+    cursor: pointer;
+}
+#mainDiv {
+    padding-top: 0px;
+}
+#bodyDiv {
+    min-width: 1130px;
+    width: auto !important;
+    min-height: 400px;
+    height: auto !important;
+    overflow: hidden;
+    padding-left: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    float: left;
+}
+#contributionSummaryDiv {
+    min-width: 400px;
+    width: auto !important;
+    height: 65px;
+    margin-right: 20px;
+    margin-top: -5px;
+    background-color: #A7B526;
+    color: #FFF;
+    font-size: 12pt;
+    padding: 5px;
+    float: right;
+}
+#contributionSummaryHeadingDiv {
+    width: 360px;
+    font-weight: bold;
+    float: left;
+}
+#contributionSummaryImageDiv {
+    width: 40px;
+    height: 60px;
+    padding-top: 5px;
+    float: left;
+    padding-left: 5px;
+}
+#totalcontributionDiv {
+    width: 160px;
+    float: left;
+    font-weight: bold;
+    height: 60px;
+    padding-top: 5px;
+}
+#lastContributionDiv,#firstContributionDiv {
+    width: 85px;
+    float: left;
+    font-size: 10pt;
+    padding-left: 5px;
+    padding-right: 5px;
+    height: 60px;
+    text-align: center;
+}
+#lastContributionDiv {
+    border-left: 1px solid #FFF;
+    border-right:  1px solid #FFF;
+    padding-top: 5px;
+}
+#firstContributionDiv {
+    padding-top: 3px;   
+}
+#leftNavigationDiv {
+    width: 140px;
+    min-height: 90px;
+    font-weight: bold;
+    font-size: 12pt;
+    padding-top: 3px;
+    float: left;
+}
+#navList { 
+    list-style: none;
+    padding-left: 0px;
+}
+#navList li { 
+    cursor: pointer;
+    padding: 5px;
+}
+#navList li:hover {
+    background-color: #254B7C;
+    color: #FFF;
+}
+#divDonorName {
+    float: left;
+    min-width: 400px;
+}
+.contributionsTable th {
+    text-align: left;
+}
+.selectedNav {
+    background-color: #254B7C;
+    color: #FFF;
+}
+
+.detailContainerDiv,.deletedDetailContainerDiv {
+    width: 270px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top:  10px;
+    float: left;
+    color: #FFF;
+    padding:10px;
+    background-color: #A7B526;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+}
+.deletedDetailContainerDiv {
+    background-color: #BE2625;   
+}
+.detailContainerHeading,.deletedDetailContainerHeading {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    font-weight: bold;
+    border-bottom: 2px solid #D9D919
+}
+.deletedDetailContainerHeading {
+    border-bottom:  2px solid #EDA2A2;
+}
+.detailContainerTable,.deletedDetailContainerTable {
+    font-size: 9pt;
+    color: #FFF;
+    margin-bottom: 15px;
+}
+.detailContainerTable td {
+    /*border-bottom: 2px solid #FF9F00;*/
+    border-bottom: 2px solid #D9D919;
+    vertical-align: top;
+}
+.deletedDetailContainerTable td {
+    vertical-align: top;
+    border-bottom:  2px solid #EDA2A2;
+}
+.contributionsTable,.notesTable {
+    font-size: 9pt;
+    color: #FFF;
+    width: 100%;
+}
+.summaryContainer {
+    min-height: 150px;
+    width: auto !important;
+}
+.notesTable tr:nth-child(even), .contributionsTable tr:nth-child(even) { 
+    background-color: #7B7922;/*#B8B85A;*/
+    color:#fff; 
+}
+.notesTable tr:nth-child(odd), .contributionsTable tr:nth-child(odd) { 
+    background-color: #98A148;
+    color:#fff; 
+}
+.contributionsHeaderLeft {
+    float: left;
+    font-size: 18pt;
+}
+.subMenuNav {
+    position: absolute;
+    top: 0;
+    left: 48%;
+    background-color: #254B7C;
+    border: 5px solid #254B7C;
+    border-radius:5px;
+    -moz-border-radius: 5px;
+    border-top-left-radius: 0px;
+    -moz-border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    -moz-border-top-right-radius: 0px;
+    width: 100px;
+    text-align: center;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    
+}
+.contributionsHeaderRight {
+    float: right;
+    text-align: right;    
+}
+.contributionsHeaderRight,.contributionsHeaderLeft {
+    margin-bottom:15px;
+    width: 50%;
+    font-weight: bold;
+} 
+.tooltip {
+	display:none;
+	position:absolute;
+	border:1px solid #333;
+	background-color:#161616;
+	border-radius:5px;
+	padding:10px;
+	color:#fff;
+	font-size: 9pt;
+}
+.waitingDiv {
+    margin: 15px;
+}
+.edit {
+    float: right;
+    height: 16px;
+    width: 16px;
+    margin-right:5px;
+}
+
+
+#leftSummary,#middleSummary,#rightSummary {
+    width: 370px;
+    height: auto !important;
+    float: left;
+} 
+
+.groupingSection {
+    clear: both;
+}
+
+
+/*  edit.personalDetails.html */
+#frmDiv {
+    width: 885px;
+    height: 525px;
+    overflow: scroll;
+    float: left;
+    background-color: #FFF;
+    padding: 10px;
+    border: 5px solid #254B7C;
+    border-bottom: 0px;
+}
+#contact.PersonalDetails {
+    width: 885px;
+    height: 550px;
+}
+#editDonorDiv {
+    padding: 20px;
+    background-color: #F0F0F0;
+    border: 10px solid #254B7C;
+    height: 630px;
+    width: 1000px;
+    margin: 0 auto;
+    margin-top: 50px;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+}
+#editDonorCloseBtn {
+    float: right;
+    margin-right: 0px;
+}
+#donorEditMenu {
+    padding-left: 0px;
+    margin-top: 0px;
+    font-weight: bold;
+}
+#donorEditMenu li {
+    display: inline;
+    cursor: pointer;
+    padding: 10px;
+}
+#donorEditMenu li:hover {
+    background-color: #254B7C;
+    color: #FFF;
+}
+.frmHeadingDiv {
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #254B7C;
+    margin-bottom: 5px;
+    font-size: 15pt;
+    width: 98%;
+}
+#contactTypeDiv {
+    font-size: 20pt;
+    font-weight: bold;
+    height: 65px;
+}
+#deleteDonorDiv,#deletedDonorDiv {
+    float: right;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 16px;
+}
+#deleteDonorDiv {
+    cursor: pointer;
+}
+#deleteDonorDiv:hover {
+    background-color: #F99;
+    color: #FFF;
+}
+#deletedDonorDiv {
+    background-color: #F99;
+    color: #FFF;
+    font-weight: bold;
+}
+#contactTypeEditDiv {
+    height: 64px;
+    width: 600px;
+    margin-left: 20px;
+    float: left;
+    vertical-align: middle;
+}
+#contact_sub_type {
+    padding: 3px;
+    border: 3px solid #254B7C;
+    margin-left: 20px;
+    font-size: 18pt;
+    font-weight: bold;
+}
+#leftEdit,#rightEdit {
+    padding-top: 10px;
+    height: 240px;
+    float: left;
+}
+#leftEdit {
+    clear: left;
+    width: 480px;
+}
+#rightEdit {
+    width: 400px;
+}
+#frmPersonalDetails select,#frmPersonalDetails input[type="text"],#frmPersonalDetails input[type="date"] {
+    border: 2px solid #254B7C;
+    padding: 2px;
+}
+#frmPersonalDetails select {
+    width: 100px;
+}
+#frmPersonalDetails input[type="text"] {
+    width: 240px;   
+}
+#frmPersonalDetails input[type="date"] {
+    width:  180px;
+}
+#frmPersonalDetails td {
+    text-align: right;
+    font-weight: bold;
+}
+#ageDiv {
+    float: left;
+    height: 90px;
+    width: 250px;
+    margin-left: 10px;
+}
+#dobDiv {
+    width: 115px;
+    height: 70px;
+    float: left;
+    margin-left: 10px;
+}
+#mnt {
+    text-align: center;
+    background-color: #F00;
+    border: 2px solid #F00;
+    height:  19px;
+    width: 100px;
+    clear: both;
+    color: #FFF;
+}
+#day {
+    text-align: center;
+    height:  46px;
+    padding-top: 5px;
+    width: 100px;
+    clear: both;
+    font-size: 22pt;
+    font-weight: bold;
+    border: 2px solid #254B7C;
+    border-top: 0px;
+}
+#ageDisplayDiv {
+    padding-left: 10px;
+    padding-top: 10px;
+    height: 80px;
+    width: 380px;
+}
+#userDetailDiv {
+    height: 20px;
+    padding: 5px;
+    padding-top: 10px;
+    width: 895px;
+    font-style: italic;
+    font-size: 11pt;
+    float: left;
+    border: 5px solid #254B7C;
+    border-top: 0px;
+}
+#isDeceasedDiv {
+    clear: both;
+    width: 215px;
+    height: 33px;
+    text-align: right;
+    padding-right: 2px;
+}
+#idDiv {
+    width: 380px;
+    height: 30px;
+    padding: 10px;
+    font-weight:  bold;
+}
+#organizationNameDiv {
+    width: 880px;
+    height: auto;
+    padding-top: 15px;
+    font-size: 20pt;
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+#organization_name,#household_name {
+    width: 700px;
+    font-size:  18pt;
+}
+.relationshipLink:hover {
+    text-shadow: 0 0 0.2em #FFF;
+}
+
+#dnrImg {
+    float: left;
+    margin-right: 5px;
+    width: 64px;
+    height: 64px;
+}
+.delImg {
+    float: right;
+}
+.stop {
+    background-color: #CD3333;
+    font-weight: bold;
+}
+
+#btnShowResults,#btnShowDetail {
+    float: right;
+    margin-right: 0px;
+    margin-top: 5px;
+}
+#divResult {
+    clear:both;
+}
+#messageDiv {
+    background-color: #CD3333;
+    width: 885px;
+    padding: 10px;
+    color: #FFF;
+    font-style: italic;
+    border: 5px solid #CD3333;
+    margin-bottom: 5px;
+}
+
+#postHeadingDiv,#resultHeadingDiv,.resHeading {
+    padding: 5px;
+    color: #FFF;
+    background-color: #254B7C;
+    clear: both;
+}
+#postDiv,#resultDiv {
+    padding: 5px;
+}
+.key,.val {
+    padding:3px;
+    float:left;
+}
+.key {
+    clear: left;
+    width: 220px;
+}
+.val {
+    margin-left: 20px;
+}
+#clsMessageDiv {
+    float: right;
+    cursor: pointer;
+    font-weight: bold;
+    
+}

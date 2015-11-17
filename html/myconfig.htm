@@ -11,14 +11,14 @@
         <script type="text/javascript" language="javascript" src="scripts/global.js"></script>
         <script type="text/javascript" language="javascript" src="scripts/<?php echo $curScript; ?>.js"></script>
     </head>
-	<body onload="initializeMe();">
+	<body>
         <div id="screenProtectorDiv" style="display:none"></div>
         <?php if ($_SESSION['dms_user']['impersonateUserId']) { include('html/tbluserdetail.htm'); } ?>
         <div id="headingRow">
             <div id="pageHeadingDiv"><?php echo $pageHeading; ?></div>
         </div>
         <div id="menuRow">
-            <?php echo $menu; ?>
+            <?php echo $menu->html; ?>
         </div>
          <div id="mainDiv">
             <div id="posDiv"></div>
@@ -29,7 +29,7 @@
                     <table cellpadding="5" cellspacing="0" id="tblUserdetail">
                         <thead>
                             <tr>
-                                <td colspan="2" style="cursor:pointer" onclick="initializeMe();">My Detail</td>
+                                <td colspan="2">My Detail</td>
                             </tr>
                         </thead>
                         <tbody id="tbdUserDetail">
@@ -68,22 +68,19 @@
                             </tr>
                         </thead>
                         <tbody id="tbdUserAuthority">
+                            <?php 
+                                $exclude = array('accessOk','isHo','isSuperUser','userGroups','userId');
+                                foreach ($_SESSION['dms_user']['authorisation'] as $a=>$v) {
+                                    if (in_array($a,$exclude)) continue;
+                            ?>
                             <tr>
-                                <td>View</td>
-                                <td><?php echo $canView; ?></td>
+                                <td><?php echo $a; ?></td>
+                                <td>
+                                    view <input type="checkbox" disabled <?php echo ($v['view']) ? ' CHECKED':''; ?> /> 
+                                    save <input type="checkbox" disabled <?php echo ($v['save']) ? ' CHECKED':''; ?> />
+                                </td>
                             </tr>
-                            <tr>
-                                <td>Edit</td>
-                                <td><?php echo $canEdit; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Insert</td>
-                                <td><?php echo $canInsert; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Delete</td>
-                                <td><?php echo $canDelete; ?></td>
-                            </tr>
+                            <?php } ?>
                         </tbody>
                         <thead>
                             <tr>
