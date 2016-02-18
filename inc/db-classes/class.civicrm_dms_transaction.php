@@ -11,8 +11,8 @@ Class civicrm_dms_transaction {
 	var $must_acknowledge;
 	var $completed_date;
 	var $completed_by_user_id;
-	var $batch_id;
-	var $batch_entry_id;
+	var $receipt_id;
+	var $receipt_entry_id;
 	var $contact_id;
 	
 
@@ -51,8 +51,8 @@ Class civicrm_dms_transaction {
 			`must_acknowledge` = '$this->must_acknowledge',
 			`completed_date` = '$this->completed_date',
 			`completed_by_user_id` = '$this->completed_by_user_id',
-			`batch_id` = '$this->batch_id',
-			`batch_entry_id` = '$this->batch_entry_id',
+			`receipt_id` = '$this->receipt_id',
+			`receipt_entry_id` = '$this->receipt_entry_id',
 			`contact_id` = '$this->contact_id'
                     WHERE
                       `id` = '$this->id';";
@@ -67,8 +67,8 @@ Class civicrm_dms_transaction {
 			`must_acknowledge`,
 			`completed_date`,
 			`completed_by_user_id`,
-			`batch_id`,
-			`batch_entry_id`,
+			`receipt_id`,
+			`receipt_entry_id`,
 			`contact_id`
                     ) VALUES (
                         '$this->contribution_id',
@@ -79,8 +79,8 @@ Class civicrm_dms_transaction {
 			'$this->must_acknowledge',
 			'$this->completed_date',
 			'$this->completed_by_user_id',
-			'$this->batch_id',
-			'$this->batch_entry_id',
+			'$this->receipt_id',
+			'$this->receipt_entry_id',
 			'$this->contact_id'
                     );";
             }

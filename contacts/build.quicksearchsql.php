@@ -10,7 +10,7 @@
  * 
  */
 
-if ($_POST['srch_bamOnly']=='Y') $bam = "INNER JOIN `civicrm_membership` m ON c.id = m.contact_id AND m.membership_type_id = $bamMembershipTypeId ";
+if (!empty($_POST['srch_bamOnly'])&&$_POST['srch_bamOnly']=='Y') $bam = "INNER JOIN `civicrm_membership` m ON c.id = m.contact_id AND m.membership_type_id = $bamMembershipTypeId ";
 $donorNo = $contactId = $_POST['qck_search'];
 $searchName = (preg_match('/\*/i',$_POST['qck_search'])) ? preg_replace('/\*/','%',$_POST['qck_search']):'%'.$_POST['qck_search'].'%';
 $deleted = ($_POST['srch_donorDeleted']=='Y') ? 1:0;
@@ -19,7 +19,7 @@ if (is_numeric($_POST['qck_search'])) {
     $where =  "(external_identifier = $donorNo OR c.id = $contactId)";
     $whereDeleted = '';
 } else {
-    $where =  "sort_name like '$searchName'";
+    $where =  "(sort_name like '$searchName' OR display_name like '$searchName')";
 }
 
 
@@ -51,6 +51,7 @@ $sql = "SELECT
         WHERE
             $where $whereDeleted
         ORDER BY sort_name;";
+
 $GLOBALS['functions']->showSql($sql);
 $_SESSION['dmsDonorSearchResultset'] = $GLOBALS['functions']->GetCiviDataFromSQL($sql);
 $_SESSION['dmsDonorSearchCriteria'] = $_POST;

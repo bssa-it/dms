@@ -22,7 +22,10 @@ if (count($searchVariables)>0) {
     $phoneOnlyPrimary = '(p.`is_primary` = 1 OR p.is_primary IS NULL)';
     $addressOnlyPrimary = '(a.`is_primary` = 1 OR a.is_primary IS NULL)';
     $emailOnlyPrimary = '(e.`is_primary` = 1 OR e.is_primary IS NULL)';
-    if (isset($searchVariables['srch_donorNumber'])) {
+    
+    $isOneDonorNumber = (!empty($searchVariables['srch_donorNumber'])) ? preg_match('/^[0-9]{6}$/',$searchVariables['srch_donorNumber']):false;
+    
+    if ($isOneDonorNumber) {
         $where = ' WHERE external_identifier = ' . $searchVariables['srch_donorNumber'];
     } elseif (isset($searchVariables['srch_civiId'])) {
         $where = ' WHERE c.id = ' . $searchVariables['srch_civiId'];
@@ -33,6 +36,10 @@ if (count($searchVariables)>0) {
         $where =  ' WHERE ';
         foreach ($searchVariables as $k=>$v) {
             switch ($k) {
+                case 'srch_donorNumber':
+                    if ($where != ' WHERE ') $where .= ' AND ';
+                    $where .= "external_identifier $v";
+                    break;
                 case 'srch_firstName':
                     if ($where != ' WHERE ') $where .= ' AND ';
                     $where .= "first_name LIKE '%$v%'";

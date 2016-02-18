@@ -17,6 +17,8 @@ $curScript = basename(__FILE__, '.php');
 $menu = new menu;
 $pageHeading = $title = 'Create Contact';
 $notificationsValue = ($GLOBALS['functions']->hasUserGotNotifications()) ? 'Y':'N';
+$contactCfg = simplexml_load_file("inc/config.xml");
+$contactDefaults = $contactCfg->defaults;
 
 #   SANITIZE POSTED VARIABLES
 if(!empty($_POST)) $_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -65,7 +67,8 @@ $organisationName = (empty($organisation->org_name)) ? 'Unknown' : $organisation
 $categories = $GLOBALS['functions']->GetCategoryList();
 $categoryOpts = '';
 foreach ($categories as $c) {
-    $categoryOpts .= '<option value="'.$c['cat_id'].'">'.str_pad($c['cat_id'],4,'0',STR_PAD_LEFT).' - '.$c['cat_name'].'</option>';
+    $selected = ((int)$contactDefaults->reporting_code->category_id==(int)$c['cat_id']) ? ' SELECTED':'';
+    $categoryOpts .= '<option value="'.$c['cat_id'].'"'.$selected.'>'.str_pad($c['cat_id'],4,'0',STR_PAD_LEFT).' - '.$c['cat_name'].'</option>';
 }
 
 

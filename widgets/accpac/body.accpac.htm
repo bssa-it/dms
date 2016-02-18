@@ -1,5 +1,22 @@
 <!-- Specific Style for Widget -->
 <style type="text/css">
+    #middlewareCalendarDiv {
+        width: auto;
+    }
+    #tblMiddlewareCalendar td {
+        text-align: center;
+        cursor: pointer;
+    }
+    #tblMiddlewareCalendar {
+        font-size: 9px;
+    }
+    #tblMiddlewareCalendar thead {
+        background-color: #254B7C;
+    }
+    #answerDiv {
+        padding: 4px !important;
+        width: 142px;
+    }
     #accpacDiv .fn, #accpacDiv .dt {
         float: left;
         margin-right: 10px;
@@ -34,7 +51,7 @@
     }
     .tileMainDisplay {
         width: 130px;
-        height: 70px;
+        height: 84px;
         padding: 10px 10px 0px 10px;
         font-size: 50px;
         text-align: center;
@@ -49,6 +66,15 @@
         clear: both;
         margin: auto;
         margin-top: 20px;
+    }
+    .red {
+        background-color: #CD3333;
+    }
+    .grn {
+        background-color: #A7B526;
+    }
+    .opq {
+        color: rgba(255, 255, 255, 0.45);
     }
 </style>
 <!-- Scripts for widget -->
@@ -73,6 +99,41 @@
         $("#monthEndDiv").click(function(){
            location="/monthEnd"; 
         });
+        $("#tblMiddlewareCalendar td").click(function(){
+            var $td = $(this);
+           var attr = $td.attr('tktId');
+            if (typeof attr !== typeof undefined && attr !== false) {
+                var d = new Date();
+                var m = d.getMonth() + 1;
+                m = (m<10) ? '0' + m:m;
+                var y = d.getFullYear();
+                var day = $td.text();
+                day = (day<10) ? '0'+day:day;
+                var syncDate = y + "-" + m + "-" + day;
+                if (attr.length == 0) {    
+                    var cfm = confirm("No ticket found for " + syncDate + ". Do you want to create a ticket?");
+                    if (cfm) {
+                        $.get("widgets/accpac/get.new.ticket.php",{dt:syncDate}).done(function(data){
+                            var json = $.parseJSON(data);
+                            alert(json.message);
+                            $td.attr('tktId',json.ticket_id);
+                        });
+                    }
+                } else {
+                    if ($td.attr('tktClosed')=='N') { 
+                        var cfm = confirm("Ticket " + attr + " is still open. Would you like to close this ticket?");
+                        if (cfm) {
+                            $.get("widgets/accpac/close.ticket.php",{ticket_id:attr}).done(function(data){
+                                var json = $.parseJSON(data);
+                                alert(json.ticket_id + ' is closed!');
+                                $td.removeClass().addClass('opq');
+                                $td.attr('tktClosed','Y');
+                            });
+                        }
+                    }
+                }
+            } 
+        });
     });
     function refreshAccpac() {
         $("#accpacResult").hide();
@@ -95,7 +156,7 @@
             $("#fileList").html(html);
             var col = (hasProc) ? '#A7B526':'#CD3333';
             var a = (hasProc) ? 'Y':'N';
-            $("#answerDiv").css('background-color',col).html(a);
+            $("#answerDiv").css('background-color',col);
             
             $("#accpacResult").show();
             $("#accpacDiv .widgetLoadingDiv").hide();
@@ -139,9 +200,15 @@
     <div class="widgetLoadingDiv"><img src="img/loading-4.gif" align="center" /> &nbsp;loading...</div>
     <div id="accpacResult">
         <div id="processedDiv">
-            <div id="processedDivHdr" class="tileHeader" >Middleware</div>
+            <div id="processedDivHdr" class="tileHeader" >Accpac BM Sync</div>
             <div id="lastCheck" class="tileMiddleBand" title="last check"></div>
-            <div id="answerDiv" class="tileMainDisplay"></div>
+            <div id="answerDiv" class="tileMainDisplay">
+                <div id="middlewareCalendarDiv">
+                    <table width="100%" cellpadding="2" cellspacing="0" id="tblMiddlewareCalendar">
+                        <?php echo $calRows; ?>
+                    </table>
+                </div>
+            </div>
         </div>
         <div id="monthEndDiv">
             <div class="tileHeader">Month End</div>

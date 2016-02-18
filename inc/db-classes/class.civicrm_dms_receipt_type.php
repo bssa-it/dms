@@ -1,16 +1,10 @@
 <?php
 
-Class civicrm_dms_statement_entry { 
+Class civicrm_dms_receipt_type { 
 
         var $id;
-	var $deposit_date;
-	var $deposit_reference;
-	var $deposit_amount;
-	var $balance;
-	var $receipt_id;
-	var $reconciled;
-	var $reconciled_datetime;
-	var $reconciled_by;
+	var $description;
+	var $active;
 	
 
         function __construct($id=null) {
@@ -18,7 +12,7 @@ Class civicrm_dms_statement_entry {
         }
 
         function Load($id) {
-            $sql = "SELECT * FROM `civicrm_dms_statement_entry` where `id` = $id";
+            $sql = "SELECT * FROM `civicrm_dms_receipt_type` where `id` = $id";
             $GLOBALS['functions']->showSql($sql);
             $result = $GLOBALS['civiDb']->select($sql);
             if (!$result) {
@@ -39,37 +33,19 @@ Class civicrm_dms_statement_entry {
             $this->MySqlEscape();
             if (isset($this->id) && !empty($this->id)) {
                 $sql = "
-                    UPDATE `civicrm_dms_statement_entry` SET
-                        `deposit_date` = '$this->deposit_date',
-			`deposit_reference` = '$this->deposit_reference',
-			`deposit_amount` = '$this->deposit_amount',
-			`balance` = '$this->balance',
-			`receipt_id` = '$this->receipt_id',
-			`reconciled` = '$this->reconciled',
-			`reconciled_datetime` = '$this->reconciled_datetime',
-			`reconciled_by` = '$this->reconciled_by'
+                    UPDATE `civicrm_dms_receipt_type` SET
+                        `description` = '$this->description',
+			`active` = '$this->active'
                     WHERE
                       `id` = '$this->id';";
             } ELSE {
                 $sql = "
-                    INSERT INTO `civicrm_dms_statement_entry` (
-                        `deposit_date`,
-			`deposit_reference`,
-			`deposit_amount`,
-			`balance`,
-			`receipt_id`,
-			`reconciled`,
-			`reconciled_datetime`,
-			`reconciled_by`
+                    INSERT INTO `civicrm_dms_receipt_type` (
+                        `description`,
+			`active`
                     ) VALUES (
-                        '$this->deposit_date',
-			'$this->deposit_reference',
-			'$this->deposit_amount',
-			'$this->balance',
-			'$this->receipt_id',
-			'$this->reconciled',
-			'$this->reconciled_datetime',
-			'$this->reconciled_by'
+                        '$this->description',
+			'$this->active'
                     );";
             }
             $GLOBALS['functions']->showSql($sql);

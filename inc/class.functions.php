@@ -634,12 +634,11 @@ WHERE `trns_date_received` >= '$mtd' AND trns_dnr_no = $trnsDnrNo AND trns_id <=
         		foreach ($hdrs as $h) $excelrow .= '"' . $k[$h] . '"' . ",";
         		$excelrow .= "\n";
         	}
-            //header("Content-type: application/csv"); 
-                header("Content-Type:text/plain");
+                header("Content-Type:text/plain; charset=utf-8");
         	header('Content-Disposition: attachment; filename='.$filename);
         	header("Pragma: no-cache"); 
         	header("Expires: 0");
-        	echo $excelrow; 
+        	echo html_entity_decode($excelrow,ENT_QUOTES); 
         }
     }
     
@@ -1554,22 +1553,23 @@ FROM dms_orgunit order by SUBSTR(org_id,4)";
         } 
         $birthdaysToday = $GLOBALS['functions']->getTodaysBirthdays($primaryDepartment);
         if (!empty($birthdaysToday)) {
+            $deptDisplay = ($primaryDepartment==='9') ? 'for BAM Club':'for department '.$primaryDepartment;
             $notificationsDivs = '
                 <div class="divNotification" a="birthday">
                     <div class="birthdayCnt">'.$birthdaysToday.'</div>
                     <div class="action">
                         
                         <div class="aType">Birthdays Today</div>
-                        <div class="cont">'.$primaryDepartment.' - '.$departmentName.' <span class="t">('.date("d F").')</span></div>
+                        <div class="cont">'.$deptDisplay.'</span></div>
                     </div>
                     <div id="prezzieDiv"><img src="/dms/img/gift.png" width="32" height="32" /></div>
                 </div>
                 <form action="/dms/contacts/find.contact.php" method="POST" style="hidden" id="frmBirthday" name="frmBirthday">
                     <input type="hidden" name="srch_database" value="civicrm" />
+                    <input type="hidden" name="srch_bdayNotification" value="Y" />
                     <input type="hidden" name="srch_donorDeleted" value="A" />
                     <input type="hidden" name="srch_birthday" value="'.date("-m-d").'" />
                     <input type="hidden" name="srch_orgId" value="'.$primaryDepartment.'" />
-                    <input type="hidden" name="srch_donorDeleted" value="N" />
                 </form>';
         }
         if (!empty($activities)) {
@@ -1912,10 +1912,17 @@ LIMIT $limit,$returnLimit) `A`";
     ####   4.3.1 Functions
     function getTodaysBirthdays($primaryDepartment) {
         $birthday = date("-m-d");
+        if ($primaryDepartment==='9') {
+            $department = $exists = '';
+        } else {
+            $department = "AND substr(organisation_id,1,1) = '$primaryDepartment' ";
+            $exists = 'NOT';
+        }
         $sql = "SELECT count(*) `total` FROM civicrm_contact C "
                 . "INNER JOIN civicrm_dms_contact_reporting_code R ON contact_id = C.id "
-                . "WHERE substr(organisation_id,1,1) = '$primaryDepartment' "
-                . "AND birth_date LIKE '%$birthday%' AND C.is_deleted = 0";
+                . "WHERE birth_date LIKE '%$birthday%' "
+                . $department
+                . ' AND '. $exists .' EXISTS (SELECT contact_id FROM `civicrm`.`civicrm_membership` WHERE `contact_id` = C.id and membership_type_id = 1)';
         $GLOBALS['functions']->showSql($sql);
         $result = $GLOBALS['civiDb']->select($sql);
         if (!$result) {

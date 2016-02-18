@@ -11,11 +11,11 @@
         font-size: 18pt;
         padding-right: 10px;
     }
-    #batchEnryDiv {
+    #receiptEnryDiv {
         padding: 10px;
         float: left;
         background-color: rgba(37, 75, 124, 0.09);
-        width: 1000px;
+        width: 1250px;
         height: 500px;
     }
     .frmLabel, .frmInput {
@@ -32,6 +32,8 @@
     }
     .entryNavigation div {
         float: left;
+        padding-top: 10px;
+        text-align: left;
     }
     .entryNavigation {
         clear: both;
@@ -60,92 +62,320 @@
         background-color: #254B7C;
         cursor: pointer;
     }
-    #batchEnryFrmDiv {
-        width: 980px;
+    #receiptEnryFrmDiv {
+        width: auto;
         height: 410px;
         padding-top: 10px;
         overflow: auto;
     }
     .col {
         float: left;
-        width: 325px;
+        min-width: 280px;
+        width: auto;
+        height: auto;
+        overflow: hidden;
+    }
+    .frmInput > input, .frmInput > select {
+        width: 250px;
+        font-size: 13pt !important;
+    }
+    #alloc_total_amount {
+        width: 210px;
+    }
+    #contactAllocationHdg {
+        text-align: left;
+        width: auto;
+        height: 30px;
+        overflow: hidden;
+        background-color: rgba(37, 75, 124, 0.18);
+        padding-bottom: 5px;
+        padding-top: 5px;        
+    }
+    #contactDiv {
+        width: auto;
+        height: auto;
+        overflow: hidden;
+        padding: 0px;
+        padding-top: 10px;
+        clear: both;
+    }
+    #unAllocated {
+        float: right;
+        padding-right: 10px;
+        font-style: italic;
+    }
+    #btnAddAllocation {
+        float: right;
+        margin-left: 10px;
+    }
+    input[name="allocated_amount[]"] {
+        width: 75px;
+        font-size: 10pt;
+        padding: 2px;
+    }
+    #tblAllocations {
+        font-size: 10pt;
+    }
+    .delRow {
+        width: auto;
+        text-align: center;
+        height: auto;
+        padding: 3px;
+        background-color: #254B7C;
+        color: #FFF;
+        cursor: pointer;
+    }
+    thead {
+        background-color: #254B7C;
+        color: #FFF;
+    }
+    #contactBreakdown {
+        width: auto;
+        height: 200px;
+        margin-top: 10px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .totAmount {
+        float: right !important;
+        font-size: 15pt;
+    }
+    .totAmount input {
+        background-color: rgba(37, 75, 124, 0.09);
+        border: 2px solid rgba(37, 75, 124, 0.09);
+        font-weight: bold;
+        width: 250px;
     }
 </style>
 <script type="text/javascript" lang="javascript">
     var contactId;
+    var allocations = [];
+    var receiptId;
+    var searchResults = [];
     $(document).ready(function(){
-       $("#btnAddEntry").click(function(){
-           if ($("#batch_title").val().length==0) {
-               alert("Please enter the title of the batch");
-               $("#batch_title").focus();
+       receiptId = $("#receipt_id").val();
+
+        $("#btnAddEntry").click(function(){
+            
+           if (allocations.allocations.length==0) {
+               alert('Please add an allocation');
+               $("#alloc_contact_identifier").focus();
                return;
            }
-           $.post("save.batch.entry.php",$("#frmNewBatchEntry").serialize()).done(function(data){
+           
+           document.frmNewReceiptEntry.submit();
+           return;
+           
+           
+           $.post("save.receipt.entry.php",$("#frmNewReceiptEntry").serialize()).done(function(data){
               var json = $.parseJSON(data);
-              if (json.batch_id>0) {
-                  window.location='load.batch.php?batch_id='+json.batch_id;
-              } else {
-                  alert('Failed to save batch entry');
-              }
+              console.log(json);
            }).fail(function(data){
-               alert('Failed to save batch entry\n'+data);
+               alert('Failed to save receipt entry\n'+data);
            });
        });
        $("#imgSearch").click(function(){
-           $("#satelite_contact_identifier").val($("#contact_identifier").val());
+           $("#satelite_contact_identifier").val($("#alloc_contact_identifier").val());
            window.open('','sateliteWindow','height=600,width=1200,titlebar=no,location=no');
            document.frmSatelite.submit();
        });
-       
+       $("#total_amount").blur(function(){
+           calculateUnallocated();
+       });
+       $.get("get.entry.allocations.php",{receipt_id: receiptId}).done(function(data){
+           allocations = $.parseJSON(data);
+           if (allocations.allocations.length>0) {
+                for (var i=0;i<allocations.allocations.length;i++) {
+                    addAllocationRow(allocations.allocations[i]);
+                }
+                $("#contactBreakdown").show();
+            } else {
+                allocations.allocations = [];
+            }
+       });
+       $("#btnAddAllocation").click(function(){
+          if ($("#received_datetime").val().length==0) {
+              alert('Please select the received date.');
+              $("#received_datetime").focus();
+              return;
+          }
+          if ($("#alloc_contact_identifier").val().length==0) {
+              alert('Please insert the contact id.');
+              $("#alloc_contact_identifier").focus();
+              return;
+          }
+          if ($("#alloc_total_amount").val().length==0) {
+              alert('Please insert allocated amount.');
+              $("#alloc_total_amount").focus();
+              return;
+          }
+          addAllocationRow({});
+          contactId = '';
+       });
+       $("#received_datetime,#alloc_contact_identifier,#alloc_total_amount,#alloc_motivation_id").keypress(function (e) {
+            var key = e.which;
+            if(key == 13)  // the enter key code
+             {
+               $("#btnAddAllocation").click();
+               return false;  
+             }
+       });   
     });
+    function clearAllocationFields() {
+        $("#alloc_contact_identifier,#alloc_total_amount").val('');
+        $("#alloc_motivation_id").val('9000');
+        $("#received_datetime").val()
+        
+    }
     function getContact() {
         if (!contactId) return;
-        //$.get("../contacts/find.contact.php",)
-        alert(contactId);
+        $("#alloc_contact_identifier").val(contactId);
+    }
+    function addAllocationRow(allocRecord) {
+        var getVars = {srch_donorDeleted: 'A',srch_database: 'civicrm',format: 'json'};
+        var cid;
+        if (typeof variable_here !== 'undefined'&&contactId.length>0) {
+            getVars.contact_id = cid = contactId;
+        } else {
+            getVars.qck_search = cid = $("#alloc_contact_identifier").val();
+        }
+        if (Object.keys(allocRecord).length==0) {
+            $.post("../contacts/find.contact.php",getVars).done(function(data){
+                
+                var json = $.parseJSON(data);
+                if (!json) {
+                    var fullname = $("#alloc_contact_identifier").val();
+                    var nameSplit = fullname.split(" ");
+                    if (nameSplit.length>1) {
+                        var serialized = '&first_name=' + nameSplit[0] + '&last_name=' + fullname.replace(nameSplit[0],'').trim();
+                    } else {
+                        var serialized = '&first_name='+fullname;
+                    }
+                    window.open('../contacts/satelite.edit.contact.php?qck=Y'+serialized,'sateliteWindow','height=550,width=680,titlebar=no,location=no');
+                } else {
+                    searchResults = json;
+                    window.open('html/contact.select.htm','sateliteWindow','height=600,width=1200,titlebar=no,location=no');
+                }
+                $("#contactBreakdown").show();
+                
+            });
+        } else {
+            var newRow = createTblRow(allocRecord);
+            $("#tbodyAllocations").append(newRow);
+            $("#contactBreakdown").show();
+            bindDeleteToRows();
+            calculateUnallocated();          
+            clearAllocationFields();
+        }
+        
+    }
+    function createTblRow(allocRecord) {
+        var newRow = '<tr allocationId="' + allocRecord.id + '"><input type="hidden" name="id[]" value="' + allocRecord.id + '" />';
+        newRow += (allocRecord.receipt_no.length==0) ? '<td>*** new ***</td>':'<td><input type="hidden" name="receipt_no[]" value="' + allocRecord.receipt_no + '" />' + allocRecord.receipt_no + '</td>'; 
+        newRow += (allocRecord.received_datetime.length==0) ? '<td>*** new ***</td>':'<td><input type="hidden" name="received_datetime[]" value="' + allocRecord.received_datetime + '" />' + allocRecord.receipt_no + '</td>'; 
+        newRow += (allocRecord.contact_id.length==0) ? '<td>*** new ***</td>':'<td><input type="hidden" name="contact_id[]" value="' + allocRecord.contact_id + '" />' + allocRecord.contact_id + '</td>';
+        newRow += (allocRecord.dnr_no.length==0) ? '<td>*** new ***</td>':'<td><input type="hidden" name="dnr_no[]" value="' + allocRecord.dnr_no + '" />' + allocRecord.dnr_no + '</td>';
+        newRow += (allocRecord.display_name.length==0) ? '<td>*** new ***</td>':'<td>' + allocRecord.display_name + '</td>';
+        newRow += (allocRecord.motivation.length==0) ? '<td>*** new ***</td>':'<td><input type="hidden" name="motivation[]" value="' + allocRecord.motivation_id + '" />' + allocRecord.motivation + '</td>';
+        newRow += (allocRecord.receipt_amount.length==0) ? '<td>*** new ***</td>':'<td><input type="text" name="allocated_amount[]" value="' + allocRecord.receipt_amount + '" /></td>';
+        newRow += '<td><div class="delRow">delete</div></td>';
+        newRow += '</tr>';
+        return newRow;
+    }
+    
+    function bindDeleteToRows() {
+        $(".delRow").click(function(){
+           $(this).parent().parent().remove(); 
+        });
+        $("input[name='allocated_amount[]']").blur(function(){
+            calculateUnallocated();
+        });
+    }
+    function calculateUnallocated() {
+        $("#unAllocated").empty();
+        var allocatedTotal = getAllocatedTotal();
+        if ($("#total_amount").val().length==0||isNaN($("#total_amount").val())||parseFloat($("#total_amount").val())<allocatedTotal) {
+            $("#total_amount").val(allocatedTotal);
+            $("#unAllocated").append('Unallocated Amount R 0.00');
+        } else {
+            if (allocatedTotal>0) {
+               var unalloc = parseFloat($("#total_amount").val()) - allocatedTotal;
+               var amnt = 'Unallocated Amount R '+ unalloc
+           }
+           $("#unAllocated").append(amnt);
+        }
+    }
+    function getAllocatedTotal() {
+        var total = 0;
+        $("input[name='allocated_amount[]']").each(function(){
+           if (!isNaN($(this).val())) total += parseFloat($(this).val());
+        });
+        return total;
     }
 </script>
 
-<div id="batchEnryDiv">
+<div id="receiptEnryDiv">
     <div class="entryNavigation">
-        <div class="prevEntry"><img src="../img/prev.png" /></div>
-        <div class="headingRw">New Entry</div>
-        <div class="entryNo"># 001</div>
-        <div class="nextEntry"><img src="../img/next.png" /></div>
+        <div class="headingRw" id="entryNoDiv">New Entry</div>
+        <div class="frmInput totAmount">
+            <label for="total_amount">Total Amount</label>
+            <input type="text" disabled="" name="total_amount" id="total_amount" />
+        </div>
     </div>
-    <div id="batchEnryFrmDiv">
-        <form action="save.batch.entry.php" method="POST" name="frmNewBatchEntry" id="frmNewBatchEntry">
-            <div class="col">
-                <div class="frmLabel"><label for="payment_instrument_id">Payment Type</label></div>
-                <div class="frmInput">
-                    <select name="payment_instrument_id" id="payment_instrument_id">
-                        <?php echo $pOpts; ?>
-                    </select>
-                </div>
-            </div>
-            <div class="col">
-                <div class="frmLabel"><label for="total_amount">Receipt Amount</label></div>
-                <div class="frmInput">
-                    <input type="text" name="total_amount" id="total_amount" />
-                </div>
-            </div>
-            <div class="col">
-                <div class="frmLabel"><label for="receive_date">Date Received</label></div>
-                <div class="frmInput">
-                    <input type="date" name="receive_date" id="receive_date" value="<?php echo date('Y-m-d'); ?>" />
-                </div>
-            </div>
+    <div id="receiptEnryFrmDiv">
+        <form action="save.receipt.entry.php" method="POST" name="frmNewReceiptEntry" id="frmNewReceiptEntry">
+            <input type="hidden" name="receipt_id" id="receipt_id" value="<?php echo $receiptId; ?>" />
             <div id="contactDiv">
-                <div class="headingRw">Contact Info</div>
-                <div class="frmLabel"><label for="contact_identifier">Contact No/Archive Donor No</label></div>
-                <div class="frmInput">
-                    <input type="text" name="contact_identifier" id="contact_identifier" />
-                    <img src="../img/search-black-32.png" style="cursor:pointer;margin-left: 5px;" id="imgSearch" align="top">
+                <div class="col">
+                    <div class="frmLabel"><label for="received_datetime">Received Date</label></div>
+                    <div class="frmInput">
+                        <input type="datetime-local" id="received_datetime" value="<?php echo date("Y-m-d")."T".date("H:i:s"); ?>" />
+                    </div>
                 </div>
+                <div class="col">
+                    <div class="frmLabel"><label for="alloc_contact_identifier">Contact No/Archive Donor No</label></div>
+                    <div class="frmInput">
+                        <input type="text" id="alloc_contact_identifier" />
+                        <img src="../img/search-black-32.png" width="24" height="24" style="cursor:pointer;margin-left: 5px;margin-top: 4px;" id="imgSearch" align="top">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="frmLabel"><label for="alloc_motivation_id">Motivation Code</label></div>
+                    <div class="frmInput">
+                        <select id="alloc_motivation_id">
+                            <?php echo $mOpts; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="frmLabel"><label for="alloc_total_amount">Received Amount</label></div>
+                    <div class="frmInput">
+                        <input type="text" id="alloc_total_amount" />
+                        <div class="btn" id="btnAddAllocation">Add</div>
+                    </div>
+                </div>
+            </div>
+            <div id="contactBreakdown" style="display: none">
+                <table width="100%" cellpadding="3" cellspacing="0" id="tblAllocations">
+                    <thead>
+                        <tr>
+                            <td>Receipt No</td>
+                            <td>Receipt Date</td>
+                            <td>Contact Id</td>
+                            <td>Archive Donor No</td>
+                            <td>Contact Name</td>
+                            <td>Motivation</td>
+                            <td>Amount</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyAllocations"></tbody>
+                </table>   
             </div>
         </form>
         <form action="../contacts/satelite.search.php" method="POST" target="sateliteWindow" style="display:none" name="frmSatelite" id="frmSatelite">
             <input type="text" name="contact_identifier" id="satelite_contact_identifier" />
         </form>
     </div>
-    <div class="btn" id="btnAddEntry">Add</div>
+    <div class="btn" id="btnAddEntry">Save</div>
 </div>

@@ -21,9 +21,6 @@ $pageHeading = $title = 'Contact Search Results';
 $notificationsValue = ($GLOBALS['functions']->hasUserGotNotifications()) ? 'Y':'N';
 $sql = '';
 
-#sanitize the posted variables
-if(!empty($_POST)) $_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
 #   FIND THE DONORS/CONTACTS AND LOAD THE DATA ARRAY
 $donors = array();
 #   FIRST CHECK IF SEARCH CRITERIA CHANGED
@@ -44,6 +41,10 @@ if (!empty($_GET['group'])) {
    include 'build.groupsql.php';
 }
 
+if (!empty($_POST['srch_bdayNotification'])) {
+    include 'build.birthdaysql.php';
+}
+
 if (empty($_GET['format'])&&empty($_POST['format'])) {
     $format = 'html';
 } else {
@@ -51,10 +52,12 @@ if (empty($_GET['format'])&&empty($_POST['format'])) {
 }
 
 #   THEN GET DATASET
-if (isset($_SESSION['dmsDonorSearchResultset'])) {
+if (array_key_exists('dmsDonorSearchResultset',$_SESSION)) {
     $donors = $_SESSION['dmsDonorSearchResultset'];
     $postedVariables = $_SESSION['dmsDonorSearchCriteria'];
+    
 } else {
+    
     #   GET SEARCH CRITERIA FROM SESSION OR POST SUPERGLOBALS
     if (!isset($_SESSION['dmsDonorSearchCriteria'])) {
         if (!isset($_POST)||is_null($_POST)||empty($_POST)) $GLOBALS['functions']->goToIndexPage();
@@ -81,7 +84,6 @@ if (isset($_SESSION['dmsDonorSearchResultset'])) {
     $_SESSION['dmsDonorSearchResultset'] = $donors;
     $GLOBALS['functions']->showSql($sql);
 }
-
 ########
 #
 #   SQL HAS BEEN CREATED AND EXECUTED IN THE CIVICRM OR DMS DATABASES RESPECTIVELY.
@@ -91,7 +93,7 @@ if (isset($_SESSION['dmsDonorSearchResultset'])) {
 
 #   FILL TABLE ROWS
 $searchResultRows = '<tr><td colspan="8" style="padding-left: 10px">No Results found</td></tr>';
-if (!empty($donors)) {
+if (!empty($donors[0]['dnr_no'])) {
     if (count($donors)==1&&$format=='html') {
         header('location:load.contact.php?d='.$donors[0]['dnr_no']);
         exit();

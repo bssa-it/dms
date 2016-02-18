@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Select Contacts</title>
+        <link rel="stylesheet" type="text/css" href="/dms/css/global.css" />
+
+        <script type="text/javascript" language="javascript" src="/dms/scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" language="javascript" src="/dms/scripts/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" language="javascript" src="/dms/scripts/global.js"></script>
+        <script type="text/javascript" language="javascript" src="/dms/scripts/tablePaging.js"></script>
+        <script type="text/javascript" language="javascript">
+            $(document).ready(function(){
+               var json = window.opener.searchResults;
+               for (var i=0;i<json.length;i++) createSelectTblRow(json[i]);
+               $("input[name='contact[]']").click(function(){
+                  //if ($(this).prop("checked")) 
+                      
+               });
+               $("#btnInsertContacts").click(function(){
+                  if ($("input[name='contact[]']:checked").length>0) {
+                    $("input[name='contact[]']:checked").each(function(){
+                        var allocAmount = $(this).parent().parent().find('td:eq(9)').find('input').val();
+                        var dnrNo = $(this).parent().parent().find('td:eq(3)').text();
+                        var contactId = $(this).parent().parent().find('td:eq(2)').text();
+                        var displayName = $(this).parent().parent().find('td:eq(4)').text();
+                        var receiptId = window.opener.receiptId;
+                        var motivationId = window.opener.document.getElementById("alloc_motivation_id").value;
+                        var motivationText = $(window.opener.document.getElementById("alloc_motivation_id")).find('option:selected').text();
+                        var receiptDate = window.opener.document.getElementById("received_datetime").value;
+                        allocRecord = {
+                            id: '',
+                            receipt_id: receiptId,
+                            received_datetime: receiptDate,
+                            received_by: '',
+                            receipt_no: '',
+                            receipt_amount: allocAmount,
+                            receipt_type: '',
+                            line_no: '',
+                            contact_id: contactId,
+                            motivation_id: motivationId,
+                            entry_id: '',
+                            dnr_no: dnrNo,
+                            display_name: displayName,
+                            motivation: motivationText
+                        };
+                        window.opener.allocations.allocations.push(allocRecord);
+                        var newRow = window.opener.createTblRow(allocRecord);
+                        $(window.opener.document).find("#tbodyAllocations").append(newRow);
+                        window.opener.bindDeleteToRows();
+                        window.opener.calculateUnallocated();          
+                        window.opener.clearAllocationFields();
+                    });
+                    window.close();
+                  } else {
+                      var cfm = confirm('Are you sure you want to insert 0 contacts?');
+                      if (cfm) {
+                          window.close();
+                      }
+                  }
+               });
+            });
+            function createSelectTblRow(json) {
+                var amnt = window.opener.document.getElementById("alloc_total_amount").value;
+                
+                var newRow = '<tr>';
+                newRow += '<td><input type="checkbox" name="contact[]" /></td>';
+                newRow += (!json.region) ? '<td>&nbsp;</td>':'<td>' + json.region + '</td>'; 
+                newRow += (!json.contact_id) ? '<td>&nbsp;</td>':'<td>' + json.contact_id + '</td>'; 
+                newRow += (!json.dnr_no) ? '<td>&nbsp;</td>':'<td>' + json.dnr_no + '</td>';
+                newRow += (!json.display_name) ? '<td>&nbsp;</td>':'<td>' + json.display_name + '</td>';
+                newRow += (!json.phone) ? '<td>&nbsp;</td>':'<td>' + json.phone + '</td>';
+                newRow += (!json.email) ? '<td>&nbsp;</td>':'<td>' + json.email + '</td>';
+                newRow += (!json.is_deleted) ? '<td>&nbsp;</td>':'<td>' + json.is_deleted + '</td>';
+                newRow += (!json.address) ? '<td>&nbsp;</td>':'<td>' + json.address + '</td>';
+                newRow += '<td><input type="text" value="'+amnt+'" name="receipt_amount[]" /></td>';
+                newRow += '</tr>';
+                $('#tbodyContacts').append(newRow);
+                
+        
+                
+                
+                
+            } 
+        </script>
+        <style type="text/css">
+            #headingRow {
+                font-size: 28pt;
+                font-weight: bold;
+                min-width: 500px;
+                width: auto !important;
+                min-height: 45px;
+                height: auto !important;
+                float: left;
+                margin-left: 10px;
+            }
+            #tblSearchResults {
+                    font-size: 10pt;
+            }
+            #tblSearchResults thead {
+                background-color: #254B7C;
+                color: #FFF;
+            }
+            input[name='contact[]'] {
+                width: 15px;
+            }
+            input[name="receipt_amount[]"] {
+                width: 50px !important;
+                font-size: 11pt;
+                color: #254B7C;
+                background-color: rgba(37, 75, 124, 0.17);
+                padding: 2px;
+            }
+            #btnInsertContacts {
+                float:right;
+                margin-top: 25px;
+            }
+            #tblSearchResults th {
+                text-align: left;
+            }
+        </style>
+    </head>
+    <body>
+       <div id="headingRow">Select Contacts</div>
+        <div class="btn" id="btnInsertContacts">Insert</div>
+        <div id="searchResultContainter">
+            <table align="center" width="100%" cellpadding="3" cellspacing="0" id="tblSearchResults">
+                <thead>
+                    <tr>
+                        <th style="width:30px">&nbsp;</th>
+                        <th style="width:20px">Reg</th>
+                        <th style="width:65px">Civi Id</th>
+                        <th style="width:65px">Dnr No</th>
+                        <th>Full Name</th>
+                        <th>Contact No</th>
+                        <th>Email</th>
+                        <th width="40">Del</th>
+                        <th>Address</th>
+                        <th>amount</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyContacts"></tbody>
+            </table>
+            <script type="text/javascript" language="javascript">
+                var x = document.getElementById("tblSearchResults").rows.length;
+                if (x>1) $('#tblSearchResults').oneSimpleTablePagination({rowsPerPage: 15,brdrColor: "#254B7C"});
+            </script>
+        </div> 
+    </body>
+</html>

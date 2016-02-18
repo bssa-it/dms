@@ -2,7 +2,8 @@
     $("#tblSearchResults tr").click(function(){
        var attr = $(this).attr('contactid');
         if (typeof attr !== typeof undefined && attr !== false) {
-            window.opener.document.getElementById('contact_identifier').value = attr;
+            window.opener.contactId = attr;
+            window.opener.getContact();
         }
         window.close();
     });

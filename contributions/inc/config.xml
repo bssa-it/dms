@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <paymentInstrumentOptionGroupId>10</paymentInstrumentOptionGroupId>
+    <defaults>
+        <motivation_id>9000</motivation_id>
+        <payment_instrument_id>3</payment_instrument_id>
+    </defaults>
+    <receiptNo>90000000</receiptNo>
 </root>
