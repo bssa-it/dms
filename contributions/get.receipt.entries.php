@@ -37,20 +37,19 @@ $b = new civicrm_dms_receipt_header_extension($_GET['receipt_id']);
             <td>Date Received</td>
             <td>Received By</td>
             <td>Receipt No</td>
-            <td>Receipt Type</td>
-            <td>Receipt Amount</td>
+            <td>Amount</td>
         </tr>
     </thead>
     <tbody>
         <?php if (count($entries)>0&&  is_array($entries)) {
-            foreach ($entries as $e) { 
-            echo '<tr eid="'.$e['id'].'" class="receiptRow">';
-            echo '<td>' . $e['entry_no'] . '</td>';
+            foreach ($entries as $e) {
+                $deleted = ($e['is_deleted']==1) ? 'deletedRcp':'';
+            echo '<tr eid="'.$e['id'].'" class="receiptRow '.$deleted.'">';
+            echo '<td>' . $e['line_no'] . '</td>';
             echo '<td>' . $e['received_datetime'] . '</td>';
             echo '<td>' . $e['user'] . '</td>';
             echo '<td>' . $e['receipt_no'] . '</td>';
-            echo '<td>' . $e['receipt_type'] . '</td>';
-            echo '<td>' . $e['receipt_amount'] . '</td>';
+            echo '<td>R ' . number_format($e['receipt_amount'],2,"."," ") . '</td>';
             echo '</tr>';
         }} else {
             echo '<tr><td colspan="6">No entries found</td></tr>';

@@ -42,11 +42,14 @@
                             entry_id: '',
                             dnr_no: dnrNo,
                             display_name: displayName,
-                            motivation: motivationText
+                            motivation: motivationText,
+                            contribution_id: '',
+                            is_deleted: 0
                         };
                         window.opener.allocations.allocations.push(allocRecord);
                         var newRow = window.opener.createTblRow(allocRecord);
                         $(window.opener.document).find("#tbodyAllocations").append(newRow);
+                        window.opener.addMotSelect();
                         window.opener.bindDeleteToRows();
                         window.opener.calculateUnallocated();          
                         window.opener.clearAllocationFields();

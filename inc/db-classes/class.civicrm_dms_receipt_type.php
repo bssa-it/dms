@@ -5,6 +5,7 @@ Class civicrm_dms_receipt_type {
         var $id;
 	var $description;
 	var $active;
+	var $payment_instrument_id;
 	
 
         function __construct($id=null) {
@@ -35,17 +36,20 @@ Class civicrm_dms_receipt_type {
                 $sql = "
                     UPDATE `civicrm_dms_receipt_type` SET
                         `description` = '$this->description',
-			`active` = '$this->active'
+			`active` = '$this->active',
+			`payment_instrument_id` = '$this->payment_instrument_id'
                     WHERE
                       `id` = '$this->id';";
             } ELSE {
                 $sql = "
                     INSERT INTO `civicrm_dms_receipt_type` (
                         `description`,
-			`active`
+			`active`,
+			`payment_instrument_id`
                     ) VALUES (
                         '$this->description',
-			'$this->active'
+			'$this->active',
+			'$this->payment_instrument_id'
                     );";
             }
             $GLOBALS['functions']->showSql($sql);

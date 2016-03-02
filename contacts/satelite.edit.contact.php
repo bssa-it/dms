@@ -362,7 +362,8 @@ function insertContributionAllocation(contact) {
         entry_id: '',
         dnr_no: contact.external_identifier,
         display_name: contact.display_name,
-        motivation: motivationText
+        motivation: motivationText,
+        contribution_id: ''
     };
     window.opener.allocations.allocations.push(allocRecord);
     var newRow = window.opener.createTblRow(allocRecord);
@@ -372,6 +373,7 @@ function insertContributionAllocation(contact) {
     window.opener.bindDeleteToRows();
     window.opener.calculateUnallocated();          
     window.opener.clearAllocationFields();
+    window.opener.addMotSelect();
     
     window.close();
 }

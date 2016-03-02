@@ -43,7 +43,7 @@ function loadBatchList() {
     $.get("/dms/get.user.details.php").done(function(data){
         var rwCnt = 0;
         var tbl = '<h3>Open Receipts</h3><table id="tblOpenReceipts" width="1100" cellpadding="5" cellspacing="0" class="tblDetails">';
-        tbl += '<thead><tr><td>Batch No</td><td>Office</td><td>Batch Type</td><td align="right">Batch Total</td>';
+        tbl += '<thead><tr><td>Receipt No</td><td>Office</td><td>Receipt Type</td><td align="right">Receipt Total</td>';
         tbl += '<td>Status</td><td>Title</td><td>Created</td><td>User</td></tr></thead>';
         dmsUser = $.parseJSON(data);
         for (var i=0;i<openReceipts.length;i++) {

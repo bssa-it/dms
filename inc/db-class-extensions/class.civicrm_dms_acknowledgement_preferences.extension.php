@@ -64,4 +64,5 @@ WHERE P.contact_id = $this->contact_id";
         $today = new Datetime();
         return ($today>=$adjustedDate);
     }
+
 }

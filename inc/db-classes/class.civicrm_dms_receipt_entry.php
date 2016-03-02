@@ -9,9 +9,11 @@ Class civicrm_dms_receipt_entry {
 	var $receipt_no;
 	var $receipt_amount;
 	var $line_no;
-        var $contact_id;
-        var $motivation_id;
-        var $contribution_id;
+	var $contact_id;
+	var $motivation_id;
+	var $contribution_id;
+	var $is_deleted;
+	
 
         function __construct($id=null) {
             if (!empty($id)) $this->Load($id);
@@ -45,10 +47,11 @@ Class civicrm_dms_receipt_entry {
 			`received_by` = '$this->received_by',
 			`receipt_no` = '$this->receipt_no',
 			`receipt_amount` = '$this->receipt_amount',
-                        `line_no` = '$this->line_no',
-                        `contact_id` = '$this->contact_id',
-                        `motivation_id` = '$this->motivation_id',
-                        `contribution_id` = '$this->contribution_id'
+			`line_no` = '$this->line_no',
+			`contact_id` = '$this->contact_id',
+			`motivation_id` = '$this->motivation_id',
+			`contribution_id` = '$this->contribution_id',
+			`is_deleted` = '$this->is_deleted'
                     WHERE
                       `id` = '$this->id';";
             } ELSE {
@@ -59,20 +62,22 @@ Class civicrm_dms_receipt_entry {
 			`received_by`,
 			`receipt_no`,
 			`receipt_amount`,
-                        `line_no`,
-                        `contact_id`,
-                        `motivation_id`,
-                        `contribution_id`
+			`line_no`,
+			`contact_id`,
+			`motivation_id`,
+			`contribution_id`,
+			`is_deleted`
                     ) VALUES (
                         '$this->receipt_id',
 			'$this->received_datetime',
 			'$this->received_by',
 			'$this->receipt_no',
 			'$this->receipt_amount',
-                        '$this->line_no',
-                        '$this->contact_id',
-                        '$this->motivation_id',
-                        '$this->contribution_id'
+			'$this->line_no',
+			'$this->contact_id',
+			'$this->motivation_id',
+			'$this->contribution_id',
+			'$this->is_deleted'
                     );";
             }
             $GLOBALS['functions']->showSql($sql);

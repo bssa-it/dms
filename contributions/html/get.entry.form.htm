@@ -108,7 +108,7 @@
         float: right;
         margin-left: 10px;
     }
-    input[name="allocated_amount[]"] {
+    .inlineInput {
         width: 75px;
         font-size: 10pt;
         padding: 2px;
@@ -124,6 +124,7 @@
         background-color: #254B7C;
         color: #FFF;
         cursor: pointer;
+        text-decoration: none !important;
     }
     thead {
         background-color: #254B7C;
@@ -131,7 +132,7 @@
     }
     #contactBreakdown {
         width: auto;
-        height: 200px;
+        height: 315px;
         margin-top: 10px;
         overflow-y: auto;
         overflow-x: hidden;
@@ -145,6 +146,11 @@
         border: 2px solid rgba(37, 75, 124, 0.09);
         font-weight: bold;
         width: 250px;
+    }
+    .deleted {
+        color: #CD3333;
+        text-decoration: line-through;
+        background-color: rgba(205, 51, 51, 0.31);
     }
 </style>
 <script type="text/javascript" lang="javascript">
@@ -166,10 +172,13 @@
            document.frmNewReceiptEntry.submit();
            return;
            
-           
            $.post("save.receipt.entry.php",$("#frmNewReceiptEntry").serialize()).done(function(data){
               var json = $.parseJSON(data);
-              console.log(json);
+              /* console.log(json); */
+              $("#newEntry").click();
+              var cnt = json.result.length-1;
+              console.log(json.result[cnt].result);
+              $("#receiptTotal").empty().append(json.result[cnt].result.receipt_total);
            }).fail(function(data){
                alert('Failed to save receipt entry\n'+data);
            });
@@ -189,6 +198,13 @@
                     addAllocationRow(allocations.allocations[i]);
                 }
                 $("#contactBreakdown").show();
+                $("#tbodyAllocations tr").each(function(){
+                    if ($(this).attr('isDeleted')=='1') {
+                        $(this).addClass('deleted');
+                        $(this).find('input, select').addClass('deleted');
+                        $(this).find('.delRow').text('re-instate');
+                    }
+                });
             } else {
                 allocations.allocations = [];
             }
@@ -219,7 +235,8 @@
                $("#btnAddAllocation").click();
                return false;  
              }
-       });   
+       });
+
     });
     function clearAllocationFields() {
         $("#alloc_contact_identifier,#alloc_total_amount").val('');
@@ -262,6 +279,7 @@
         } else {
             var newRow = createTblRow(allocRecord);
             $("#tbodyAllocations").append(newRow);
+            addMotSelect();
             $("#contactBreakdown").show();
             bindDeleteToRows();
             calculateUnallocated();          
@@ -269,23 +287,53 @@
         }
         
     }
+    function addMotSelect() {
+        $(".tdMotivation").each(function(){
+            var cur = $(this).html();
+            if (cur.length==0) {
+                var opts = $("#alloc_motivation_id").html();
+                var h = '<select name="motivation[]"  class="inlineInput">'+opts+'</select>';
+                $(this).append(h);
+                $(this).find('select').val($(this).attr('mid'));
+            }
+         });
+    }
     function createTblRow(allocRecord) {
-        var newRow = '<tr allocationId="' + allocRecord.id + '"><input type="hidden" name="id[]" value="' + allocRecord.id + '" />';
-        newRow += (allocRecord.receipt_no.length==0) ? '<td>*** new ***</td>':'<td><input type="hidden" name="receipt_no[]" value="' + allocRecord.receipt_no + '" />' + allocRecord.receipt_no + '</td>'; 
-        newRow += (allocRecord.received_datetime.length==0) ? '<td>*** new ***</td>':'<td><input type="hidden" name="received_datetime[]" value="' + allocRecord.received_datetime + '" />' + allocRecord.receipt_no + '</td>'; 
-        newRow += (allocRecord.contact_id.length==0) ? '<td>*** new ***</td>':'<td><input type="hidden" name="contact_id[]" value="' + allocRecord.contact_id + '" />' + allocRecord.contact_id + '</td>';
+        var newRow = '<tr allocationId="' + allocRecord.id + '" isDeleted="'+allocRecord.is_deleted+'"><input type="hidden" name="id[]" value="' + allocRecord.id + '" /><input type="hidden" name="is_deleted[]" value="'+allocRecord.is_deleted+'" />';
+        newRow += (allocRecord.receipt_no.length==0) ? '<td>*** new ***<input type="hidden" name="receipt_no[]" value="" /></td>':'<td><input type="hidden" name="receipt_no[]" value="' + allocRecord.receipt_no + '" />' + allocRecord.receipt_no + '</td>'; 
+        newRow += (allocRecord.received_datetime.length==0) ? '<td>*** new ***</td>':'<td><input type="hidden" name="received_datetime[]" value="' + allocRecord.received_datetime + '" />' + allocRecord.received_datetime + '</td>'; 
+        newRow += (allocRecord.contact_id.length==0) ? '<td>*** new ***</td>':'<td><input type="text" class="inlineInput" name="contact_id[]" value="' + allocRecord.contact_id + '" /></td>';
         newRow += (allocRecord.dnr_no.length==0) ? '<td>*** new ***</td>':'<td><input type="hidden" name="dnr_no[]" value="' + allocRecord.dnr_no + '" />' + allocRecord.dnr_no + '</td>';
         newRow += (allocRecord.display_name.length==0) ? '<td>*** new ***</td>':'<td>' + allocRecord.display_name + '</td>';
-        newRow += (allocRecord.motivation.length==0) ? '<td>*** new ***</td>':'<td><input type="hidden" name="motivation[]" value="' + allocRecord.motivation_id + '" />' + allocRecord.motivation + '</td>';
-        newRow += (allocRecord.receipt_amount.length==0) ? '<td>*** new ***</td>':'<td><input type="text" name="allocated_amount[]" value="' + allocRecord.receipt_amount + '" /></td>';
-        newRow += '<td><div class="delRow">delete</div></td>';
+        newRow += (allocRecord.motivation.length==0) ? '<td>*** new ***</td>':'<td class="tdMotivation" mid="' + allocRecord.motivation_id + '"></td>';
+        newRow += (allocRecord.receipt_amount.length==0) ? '<td>*** new ***</td>':'<td><input type="text" name="allocated_amount[]" class="inlineInput" value="' + allocRecord.receipt_amount + '" /></td>';
+        var canRemove = (allocRecord.receipt_no.length==0) ? 'Y':'N';
+        newRow += (allocRecord.contribution_id>0) ? '<td>&nbsp;</td>':'<td><div class="delRow" rm="'+canRemove+'">delete</div></td>';
         newRow += '</tr>';
         return newRow;
     }
     
     function bindDeleteToRows() {
         $(".delRow").click(function(){
-           $(this).parent().parent().remove(); 
+            
+            if ($(this).attr('rm')=='Y') {
+                $(this).parent().parent().remove();
+            } else {
+                var curVal = $(this).parent().parent().find('input[name="is_deleted[]"]').val();
+                var opp = (curVal>0) ? 0:1;
+                var cfm = confirm('Are you sure you want to '+$(this).text()+' this entry?');
+                if (cfm) $(this).parent().parent().find('input[name="is_deleted[]"]').val(opp);
+            }
+            
+            if ($(this).parent().parent().find('input[name="is_deleted[]"]').val()=='1') {
+                $(this).parent().parent().addClass('deleted');
+                $(this).parent().parent().find('input, select').addClass('deleted');
+                $(this).text('re-instate');
+            } else {
+                $(this).parent().parent().removeClass('deleted');
+                $(this).parent().parent().find('input, select').removeClass('deleted');
+                $(this).text('delete');
+            }
         });
         $("input[name='allocated_amount[]']").blur(function(){
             calculateUnallocated();

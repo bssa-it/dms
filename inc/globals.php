@@ -29,17 +29,17 @@ $GLOBALS['dms_base_path'] = DMS_PATH;
 #   Include classes
 #       Start with DB classes
 $classes = glob(DMS_PATH ."inc/db-classes/class.*.php");
-foreach ($classes as $class) require($class);
+foreach ($classes as $class) require_once($class);
 #       Then DB class extensions
 $classes = glob(DMS_PATH ."inc/db-class-extensions/class.*.php");
-foreach ($classes as $class) require($class);
+foreach ($classes as $class) require_once($class);
 #       Then classes from config file
 $xmlConfig = simplexml_load_file(DMS_PATH . "inc/classes.config.xml");
 $classesConfig = $xmlConfig->includes->children();
-foreach ($classesConfig as $class) require($class);
+foreach ($classesConfig as $class) require_once($class);
 #       Then class extensions from config file
 $classesConfig = $xmlConfig->extensions->children();
-foreach ($classesConfig as $class) require($class);
+foreach ($classesConfig as $class) require_once($class);
 
 #   Get XML configurations
 $xmlConfig = simplexml_load_file(DMS_PATH . "inc/config.xml");

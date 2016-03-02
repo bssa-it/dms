@@ -4,6 +4,11 @@
     <defaults>
         <motivation_id>9000</motivation_id>
         <payment_instrument_id>3</payment_instrument_id>
+        <defaultContributionStatus>2</defaultContributionStatus>
+        <completedContributionStatus>1</completedContributionStatus>
+        <defaultFinancialTypeId>1</defaultFinancialTypeId>
     </defaults>
     <receiptNo>90000000</receiptNo>
+    <officeId>9</officeId>
+    
 </root>
